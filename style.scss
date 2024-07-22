@@ -40,16 +40,28 @@ section {
 
 button {
   cursor: pointer;
+  transition: filter 0.2s;
+  &:hover {
+    filter: brightness(0.8);
+  }
 }
 
 a {
   text-decoration: none;
+  transition: filter 0.2s;
+  &:hover {
+    filter: brightness(0.8);
+  }
 }
 
 header {
   padding: 35px;
   width: 100%;
   position: absolute;
+
+  .iconMenu {
+    display: none;
+  }
 
   .content {
     max-width: 1440px;
@@ -111,6 +123,12 @@ header {
         font-weight: 700;
         font-size: 18px;
       }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .iconMenu {
+      display: block;
     }
   }
 }
