@@ -4,15 +4,15 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Vite App</title>
 </head>
 
 <body>
   <header>
-    <svg class="iconMenu" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-      id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"
-      width="512" height="512">
+    <svg class="iconMenu" id="iconMenu" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+      xml:space="preserve" width="512" height="512">
       <g>
         <path
           d="M480,224H32c-17.673,0-32,14.327-32,32s14.327,32,32,32h448c17.673,0,32-14.327,32-32S497.673,224,480,224z" />
@@ -53,6 +53,17 @@
       </div>
     </div>
   </header>
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <div class="side-menu" id="side-menu">
+    <button class="close-btn" id="closeBtn">X</button>
+    <nav>
+      <ul>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#processo">Gameficação</a></li>
+        <li><a href="#dev">Desenvolvimento</a></li>
+      </ul>
+    </nav>
+  </div>
   <section id="initial">
     <div class="content">
       <div class="card">

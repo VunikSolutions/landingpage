@@ -127,8 +127,107 @@ header {
   }
 
   @media screen and (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 8px;
     .iconMenu {
       display: block;
+      width: 40px;
+      height: 40px;
+
+      g {
+        path {
+          fill: white;
+        }
+      }
+    }
+
+    .content {
+      max-width: fit-content;
+      padding: 0;
+      margin: 0;
+      .wrapper {
+        nav {
+          display: none;
+        }
+        button {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.side-menu {
+  display: none;
+
+  @media screen and (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    left: -50%;
+    width: 50%;
+    height: 100%;
+    background-color: #333;
+    color: #fff;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 30px 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    &.open {
+      left: 0;
+      padding-top: 80px;
+    }
+  }
+}
+
+.menu-overlay {
+  display: none;
+
+  @media screen and (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 900;
+
+    &.active {
+      opacity: 1;
+      visibility: visible;
     }
   }
 }
@@ -206,12 +305,25 @@ header {
       margin: 0;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    background-image: unset;
+    background-color: rgb(103, 23, 7);
+
+    .content {
+      .title {
+        font-size: 3rem;
+      }
+    }
+  }
 }
 
 #sobre {
   width: 100%;
   height: 1108px;
   background-color: #fff;
+  height: fit-content;
 
   .content {
     max-width: 1440px;
@@ -277,6 +389,31 @@ header {
         font-weight: 400;
         font-size: 24px;
         max-width: 538px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    display: block;
+    .content {
+      flex-direction: column;
+      padding: 20px 10px;
+      gap: 0;
+
+      picture {
+        img {
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          height: auto;
+        }
+      }
+
+      .textWrapper {
+        h2 {
+          width: 100%;
+          height: fit-content;
+          font-size: clamp(38px, 10vw, 48px);
+        }
       }
     }
   }
@@ -346,6 +483,30 @@ header {
       }
     }
   }
+  @media screen and (max-width: 768px) {
+    display: block;
+    height: fit-content;
+
+    .content {
+      padding: 20px 10px;
+      flex-direction: column;
+
+      picture {
+        order: 1;
+        img {
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          height: auto;
+        }
+      }
+      .textWrapper {
+        order: 2;
+        h3 {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 
 #dev {
@@ -407,6 +568,31 @@ header {
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    display: block;
+    height: fit-content;
+
+    .content {
+      padding: 20px 10px;
+      width: 100%;
+
+      h3 {
+        font-size: clamp(38px, 10vw, 60px);
+      }
+
+      .boxWrapper {
+        grid-template-columns: repeat(1, 1fr);
+        width: 100%;
+
+        .devBox {
+          width: 100%;
+          max-width: 100%;
+          height: fit-content;
+        }
+      }
+    }
+  }
 }
 
 #orcamento {
@@ -440,6 +626,28 @@ header {
 
     button {
       margin: 10px 0px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    background-size: cover;
+    background-position: top;
+    height: fit-content;
+
+    .content {
+      padding: 20px 10px;
+      width: 100%;
+      max-width: 100%;
+
+      h3 {
+        max-width: 100%;
+        font-size: clamp(40px, 10vw, 60px);
+      }
+
+      p {
+        font-size: 22px;
+      }
     }
   }
 }
@@ -508,6 +716,56 @@ header {
         &:nth-child(4) {
           grid-area: item4;
           width: 488px;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    display: block;
+    height: fit-content;
+
+    .content {
+      padding: 20px 10px;
+      width: 100%;
+      max-width: 100%;
+
+      h3 {
+        font-size: 3rem;
+      }
+
+      p {
+        font-size: 22px;
+      }
+
+      .boxWrapper {
+        grid-template-columns: repeat(1, 1fr);
+        width: 100%;
+        height: fit-content;
+        grid-template-areas: none;
+
+        .card {
+          width: 100%;
+
+          &:nth-child(1) {
+            grid-area: auto;
+            width: 100%;
+          }
+
+          &:nth-child(2) {
+            grid-area: auto;
+            width: 100%;
+          }
+
+          &:nth-child(3) {
+            grid-area: auto;
+            width: 100%;
+          }
+
+          &:nth-child(4) {
+            grid-area: auto;
+            width: 100%;
+          }
         }
       }
     }
@@ -597,6 +855,48 @@ footer {
       color: white;
       font-weight: 500;
       font-size: 19px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    height: fit-content;
+
+    .content {
+      padding: 20px 10px;
+      width: 100%;
+      max-width: 100%;
+      flex-direction: column;
+
+      .first {
+        width: 100%;
+        height: fit-content;
+
+        p {
+          font-size: 22px;
+          max-width: 100%;
+        }
+      }
+
+      .second {
+        flex-direction: column;
+        width: 100%;
+        height: fit-content;
+
+        .column1 {
+          button {
+            margin-top: 22px;
+          }
+        }
+
+        .column2 {
+          a {
+            text-align: left;
+          }
+        }
+      }
+
+      .rights {
+        position: initial;
+      }
     }
   }
 }
