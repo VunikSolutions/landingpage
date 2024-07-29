@@ -417,6 +417,7 @@ header {
       }
 
       .textWrapper {
+        padding: 40px 0px;
         h2 {
           width: 100%;
           height: fit-content;
@@ -497,6 +498,7 @@ header {
 
     .content {
       padding: 20px 10px;
+      gap: 0;
       flex-direction: column;
 
       picture {
@@ -508,6 +510,7 @@ header {
         }
       }
       .textWrapper {
+        padding: 40px 0px;
         order: 2;
         h3 {
           width: 100%;
