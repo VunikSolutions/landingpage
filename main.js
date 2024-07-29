@@ -1,5 +1,7 @@
 import './style.scss';
 
+console.log('version 03');
+
 let iconMenuHamburguer = document.querySelector('#iconMenu');
 const closeBtn = document.getElementById('closeBtn');
 const menu = document.getElementById('side-menu');
