@@ -1,7 +1,5 @@
 import './style.scss';
 
-console.log('version 03');
-
 let iconMenuHamburguer = document.querySelector('#iconMenu');
 const closeBtn = document.getElementById('closeBtn');
 const menu = document.getElementById('side-menu');
@@ -20,4 +18,12 @@ closeBtn.addEventListener('click', function () {
 menuOverlay.addEventListener('click', function () {
   menu.classList.remove('open');
   menuOverlay.classList.remove('active');
+});
+
+const buttonActions = document.querySelectorAll('.buttonAction');
+
+buttonActions.forEach((item) => {
+  item.addEventListener('click', () => {
+    window.open('https://wa.me/71992432321');
+  });
 });
