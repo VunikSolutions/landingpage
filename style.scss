@@ -318,8 +318,6 @@ header {
 
   @media screen and (max-width: 768px) {
     display: flex;
-    background-image: unset;
-    background-color: rgb(103, 23, 7);
 
     .content {
       .card {
@@ -387,7 +385,7 @@ header {
         display: flex;
         flex-direction: column;
         gap: 17px;
-
+        display: none;
         p {
           color: rgba(206, 52, 21, 1);
           font-weight: 700;
@@ -670,6 +668,7 @@ header {
 }
 
 #projects {
+  display: none !important;
   width: 100%;
   background-color: #fff;
   height: 1381px;
