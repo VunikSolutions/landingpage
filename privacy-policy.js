@@ -1,7 +1,4 @@
-import './style.scss';
-import { inject } from '@vercel/analytics';
-
-inject();
+import './privacy.scss';
 
 let iconMenuHamburguer = document.querySelector('#iconMenu');
 const closeBtn = document.getElementById('closeBtn');
