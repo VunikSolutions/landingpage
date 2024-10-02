@@ -1,5 +1,20 @@
 import './gameficacao.scss';
 
+import Swiper from 'swiper';
+import 'swiper/swiper-bundle.css';
+
+// Inicializa o Swiper
+const swiper = new Swiper('.swiper-container', {
+  // Configurações do Swiper
+  loop: true, // Faz o carrossel rodar em loop
+  autoplay: {
+    delay: 3000,
+    disableOnInteraction: false,
+  },
+  slidesPerView: 1,
+  spaceBetween: 30,
+});
+
 let iconMenuHamburguer = document.querySelector('#iconMenu');
 const closeBtn = document.getElementById('closeBtn');
 const menu = document.getElementById('side-menu');

@@ -37,16 +37,26 @@ html {
 
 body {
   background-color: black;
+  overflow-x: hidden;
 }
 
 section {
   margin: -1px auto 0px;
-  max-width: 1080px;
+  max-width: 100%;
   padding: 40px 0px;
+  cursor: grab;
 
-  img {
-    margin-top: -5px;
-    width: 100%;
+  .swiper-wrapper {
+    max-width: 100%;
+    .swiper-slide {
+      display: flex;
+
+      img {
+        margin: -5px auto 0;
+        max-width: 700px;
+        width: 100%;
+      }
+    }
   }
 }
 
