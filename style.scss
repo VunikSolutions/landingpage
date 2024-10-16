@@ -803,7 +803,8 @@ header {
 footer {
   width: 100%;
   background-color: rgba(103, 23, 7, 1);
-  height: 746px;
+  min-height: 746px;
+  padding-bottom: 20px;
   .content {
     max-width: 1440px;
     margin: 0 auto;
@@ -811,6 +812,7 @@ footer {
     display: flex;
     gap: 20px;
     position: relative;
+    flex-wrap: wrap;
 
     .first {
       width: 692px;
@@ -925,6 +927,14 @@ footer {
 
       .rights {
         position: initial;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1480px) {
+    .content {
+      .rights {
+        bottom: 0;
       }
     }
   }
