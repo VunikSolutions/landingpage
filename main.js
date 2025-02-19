@@ -27,6 +27,6 @@ const buttonActions = document.querySelectorAll('.buttonAction');
 
 buttonActions.forEach((item) => {
   item.addEventListener('click', () => {
-    window.open('https://wa.me/71992432321');
+    window.open('https://wa.me/5571992432321?text=Olá!%20Quero%20Impulsionar%20Meu%20Negócio!%20');
   });
 });
