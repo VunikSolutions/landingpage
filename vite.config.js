@@ -5,8 +5,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html', // Página principal
-        privacy: 'privacy-policy.html', // Primeira página adicional
-        gameficacao: 'gameficacao.html'
+        privacy: 'privacy-policy.html' // Política de privacidade
       },
     },
   },
