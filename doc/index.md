@@ -78,7 +78,7 @@ landingpage/
 ## Contato e Informações
 
 - **Telefone**: +55 71 992432321
-- **Email**: corporativo@vunik.com.br
+- **Email**: corporativo@vunik.site
 - **Instagram**: @vuniksolutions
 - **Website**: https://www.vunik.com.br/
 
