@@ -6,30 +6,99 @@
   <link rel="icon" type="image/jpg" href="/favicon.jpg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <meta name="author" content="Vunik Solutions">
+  
+  <!-- Performance and SEO meta tags -->
+  <meta name="theme-color" content="#CE3415">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <link rel="canonical" href="https://www.vunik.com.br/">
+  
+  <!-- Cache control hints -->
+  <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+  <meta http-equiv="Expires" content="31536000">
+  
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="/font/Satoshi-Regular.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="/font/Satoshi-Medium.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="/font/Satoshi-Bold.otf" as="font" type="font/otf" crossorigin>
+  
+  <!-- Preload critical images -->
+  <link rel="preload" href="/section-sobre.png" as="image">
+  <link rel="preload" href="/logo.svg" as="image">
+  
+  <!-- DNS prefetch for external domains -->
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+  <link rel="dns-prefetch" href="//www.termsfeed.com">
+  <link rel="dns-prefetch" href="//wa.me">
+  
+  <!-- Critical CSS Inline -->
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Satoshi',sans-serif}
+    html{scroll-behavior:smooth}
+    body{background-color:#000;font-family:'Satoshi',sans-serif}
+    header{position:absolute;width:100%;padding:35px}
+    header .content{max-width:1440px;margin:0 auto;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 73px 0 120px}
+    header .wrapper{display:flex;align-items:center}
+    header .wrapper nav ul{display:flex;align-items:center;gap:50px;list-style:none}
+    header .wrapper nav ul li{display:flex;align-items:center;height:37px}
+    header .wrapper nav ul li a{color:#fff;text-decoration:none}
+    header .wrapper button{width:244px;height:55px;margin-left:47px;background-color:#ce3415;border:none;border-radius:6px;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-weight:700;font-size:18px;cursor:pointer}
+    #initial{background-image:url('/section-sobre.webp'),url('/section-sobre.png');background-size:cover;background-repeat:no-repeat;width:100%;height:1050px;display:flex;justify-content:center;align-items:center}
+    #initial .content{display:flex;flex-direction:column;justify-content:center;align-items:center;max-width:1036px}
+    #initial .title{font-size:75px;color:#fff;font-weight:700;text-align:center}
+    #initial p{margin:21px 0 26px 0;font-size:24px;font-weight:700;text-align:center;color:#fff}
+    .buttonAction{width:240px;height:55px;background-color:#ce3415;border:none;border-radius:6px;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-weight:700;font-size:18px;cursor:pointer}
+    @media screen and (max-width:768px){
+      header{display:flex;align-items:center;justify-content:space-between;padding:20px}
+      header .iconMenu{display:block;width:40px;height:40px;order:2}
+      header .content{max-width:fit-content;padding:0;margin:0}
+      header .wrapper nav{display:none}
+      header .wrapper button{display:none}
+      #initial .title{font-size:clamp(42px,10vw,60px)}
+    }
+  </style>
   <meta name="description"
     content="A Vunik é uma empresa de tecnologia que oferece soluções de designer, sites e aplicativos mais adequados para a sua empresa e o seu negócio.">
   <meta property="og:image" content="/favicon.jpg" />
   <meta property="og:description"
     content="A Vunik é uma empresa de tecnologia que oferece soluções de designer, sites e aplicativos mais adequados para a sua empresa e o seu negócio." />
   <meta property="og:title" content="Vunik Solutions" />
-  <!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
-  <script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.1.0/cookie-consent.js"
-    charset="UTF-8"></script>
-  <script type="text/javascript" charset="UTF-8">
-    document.addEventListener('DOMContentLoaded', function () {
-      cookieconsent.run({ "notice_banner_type": "headline", "consent_type": "express", "palette": "light", "language": "pt", "page_load_consent_levels": ["strictly-necessary"], "notice_banner_reject_button_hide": false, "preferences_center_close_button_hide": false, "page_refresh_confirmation_buttons": false, "website_name": "https://www.vunik.com.br/", "website_privacy_policy_url": "https://www.vunik.com.br/privacy-policy.html" });
+  <!-- Cookie Consent by TermsFeed https://www.TermsFeed.com - Loaded asynchronously -->
+  <script>
+    // Load cookie consent asynchronously after page load
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var script = document.createElement('script');
+        script.src = 'https://www.termsfeed.com/public/cookie-consent/4.1.0/cookie-consent.js';
+        script.charset = 'UTF-8';
+        script.onload = function() {
+          if (window.cookieconsent) {
+            cookieconsent.run({ 
+              "notice_banner_type": "headline", 
+              "consent_type": "express", 
+              "palette": "light", 
+              "language": "pt", 
+              "page_load_consent_levels": ["strictly-necessary"], 
+              "notice_banner_reject_button_hide": false, 
+              "preferences_center_close_button_hide": false, 
+              "page_refresh_confirmation_buttons": false, 
+              "website_name": "https://www.vunik.com.br/", 
+              "website_privacy_policy_url": "https://www.vunik.com.br/privacy-policy.html" 
+            });
+          }
+        };
+        document.head.appendChild(script);
+      }, 2000);
     });
   </script>
 
   <!-- Google Analytics -->
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGRY2D9WVM">
-  </script>
-  <script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGRY2D9WVM"></script>
+  <script defer>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-MGRY2D9WVM');
   </script>
   <!-- end of Google Analytics-->
@@ -104,7 +173,7 @@
 
     <div class="content">
       <picture>
-        <img src="/logo.svg" alt="Logotipo Vunik">
+        <img src="/logo.svg" alt="Logotipo Vunik" loading="eager" width="120" height="40">
       </picture>
 
       <div class="wrapper">
@@ -112,6 +181,7 @@
           <ul>
             <li><a href="#sobre">Sobre</a></li>
             <li><a href="#dev">Desenvolvimento</a></li>
+            <li><a href="#cases">Cases</a></li>
 
           </ul>
         </nav>
@@ -139,6 +209,7 @@
       <ul>
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#dev">Desenvolvimento</a></li>
+        <li><a href="#cases">Cases</a></li>
         <li> <button class="buttonAction">Faça um Orçamento <svg width="14" height="15" viewBox="0 0 14 15" fill="none"
               xmlns="http://www.w3.org/2000/svg">
               <mask id="mask0_229_55" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="14"
@@ -189,9 +260,11 @@
   <section id="sobre">
     <div class="content">
       <picture>
-        <source media="(max-width: 768px)" srcset="/code_mobile.png">
-        <source media="(mix-width: 769px)" srcset="/code.png">
-        <img src="/code.png" alt="Monitor com código frontend">
+        <source media="(max-width: 768px)" srcset="/code_mobile.webp" type="image/webp">
+        <source media="(max-width: 768px)" srcset="/code_mobile.png" type="image/png">
+        <source media="(min-width: 769px)" srcset="/code.webp" type="image/webp">
+        <source media="(min-width: 769px)" srcset="/code.png" type="image/png">
+        <img src="/code.png" alt="Monitor com código frontend" loading="lazy" width="592" height="888">
       </picture>
       <div class="textWrapper">
         <p class="underline">qual o nosso diferencial ?</p>
@@ -317,6 +390,95 @@
       </button>
     </div>
   </section>
+  
+  <section id="cases">
+    <div class="content">
+      <h3>Cases de Sucesso</h3>
+      <p>Transformamos ideias em soluções digitais que impulsionam resultados reais para nossos clientes.</p>
+      
+      <div class="cases-grid">
+        <div class="case-card">
+          <div class="case-image">
+            <div class="placeholder-image">
+              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="case-content">
+            <h4>Sistema de Gestão Empresarial</h4>
+            <p class="case-client">Cliente: Empresa de Logística</p>
+            <p class="case-description">Desenvolvemos uma plataforma completa de gestão que automatizou processos e reduziu custos operacionais em 40%.</p>
+            <div class="case-results">
+              <div class="result-item">
+                <span class="result-number">40%</span>
+                <span class="result-label">Redução de Custos</span>
+              </div>
+              <div class="result-item">
+                <span class="result-number">60%</span>
+                <span class="result-label">Aumento de Produtividade</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-image">
+            <div class="placeholder-image">
+              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" stroke-width="2"/>
+                <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+          </div>
+          <div class="case-content">
+            <h4>App Mobile para E-commerce</h4>
+            <p class="case-client">Cliente: Loja de Moda</p>
+            <p class="case-description">Criamos um aplicativo mobile intuitivo que aumentou as vendas online e melhorou a experiência do cliente.</p>
+            <div class="case-results">
+              <div class="result-item">
+                <span class="result-number">150%</span>
+                <span class="result-label">Aumento nas Vendas</span>
+              </div>
+              <div class="result-item">
+                <span class="result-number">4.8★</span>
+                <span class="result-label">Avaliação dos Usuários</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-image">
+            <div class="placeholder-image">
+              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 11H15M9 15H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L19.7071 9.70711C19.8946 9.89464 20 10.149 20 10.4142V19C20 20.1046 19.1046 21 18 21H17ZM17 21V10H13V6H7V19H17Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="case-content">
+            <h4>Plataforma de Automação</h4>
+            <p class="case-client">Cliente: Consultoria Financeira</p>
+            <p class="case-description">Implementamos um sistema de automação que otimizou processos internos e aumentou a eficiência operacional.</p>
+            <div class="case-results">
+              <div class="result-item">
+                <span class="result-number">75%</span>
+                <span class="result-label">Redução de Tempo</span>
+              </div>
+              <div class="result-item">
+                <span class="result-number">90%</span>
+                <span class="result-label">Precisão nos Processos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="projects">
     <div class="content">
       <h3>Projetos</h3>
@@ -345,7 +507,7 @@
         <!-- Logo e Descrição -->
         <div class="footer-brand">
           <picture>
-            <img src="/logo.svg" alt="Logotipo Vunik">
+            <img src="/logo.svg" alt="Logotipo Vunik" loading="lazy" width="120" height="40">
           </picture>
           <p>
             Fundada por três experientes profissionais da área de tecnologia, a Vunik é uma empresa altamente
