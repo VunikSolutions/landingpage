@@ -1,172 +1,279 @@
 # Arquitetura do Projeto - Vunik Solutions
 
-## Visão Geral da Arquitetura
+## 🏗️ Visão Geral da Arquitetura
 
-O projeto da Vunik Solutions segue uma arquitetura frontend moderna baseada em tecnologias web padrão, utilizando Vite como build tool para otimização de performance e desenvolvimento eficiente.
+O projeto segue uma arquitetura **JAMstack** (JavaScript, APIs, Markup), utilizando:
+- Frontend estático otimizado
+- Backend serverless (Supabase)
+- Edge Functions para processamento assíncrono
+- APIs de terceiros para serviços complementares
 
-## Stack Tecnológica
+## 📐 Diagrama de Arquitetura
 
-### Core Technologies
 ```
-Frontend Stack:
-├── HTML5 (Semântico)
-├── SCSS/Sass (Estilização)
-├── JavaScript ES6+ (Interatividade)
-└── Vite (Build Tool)
-```
-
-### Dependências Principais
-```json
-{
-  "vite": "^5.3.4",           // Build tool e dev server
-  "sass": "^1.77.8",          // Pré-processador CSS
-  "swiper": "^11.1.14",       // Carrossel responsivo
-  "@vercel/analytics": "^1.3.1" // Analytics de performance
-}
-```
-
-## Estrutura de Arquivos
-
-### Organização do Projeto
-```
-landingpage/
-├── 📄 index.html                 # Entry point principal
-├── 📄 privacy-policy.html        # Política de privacidade
-├── 📄 main.js                    # JavaScript principal
-├── 📄 style.scss                 # Estilos globais
-├── 📄 vite.config.js             # Configuração do Vite
-├── 📄 package.json               # Dependências e scripts
-└── 📁 public/                    # Assets estáticos
-    ├── 📁 font/                  # Fontes customizadas
-    │   ├── Satoshi-Regular.otf
-    │   ├── Satoshi-Medium.otf
-    │   └── Satoshi-Bold.otf
-    ├── 🖼️ *.png                  # Imagens do projeto
-    └── 🎨 *.svg                  # Ícones e logos
+┌─────────────────────────────────────────────────────────────┐
+│                        CLIENTE (Browser)                     │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  index.html + main.js + style.scss                    │  │
+│  │  - Renderização estática                             │  │
+│  │  - Interatividade JavaScript vanilla                  │  │
+│  │  - Validação de formulários                          │  │
+│  └──────────────────────────────────────────────────────┘  │
+└───────────────────────┬─────────────────────────────────────┘
+                        │
+                        │ HTTPS
+                        │
+        ┌───────────────┴───────────────┐
+        │                               │
+┌───────▼────────┐            ┌─────────▼──────────┐
+│   Supabase     │            │   APIs Externas     │
+│   (Backend)    │            │                    │
+├────────────────┤            ├────────────────────┤
+│ - PostgreSQL   │            │ - Google Analytics │
+│ - Edge Funcs   │            │ - Vercel Analytics │
+│ - Auth         │            │ - Resend (Email)   │
+│                │            │ - TermsFeed        │
+└────────────────┘            └────────────────────┘
 ```
 
-## Arquitetura de Componentes
+## 🔄 Fluxo de Dados
 
-### 1. Header Component
-```html
-<header>
-  ├── Logo (SVG)
-  ├── Navigation Menu
-  │   ├── Desktop Menu
-  │   └── Mobile Hamburger Menu
-  └── CTA Button
-</header>
+### 1. Fluxo de Captura de Lead
+
+```
+Usuário preenche formulário
+         │
+         ▼
+Validação frontend (JavaScript)
+         │
+         ▼
+Envio para Supabase (POST /leads)
+         │
+         ├──► Salva no PostgreSQL
+         │
+         └──► Trigger Edge Function
+                  │
+                  ▼
+         send-lead-notification
+                  │
+                  ├──► Formata dados
+                  │
+                  └──► Envia email via Resend API
+                           │
+                           ▼
+                  Notificação recebida pela equipe
 ```
 
-**Funcionalidades:**
-- Menu responsivo com breakpoint mobile
-- Overlay de menu lateral
-- Navegação suave entre seções
+### 2. Fluxo de Renderização
 
-### 2. Hero Section
-```html
-<section id="initial">
-  ├── Badge "Software House"
-  ├── Título principal
-  ├── Descrição
-  └── CTA Button
-</section>
+```
+Request HTTP
+    │
+    ▼
+Vite Dev Server / CDN (Produção)
+    │
+    ├──► index.html (HTML estático)
+    │
+    ├──► main.js (Bundle JavaScript)
+    │       │
+    │       ├──► Importa style.scss
+    │       ├──► Inicializa Swiper
+    │       ├──► Configura Supabase Client
+    │       └──► Registra event listeners
+    │
+    └──► Assets estáticos (imagens, fontes)
 ```
 
-### 3. About Section
-```html
-<section id="sobre">
-  ├── Imagem responsiva
-  └── Content Wrapper
-      ├── Subtítulo
-      ├── Título com highlight
-      ├── Estatísticas
-      └── Descrição
-</section>
-```
+## 🗂️ Estrutura de Código
 
+### Frontend (`main.js`)
 
+O arquivo principal está organizado em seções funcionais:
 
-### 4. Services Grid
-```html
-<section id="dev">
-  ├── Título e descrição
-  └── Grid de serviços (6 cards)
-      ├── Ícone SVG
-      ├── Título
-      └── Descrição
-</section>
-```
-
-## Sistema de Estilos (SCSS)
-
-### Estrutura de Estilos
-```scss
-// 1. Fontes customizadas
-@font-face declarations
-
-// 2. Reset e base
-* { box-sizing, font-family }
-html, body { scroll-behavior, background }
-
-// 3. Componentes
-header { navigation, responsive menu }
-sections { layout, typography }
-buttons { hover effects, transitions }
-
-// 4. Responsividade
-@media queries for mobile/tablet
-```
-
-### Design System
-```scss
-// Cores
-$primary-color: #CE3415;    // Vermelho principal
-$background: #000000;       // Fundo escuro
-$text-color: #FFFFFF;       // Texto branco
-
-// Tipografia
-$font-family: 'Satoshi', sans-serif;
-$font-weights: (400, 500, 700);
-
-// Breakpoints
-$mobile: 768px;
-$tablet: 1024px;
-$desktop: 1440px;
-```
-
-## JavaScript Architecture
-
-### Main Module (main.js)
 ```javascript
-// 1. Imports
+// 1. Configuração e Imports
 import './style.scss';
-import { inject } from '@vercel/analytics';
+import Swiper from 'swiper';
+import { createClient } from '@supabase/supabase-js';
 
-// 2. Analytics
-inject();
+// 2. Configuração Supabase
+const supabase = createClient(url, key);
 
-// 3. DOM Elements
-const iconMenu = document.querySelector('#iconMenu');
-const closeBtn = document.getElementById('closeBtn');
-const menu = document.getElementById('side-menu');
-const menuOverlay = document.getElementById('menuOverlay');
+// 3. Funções Globais
+function scrollToForm() { ... }
+function closeMobileMenu() { ... }
 
-// 4. Event Listeners
-- Menu toggle functionality
-- Overlay click handling
-- CTA button actions
+// 4. Event Listeners por Funcionalidade
+// - Menu Mobile
+// - Scroll Suave
+// - Header Sticky
+// - Swiper
+// - FAQ Accordion
+// - Validação de Formulário
+// - Submissão de Formulário
+// - Animações
+// - Snackbar
 ```
 
-### Funcionalidades JavaScript
-1. **Menu Mobile**: Toggle do menu hambúrguer
-2. **Overlay**: Fechamento do menu por clique externo
-3. **CTA Actions**: Redirecionamento para WhatsApp
-4. **Analytics**: Rastreamento de performance
+### Estilos (`style.scss`)
 
-## Build System (Vite)
+Organização por componentes e seções:
+- Variáveis CSS
+- Reset e base
+- Header/Navbar
+- Hero Section
+- Seções de conteúdo
+- Formulário
+- Footer
+- Componentes reutilizáveis
+- Responsividade (mobile-first)
 
-### Configuração
+### Backend (Supabase)
+
+#### Tabela `leads`
+
+```sql
+CREATE TABLE leads (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  nome TEXT NOT NULL,
+  whatsapp TEXT NOT NULL,
+  especialidade TEXT NOT NULL,
+  faturamento TEXT NOT NULL,
+  objetivo TEXT NOT NULL,
+  tempo_atendimento TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+#### Edge Function: `send-lead-notification`
+
+**Localização**: `supabase/functions/send-lead-notification/index.ts`
+
+**Responsabilidades**:
+1. Receber dados do lead via POST
+2. Validar dados recebidos
+3. Formatar dados para exibição
+4. Gerar template HTML do email
+5. Enviar email via Resend API
+6. Retornar resposta de sucesso/erro
+
+**Variáveis de Ambiente**:
+- `RESEND_API_KEY`: Chave da API Resend
+- `NOTIFICATION_EMAIL`: Email destinatário
+
+## 🔌 Integrações
+
+### Supabase
+
+**Uso**:
+- Armazenamento de leads no PostgreSQL
+- Edge Functions para processamento serverless
+- Real-time subscriptions (futuro)
+
+**Configuração**:
+```javascript
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
+```
+
+### Resend (via Edge Function)
+
+**Uso**: Envio de emails transacionais de notificação
+
+**Fluxo**:
+1. Lead é salvo no Supabase
+2. Edge Function é invocada automaticamente
+3. Template HTML é gerado
+4. Email é enviado via Resend API
+
+### Google Analytics
+
+**Uso**: Tracking de eventos e comportamento do usuário
+
+**Implementação**: Script assíncrono no `<head>` do HTML
+
+### Vercel Analytics
+
+**Uso**: Métricas de performance e Web Vitals
+
+**Implementação**: Lazy loading via import dinâmico
+
+## 🎯 Padrões de Design
+
+### 1. Vanilla JavaScript (Sem Frameworks)
+
+**Motivo**: 
+- Performance otimizada
+- Bundle size reduzido
+- Controle total sobre o código
+
+**Estrutura**:
+- Event-driven architecture
+- Modular functions
+- Global namespace para funções necessárias no HTML
+
+### 2. Mobile-First Design
+
+**Abordagem**:
+- Estilos base para mobile
+- Media queries para desktop
+- Componentes adaptativos (ex: Swiper apenas no mobile)
+
+### 3. Progressive Enhancement
+
+**Estratégia**:
+- HTML semântico como base
+- JavaScript para melhorias de UX
+- Fallbacks para funcionalidades avançadas
+
+### 4. Performance Optimization
+
+**Técnicas**:
+- Lazy loading de imagens (Intersection Observer)
+- Code splitting (Vite)
+- Preload de recursos críticos
+- Otimização de imagens (WebP + fallback)
+- Throttling de eventos de scroll
+- RequestAnimationFrame para animações
+
+## 🔐 Segurança
+
+### Frontend
+- Validação de formulários (client-side)
+- Sanitização de inputs
+- HTTPS obrigatório
+- Content Security Policy (recomendado)
+
+### Backend (Supabase)
+- Row Level Security (RLS) nas tabelas
+- API keys protegidas via variáveis de ambiente
+- Validação server-side dos dados
+- Rate limiting (configurado no Supabase)
+
+### Dados Sensíveis
+- Variáveis de ambiente não versionadas
+- API keys nunca expostas no código
+- Dados de leads armazenados com segurança
+
+## 📦 Build e Deploy
+
+### Processo de Build (Vite)
+
+```bash
+npm run build
+```
+
+**Etapas**:
+1. Compilação do SCSS para CSS
+2. Bundling do JavaScript (ES modules)
+3. Otimização de assets
+4. Minificação de código
+5. Geração de arquivos estáticos em `dist/`
+
+### Configuração do Vite
+
 ```javascript
 // vite.config.js
 export default defineConfig({
@@ -175,149 +282,95 @@ export default defineConfig({
       input: {
         main: 'index.html',
         privacy: 'privacy-policy.html'
-      },
-    },
-  },
-});
-```
-
-### Otimizações
-- **Code Splitting**: Separação automática de chunks
-- **Tree Shaking**: Remoção de código não utilizado
-- **Asset Optimization**: Compressão de imagens e fontes
-- **Hot Module Replacement**: Desenvolvimento rápido
-
-## SEO e Performance
-
-### Meta Tags Estruturadas
-```html
-<!-- Open Graph -->
-<meta property="og:title" content="Vunik Solutions" />
-<meta property="og:description" content="..." />
-<meta property="og:image" content="/favicon.jpg" />
-
-<!-- Schema.org -->
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Vunik",
-    "url": "https://www.vunik.com.br/"
+      }
+    }
   }
-</script>
-```
-
-### Analytics Integration
-```javascript
-// Google Analytics
-gtag('config', 'G-MGRY2D9WVM');
-
-// Vercel Analytics
-import { inject } from '@vercel/analytics';
-inject();
-```
-
-## Responsividade
-
-### Breakpoints Strategy
-```scss
-// Mobile First Approach
-@media (max-width: 768px) {
-  // Mobile styles
-}
-
-@media (min-width: 769px) {
-  // Desktop styles
-}
-```
-
-### Responsive Images
-```html
-<picture>
-  <source media="(max-width: 768px)" srcset="/code_mobile.png">
-  <source media="(min-width: 769px)" srcset="/code.png">
-  <img src="/code.png" alt="Monitor com código frontend">
-</picture>
-```
-
-## Segurança e Conformidade
-
-### LGPD Compliance
-```javascript
-// Cookie Consent
-cookieconsent.run({
-  "notice_banner_type": "headline",
-  "consent_type": "express",
-  "palette": "light",
-  "language": "pt"
 });
 ```
 
-### External Scripts
-- Google Analytics (com consentimento)
-- TermsFeed Cookie Consent
-- Vercel Analytics
+**Características**:
+- Múltiplos pontos de entrada (SPA-like)
+- Otimização automática de assets
+- Code splitting automático
+- Tree shaking
 
-## Deployment e Infraestrutura
+## 🧪 Estrutura de Testes (Futuro)
 
-### Domínio e DNS
-- **Domínio**: vunik.com.br
-- **Registrador**: GoDaddy
-- **DNS**: Configurado para apontar para o servidor de produção
-- **SSL**: Certificado SSL ativo para HTTPS
+Recomendações para implementação:
+- Testes unitários (Jest/Vitest)
+- Testes E2E (Playwright/Cypress)
+- Testes de acessibilidade (axe-core)
+- Testes de performance (Lighthouse CI)
 
-### Build Process
-```bash
-npm run build    # Gera arquivos otimizados
-npm run preview  # Preview local do build
-```
+## 🔄 Versionamento e CI/CD
 
-### Output Structure
-```
-dist/
-├── index.html
-├── privacy-policy.html
-├── assets/
-│   ├── main-[hash].js
-│   ├── main-[hash].css
-│   └── images/
-└── public/
-    ├── font/
-    ├── *.png
-    └── *.svg
-```
+### Git Workflow
+- `main`: Branch de produção
+- `develop`: Branch de desenvolvimento
+- Feature branches para novas funcionalidades
 
-### Deployment Strategy
-- **Static Hosting**: Arquivos estáticos servidos via CDN
-- **Cache**: Headers de cache configurados para otimização
-- **Compression**: Gzip/Brotli habilitado para assets
-- **CDN**: Distribuição global de conteúdo
+### Deploy Automático
+- Vercel: Deploy automático no push para `main`
+- Preview deployments para PRs
 
-## Monitoramento e Analytics
+## 📊 Monitoramento e Observabilidade
 
-### Performance Metrics
-- **Core Web Vitals**: LCP, FID, CLS
-- **Page Load Speed**: Otimização via Vite
-- **User Engagement**: Google Analytics
-- **Error Tracking**: Vercel Analytics
+### Métricas Coletadas
+- Page views (Google Analytics)
+- Web Vitals (Vercel Analytics)
+- Conversões (form submissions)
+- Erros (console errors)
 
-### SEO Monitoring
-- **Meta Tags**: Estruturadas para redes sociais
-- **Schema.org**: Markup para rich snippets
-- **Accessibility**: HTML semântico
-- **Mobile Friendly**: Design responsivo
-- **Domain Authority**: vunik.com.br com SEO otimizado
+### Logs
+- Edge Functions: Logs no Supabase Dashboard
+- Frontend: Console logs (dev) / Error tracking (produção)
 
-## Manutenibilidade
+## 🚀 Escalabilidade
 
-### Code Organization
-- **Separation of Concerns**: HTML, CSS, JS separados
-- **Modular SCSS**: Organização por componentes
-- **Clean JavaScript**: Funções específicas e reutilizáveis
-- **Documentation**: Comentários explicativos
+### Atual
+- Arquitetura serverless (escala automaticamente)
+- CDN para assets estáticos
+- Database gerenciado (Supabase)
 
-### Scalability
-- **Component-Based**: Estrutura modular
-- **CSS Architecture**: SCSS com variáveis
-- **Build Optimization**: Vite para performance
-- **Asset Management**: Organização clara de recursos
+### Futuro
+- Cache de assets (Service Workers)
+- CDN para HTML (Edge Caching)
+- Database read replicas (se necessário)
+- Rate limiting mais agressivo
+
+## 🔧 Manutenção
+
+### Dependências
+- Atualizações regulares via `npm audit`
+- Monitoramento de vulnerabilidades
+- Testes após atualizações
+
+### Backup
+- Database: Backup automático (Supabase)
+- Código: Versionamento Git
+- Assets: Versionamento Git + CDN
+
+## 📝 Convenções de Código
+
+### JavaScript
+- ES6+ syntax
+- Funções nomeadas (não arrow functions anônimas)
+- Comentários em português
+- Organização por funcionalidade
+
+### CSS/SCSS
+- BEM-like naming (quando aplicável)
+- Variáveis CSS para cores e espaçamentos
+- Mobile-first media queries
+- Comentários por seção
+
+### HTML
+- Semântico
+- Acessível (ARIA quando necessário)
+- SEO-friendly
+- Validação HTML5
+
+---
+
+**Última atualização**: 2025
+
