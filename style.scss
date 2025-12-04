@@ -93,7 +93,16 @@ body {
   --blue-dark: #1E40AF;
   --blue-darker: #1E3A8A;
 
-  // Laranja - Secundária (Cor de Destaque/CTA - Energia e Vitalidade)
+  // Verde - Secundária (Cor de Destaque/CTA - Confiança e Segurança)
+  --green-lightest: #F0FDF4;
+  --green-lighter: #DCFCE7;
+  --green-light: #BBF7D0;
+  --green-medium: #86EFAC;
+  --green-primary: #22C55E;
+  --green-dark: #16A34A;
+  --green-darker: #15803D;
+
+  // Laranja - Mantida para compatibilidade (não mais usada em CTAs)
   --orange-lightest: #FFF7ED;
   --orange-lighter: #FFEDD5;
   --orange-light: #FED7AA;
@@ -243,7 +252,7 @@ header {
           margin-left: 0;
           width: 244px;
           height: 55px;
-          background-color: var(--orange-primary);
+          background-color: var(--green-primary);
           border: none;
           border-radius: 6px;
           display: flex;
@@ -255,12 +264,12 @@ header {
           font-size: 18px;
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 4px 20px rgba(249, 115, 22, 0.3);
+          box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
           flex-shrink: 0;
 
           &:hover {
-            background-color: var(--orange-dark);
-            box-shadow: 0 6px 30px rgba(249, 115, 22, 0.5);
+            background-color: var(--green-dark);
+            box-shadow: 0 6px 30px rgba(34, 197, 94, 0.5);
             transform: translateY(-2px);
           }
 
@@ -465,7 +474,7 @@ header {
           width: 100%;
           height: 56px;
           min-height: 56px;
-          background-color: var(--orange-primary);
+          background-color: var(--green-primary);
           border: none;
           border-radius: 8px;
           display: flex;
@@ -478,12 +487,12 @@ header {
           cursor: pointer;
           transition: all 0.2s ease;
           touch-action: manipulation;
-          box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+          box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
 
           &:active {
-            background-color: var(--orange-dark);
+            background-color: var(--green-dark);
             transform: scale(0.98);
-            box-shadow: 0 2px 8px rgba(249, 115, 22, 0.4);
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
           }
         }
       }
@@ -631,7 +640,7 @@ header {
 
     .hero-cta {
       height: 55px;
-      background-color: var(--orange-primary);
+      background-color: var(--green-primary);
       border: none;
       border-radius: 6px;
       display: inline-flex;
@@ -643,7 +652,7 @@ header {
       font-weight: 700;
       font-size: 18px;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.4);
       transition: all 0.3s ease;
       white-space: nowrap;
 
@@ -658,7 +667,7 @@ header {
         font-size: 14px;
         border-radius: 8px;
         touch-action: manipulation;
-        box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4);
+        box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
       }
 
       span {
@@ -680,8 +689,8 @@ header {
       }
 
       &:hover {
-        background-color: var(--orange-dark);
-        box-shadow: 0 6px 30px rgba(249, 115, 22, 0.6);
+        background-color: var(--green-dark);
+        box-shadow: 0 6px 30px rgba(34, 197, 94, 0.6);
         transform: translateY(-2px);
       }
 
@@ -691,9 +700,9 @@ header {
 
       @include mobile {
         &:active {
-          background-color: var(--orange-dark);
+          background-color: var(--green-dark);
           transform: scale(0.98);
-          box-shadow: 0 2px 12px rgba(249, 115, 22, 0.5);
+          box-shadow: 0 2px 12px rgba(34, 197, 94, 0.5);
         }
       }
 
@@ -2659,7 +2668,7 @@ a.cta-secondary,
       .form-submit {
         width: 100%;
         height: 55px;
-        background-color: var(--orange-primary);
+        background-color: var(--green-primary);
         border: none;
         border-radius: 6px;
         color: #FFFFFF;
@@ -2668,7 +2677,7 @@ a.cta-secondary,
         cursor: pointer;
         transition: all 0.3s ease;
         margin-top: var(--spacing-md);
-        box-shadow: 0 4px 20px rgba(249, 115, 22, 0.3);
+        box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
 
         @include mobile {
           height: 56px;
@@ -2680,8 +2689,8 @@ a.cta-secondary,
         }
 
         &:hover:not(:disabled) {
-          background-color: var(--orange-dark);
-          box-shadow: 0 6px 30px rgba(249, 115, 22, 0.5);
+          background-color: var(--green-dark);
+          box-shadow: 0 6px 30px rgba(34, 197, 94, 0.5);
           transform: translateY(-2px);
         }
 
