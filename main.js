@@ -11,6 +11,9 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Variáveis de ambiente do Supabase não configuradas!');
+  console.error('URL:', supabaseUrl ? '✓ Configurada' : '✗ Não configurada');
+  console.error('Key:', supabaseAnonKey ? '✓ Configurada' : '✗ Não configurada');
+  console.error('Configure as variáveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY no ambiente de produção.');
 }
 
 const supabase = supabaseUrl && supabaseAnonKey
@@ -561,7 +564,12 @@ document.addEventListener('DOMContentLoaded', function () {
       try {
         // Verificar se Supabase está configurado
         if (!supabase) {
-          throw new Error('Supabase não configurado. Verifique as variáveis de ambiente.');
+          console.error('Erro de configuração:', {
+            url: supabaseUrl ? 'configurada' : 'não configurada',
+            key: supabaseAnonKey ? 'configurada' : 'não configurada',
+            env: import.meta.env.MODE
+          });
+          throw new Error('Serviço temporariamente indisponível. Por favor, entre em contato diretamente pelo email corporativo@vunik.site');
         }
 
         // Inserir no Supabase
