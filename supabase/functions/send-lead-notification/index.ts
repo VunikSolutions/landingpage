@@ -23,18 +23,29 @@ serve(async (req) => {
     const { lead } = await req.json()
     
     if (!lead) {
+      console.error('Erro: Dados do lead não fornecidos')
       throw new Error('Dados do lead não fornecidos')
     }
 
+    // Validar campos obrigatórios do lead
+    if (!lead.nome || !lead.whatsapp || !lead.especialidade) {
+      console.error('Erro: Campos obrigatórios do lead não fornecidos', lead)
+      throw new Error('Campos obrigatórios do lead não fornecidos')
+    }
+
     if (!RESEND_API_KEY) {
-      console.error('RESEND_API_KEY não configurada')
-      // Retornar sucesso mesmo sem enviar email para não quebrar o fluxo
+      console.error('ERRO CRÍTICO: RESEND_API_KEY não configurada')
+      console.error('Configure a variável RESEND_API_KEY no Supabase Dashboard:')
+      console.error('Project Settings → Edge Functions → Environment Variables')
+      // Retornar erro para que seja visível nos logs
       return new Response(
         JSON.stringify({ 
-          success: true, 
-          warning: 'Email não enviado: RESEND_API_KEY não configurada' 
+          success: false,
+          error: 'RESEND_API_KEY não configurada',
+          message: 'Configure RESEND_API_KEY no Supabase Dashboard → Edge Functions → Environment Variables'
         }),
         { 
+          status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
         }
       )
@@ -294,6 +305,9 @@ serve(async (req) => {
       .replace(/\{\{LEAD_ID\}\}/g, lead.id)
 
     // Enviar email via Resend
+    console.log('Enviando email para:', NOTIFICATION_EMAIL)
+    console.log('Lead:', { nome: lead.nome, whatsapp: lead.whatsapp })
+    
     const emailResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -310,11 +324,26 @@ serve(async (req) => {
     
     if (!emailResponse.ok) {
       const errorText = await emailResponse.text()
-      console.error('Erro ao enviar email:', errorText)
-      throw new Error(`Falha ao enviar email: ${emailResponse.status}`)
+      console.error('Erro ao enviar email via Resend:')
+      console.error('Status:', emailResponse.status)
+      console.error('Resposta:', errorText)
+      
+      // Tentar parsear o erro do Resend para mensagem mais clara
+      let errorMessage = `Falha ao enviar email: ${emailResponse.status}`
+      try {
+        const errorJson = JSON.parse(errorText)
+        if (errorJson.message) {
+          errorMessage = errorJson.message
+        }
+      } catch (e) {
+        // Se não conseguir parsear, usar a mensagem padrão
+      }
+      
+      throw new Error(errorMessage)
     }
 
     const emailData = await emailResponse.json()
+    console.log('Email enviado com sucesso! ID:', emailData.id)
     
     return new Response(
       JSON.stringify({ 
@@ -327,11 +356,16 @@ serve(async (req) => {
       }
     )
   } catch (error) {
-    console.error('Erro na função:', error)
+    console.error('Erro na Edge Function send-lead-notification:')
+    console.error('Tipo:', error?.constructor?.name || typeof error)
+    console.error('Mensagem:', error?.message || error)
+    console.error('Stack:', error?.stack)
+    
     return new Response(
       JSON.stringify({ 
-        error: error.message || 'Erro desconhecido',
-        success: false 
+        error: error?.message || 'Erro desconhecido',
+        success: false,
+        details: process.env.DENO_ENV === 'development' ? error?.stack : undefined
       }),
       { 
         status: 500, 

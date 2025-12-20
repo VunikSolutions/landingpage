@@ -585,16 +585,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Chamar Edge Function para enviar notificação por email
         try {
-          const { error: notificationError } = await supabase.functions.invoke('send-lead-notification', {
+          const { data: notificationData, error: notificationError } = await supabase.functions.invoke('send-lead-notification', {
             body: { lead: data[0] }
           });
 
           if (notificationError) {
-            console.warn('Erro ao enviar notificação (lead salvo):', notificationError);
+            console.error('❌ Erro ao enviar notificação por email:', notificationError);
+            console.error('Detalhes:', {
+              message: notificationError.message,
+              context: notificationError.context,
+              status: notificationError.status
+            });
             // Não falhar o formulário se apenas a notificação falhar
+            // Mas logar o erro para diagnóstico
+          } else if (notificationData) {
+            if (notificationData.success) {
+              console.log('✅ Email de notificação enviado com sucesso!');
+            } else {
+              console.warn('⚠️ Email não foi enviado:', notificationData.error || notificationData.warning);
+            }
           }
         } catch (notificationError) {
-          console.warn('Erro ao chamar função de notificação (lead salvo):', notificationError);
+          console.error('❌ Erro ao chamar função de notificação:', notificationError);
+          console.error('Tipo do erro:', notificationError?.constructor?.name);
+          console.error('Mensagem:', notificationError?.message);
           // Não falhar o formulário se apenas a notificação falhar
         }
 
@@ -625,7 +639,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Reabilitar botão
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Enviar';
+          submitBtn.textContent = 'Agendar uma análise';
         }
       }
     });

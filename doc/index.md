@@ -174,6 +174,25 @@ npm run build
 
 Os arquivos de produção serão gerados na pasta `dist/`.
 
+### ⚠️ Configuração de Produção
+
+**IMPORTANTE**: Para que o envio de emails funcione em produção, você precisa:
+
+1. **Configurar variáveis de ambiente no ambiente de produção:**
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+
+2. **Deployar a Edge Function no Supabase:**
+   ```bash
+   supabase functions deploy send-lead-notification
+   ```
+
+3. **Configurar variáveis de ambiente da Edge Function no Supabase Dashboard:**
+   - `RESEND_API_KEY` (chave da API do Resend)
+   - `NOTIFICATION_EMAIL` (email que receberá as notificações)
+
+📖 **Para instruções detalhadas, consulte o [Guia de Produção](../GUIA_PRODUCAO.md)**
+
 ## 📚 Documentação Adicional
 
 - [Arquitetura do Projeto](./architecture.md) - Detalhes técnicos da arquitetura
