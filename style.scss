@@ -2737,6 +2737,29 @@ a.cta-secondary,
         &.show {
           display: block;
         }
+
+        .form-success-whatsapp {
+          margin-top: 20px;
+          font-size: 16px;
+          font-weight: 400;
+
+          a {
+            color: #25D366;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+
+            &:hover {
+              color: #20BA5A;
+              border-bottom-color: #25D366;
+            }
+
+            &:active {
+              color: #1DA851;
+            }
+          }
+        }
       }
     }
   }
