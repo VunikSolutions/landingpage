@@ -202,12 +202,6 @@
         <span class="nav-item" onclick="document.getElementById('servicos').scrollIntoView({behavior: 'smooth'})">Serviços</span>
         <span class="nav-item" onclick="document.getElementById('processo').scrollIntoView({behavior: 'smooth'})">Como Funciona</span>
         <span class="nav-item" onclick="document.getElementById('faq').scrollIntoView({behavior: 'smooth'})">FAQ</span>
-        <button class="cta-header" onclick="scrollToForm()">
-          Falar com Especialista
-          <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4.68123 13.3334L3.64581 12.2979L8.44373 7.50002L3.64581 2.7021L4.68123 1.66669L10.5146 7.50002L4.68123 13.3334Z" fill="white" />
-          </svg>
-        </button>
       </div>
 
       <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
@@ -231,14 +225,6 @@
         <li><a href="#servicos" onclick="closeMobileMenu()">Serviços</a></li>
         <li><a href="#processo" onclick="closeMobileMenu()">Como Funciona</a></li>
         <li><a href="#faq" onclick="closeMobileMenu()">FAQ</a></li>
-        <li>
-          <button class="cta-mobile" onclick="closeMobileMenu(); scrollToForm();">
-            Falar com Especialista
-            <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4.68123 13.3334L3.64581 12.2979L8.44373 7.50002L3.64581 2.7021L4.68123 1.66669L10.5146 7.50002L4.68123 13.3334Z" fill="white" />
-            </svg>
-          </button>
-        </li>
       </ul>
     </nav>
   </div>
@@ -247,20 +233,116 @@
   <section id="hero" class="hero-section">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1 class="hero-title">
-        Seja encontrado por pacientes — conquiste o topo do Google
-      </h1>
-      <div class="hero-bottom-block">
+      <div class="hero-text-block">
+        <h1 class="hero-title">
+          Seja encontrado por pacientes — conquiste o topo do Google
+        </h1>
         <p class="hero-subtitle">
           Tornamos médicos e dentistas visíveis para quem precisa deles. Presença digital premium que gera pacientes agendados, não apenas engajamento.
         </p>
-        <button class="hero-cta" onclick="scrollToForm()">
-          <span class="hero-cta-text-desktop">Quero ser encontrado pelos meus pacientes</span>
-          <span class="hero-cta-text-mobile">Quero ser encontrado</span>
-          <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4.68123 13.3334L3.64581 12.2979L8.44373 7.50002L3.64581 2.7021L4.68123 1.66669L10.5146 7.50002L4.68123 13.3334Z" fill="white" />
-          </svg>
-        </button>
+      </div>
+      
+      <!-- Formulário integrado na Hero -->
+      <div class="hero-form-wrapper" id="formulario">
+        <div class="form-container">
+          <form id="contactForm">
+            <div class="form-group form-row">
+              <div class="form-group">
+                <label for="nome">Nome completo <span class="required">*</span></label>
+                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required minlength="3" />
+                <span class="error-message" id="nomeError"></span>
+              </div>
+              <div class="form-group">
+                <label for="whatsapp">WhatsApp <span class="required">*</span></label>
+                <input type="text" id="whatsapp" name="whatsapp" placeholder="(XX) XXXXX-XXXX" required />
+                <span class="error-message" id="whatsappError"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="especialidade">Especialidade <span class="required">*</span></label>
+              <select id="especialidade" name="especialidade" required>
+                <option value="">Selecione...</option>
+                <option value="Cardiologia">Cardiologia</option>
+                <option value="Ortopedia">Ortopedia</option>
+                <option value="Dermatologia">Dermatologia</option>
+                <option value="Odontologia">Odontologia</option>
+                <option value="Ortodontia">Ortodontia</option>
+                <option value="Implantodontia">Implantodontia</option>
+                <option value="Endodontia">Endodontia</option>
+                <option value="Periodontia">Periodontia</option>
+                <option value="Clínica Geral">Clínica Geral</option>
+                <option value="Pediatria">Pediatria</option>
+                <option value="Ginecologia">Ginecologia</option>
+                <option value="Urologia">Urologia</option>
+                <option value="Oftalmologia">Oftalmologia</option>
+                <option value="Otorrinolaringologia">Otorrinolaringologia</option>
+                <option value="outro">Outro</option>
+              </select>
+              <div class="form-group" id="especialidade-outro-wrapper" style="display: none; margin-top: var(--spacing-md);">
+                <label for="especialidade-outro">Digite a especialidade <span class="required">*</span></label>
+                <input type="text" id="especialidade-outro" name="especialidade-outro" autocomplete="off" />
+                <span class="error-message" id="especialidadeOutroError"></span>
+              </div>
+              <span class="error-message" id="especialidadeError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="faturamento">Faturamento mensal aproximado <span class="required">*</span></label>
+              <select id="faturamento" name="faturamento" required>
+                <option value="">Selecione...</option>
+                <option value="ate-10k">Até R$ 10.000</option>
+                <option value="10k-30k">R$ 10.000 a R$ 30.000</option>
+                <option value="30k-50k">R$ 30.000 a R$ 50.000</option>
+                <option value="50k-100k">R$ 50.000 a R$ 100.000</option>
+                <option value="acima-100k">Acima de R$ 100.000</option>
+              </select>
+              <span class="error-message" id="faturamentoError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="objetivo">Qual seu principal objetivo? <span class="required">*</span></label>
+              <select id="objetivo" name="objetivo" required>
+                <option value="">Selecione...</option>
+                <option value="aumentar-pacientes">Aumentar número de pacientes</option>
+                <option value="posicionamento-google">Melhorar posicionamento no Google</option>
+                <option value="presenca-digital">Ter presença digital profissional</option>
+                <option value="aumentar-agendamentos">Aumentar agendamentos</option>
+                <option value="pacientes-ideais">Ser encontrado por pacientes ideais</option>
+                <option value="outro">Outro</option>
+              </select>
+              <span class="error-message" id="objetivoError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="tempo-atendimento">Há quanto tempo você atende? <span class="required">*</span></label>
+              <select id="tempo-atendimento" name="tempo-atendimento" required>
+                <option value="">Selecione...</option>
+                <option value="menos-2">Menos de 2 anos</option>
+                <option value="2-5">2 a 5 anos</option>
+                <option value="5-10">5 a 10 anos</option>
+                <option value="mais-10">Mais de 10 anos</option>
+              </select>
+              <span class="error-message" id="tempoAtendimentoError"></span>
+            </div>
+
+            <button type="submit" class="form-submit" id="submitBtn" disabled>Agendar uma análise</button>
+            
+            <p class="form-privacy">Seus dados estão seguros. Não fazemos spam.</p>
+          </form>
+
+          <div class="form-success" id="formSuccess">
+            <p>Obrigado! Recebemos suas informações e <strong>entraremos em contato em até 30 minutos</strong> para agendarmos uma conversa.</p>
+            <div class="form-success-download">
+              <a href="/Checklist-Presenca-Digital.pdf" download="Checklist-Presenca-Digital.pdf" class="download-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M7 10L12 15M12 15L17 10M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Baixar Checklist de Presença Digital</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -672,113 +754,6 @@
     </div>
   </section>
 
-  <!-- 10. FORMULÁRIO DE CONVERSÃO -->
-  <section id="formulario" class="form-section">
-    <div class="form-content">
-      <h2 class="section-title">Vamos conversar sobre seus objetivos</h2>
-      <p class="section-subtitle">Preencha o formulário, <strong class="highlight-time">receba nosso Checklist de Presença Digital gratuitamente</strong> e descubra onde você pode estar perdendo clientes! <br>Também entraremos em contato em até 30 minutos para agendarmos uma conversa.</p>
-      
-      <div class="form-container">
-        <form id="contactForm">
-          <div class="form-group form-row">
-            <div class="form-group">
-              <label for="nome">Nome completo <span class="required">*</span></label>
-              <input type="text" id="nome" name="nome" required minlength="3" />
-              <span class="error-message" id="nomeError"></span>
-            </div>
-            <div class="form-group">
-              <label for="whatsapp">WhatsApp <span class="required">*</span></label>
-              <input type="text" id="whatsapp" name="whatsapp" placeholder="(XX) XXXXX-XXXX" required />
-              <span class="error-message" id="whatsappError"></span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="especialidade">Especialidade <span class="required">*</span></label>
-            <select id="especialidade" name="especialidade" required>
-              <option value="">Selecione...</option>
-              <option value="Cardiologia">Cardiologia</option>
-              <option value="Ortopedia">Ortopedia</option>
-              <option value="Dermatologia">Dermatologia</option>
-              <option value="Odontologia">Odontologia</option>
-              <option value="Ortodontia">Ortodontia</option>
-              <option value="Implantodontia">Implantodontia</option>
-              <option value="Endodontia">Endodontia</option>
-              <option value="Periodontia">Periodontia</option>
-              <option value="Clínica Geral">Clínica Geral</option>
-              <option value="Pediatria">Pediatria</option>
-              <option value="Ginecologia">Ginecologia</option>
-              <option value="Urologia">Urologia</option>
-              <option value="Oftalmologia">Oftalmologia</option>
-              <option value="Otorrinolaringologia">Otorrinolaringologia</option>
-              <option value="outro">Outro</option>
-            </select>
-            <div class="form-group" id="especialidade-outro-wrapper" style="display: none; margin-top: var(--spacing-md);">
-              <label for="especialidade-outro">Digite a especialidade <span class="required">*</span></label>
-              <input type="text" id="especialidade-outro" name="especialidade-outro" autocomplete="off" />
-              <span class="error-message" id="especialidadeOutroError"></span>
-            </div>
-            <span class="error-message" id="especialidadeError"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="faturamento">Faturamento mensal aproximado <span class="required">*</span></label>
-            <select id="faturamento" name="faturamento" required>
-              <option value="">Selecione...</option>
-              <option value="ate-10k">Até R$ 10.000</option>
-              <option value="10k-30k">R$ 10.000 a R$ 30.000</option>
-              <option value="30k-50k">R$ 30.000 a R$ 50.000</option>
-              <option value="50k-100k">R$ 50.000 a R$ 100.000</option>
-              <option value="acima-100k">Acima de R$ 100.000</option>
-            </select>
-            <span class="error-message" id="faturamentoError"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="objetivo">Qual seu principal objetivo? <span class="required">*</span></label>
-            <select id="objetivo" name="objetivo" required>
-              <option value="">Selecione...</option>
-              <option value="aumentar-pacientes">Aumentar número de pacientes</option>
-              <option value="posicionamento-google">Melhorar posicionamento no Google</option>
-              <option value="presenca-digital">Ter presença digital profissional</option>
-              <option value="aumentar-agendamentos">Aumentar agendamentos</option>
-              <option value="pacientes-ideais">Ser encontrado por pacientes ideais</option>
-              <option value="outro">Outro</option>
-            </select>
-            <span class="error-message" id="objetivoError"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="tempo-atendimento">Há quanto tempo você atende? <span class="required">*</span></label>
-            <select id="tempo-atendimento" name="tempo-atendimento" required>
-              <option value="">Selecione...</option>
-              <option value="menos-2">Menos de 2 anos</option>
-              <option value="2-5">2 a 5 anos</option>
-              <option value="5-10">5 a 10 anos</option>
-              <option value="mais-10">Mais de 10 anos</option>
-            </select>
-            <span class="error-message" id="tempoAtendimentoError"></span>
-          </div>
-
-          <button type="submit" class="form-submit" id="submitBtn" disabled>Agendar uma análise</button>
-          
-          <p class="form-privacy">Seus dados estão seguros. Não fazemos spam.</p>
-        </form>
-
-        <div class="form-success" id="formSuccess">
-          <p>Obrigado! Recebemos suas informações e <strong>entraremos em contato em até 30 minutos</strong> para agendarmos uma conversa.</p>
-          <div class="form-success-download">
-            <a href="/Checklist-Presenca-Digital.pdf" download="Checklist-Presenca-Digital.pdf" class="download-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M7 10L12 15M12 15L17 10M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span>Baixar Checklist de Presença Digital</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- 11. FOOTER -->
   <footer>

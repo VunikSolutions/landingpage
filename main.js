@@ -28,7 +28,7 @@ function scrollToForm() {
   if (formSection) {
     formSection.scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'center'
     });
   }
 }
