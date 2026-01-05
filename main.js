@@ -1,8 +1,5 @@
 import './style.scss';
-import Swiper from 'swiper';
-import { Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
+// Swiper removido - não mais necessário após remoção da seção de depoimentos
 import { createClient } from '@supabase/supabase-js';
 
 // Configurar cliente Supabase
@@ -141,39 +138,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ============================================
-// SWIPER PARA DEPOIMENTOS (MOBILE)
+// CARROSSEL DE DEPOIMENTOS PREMIUM - REMOVIDO
 // ============================================
-document.addEventListener('DOMContentLoaded', function () {
-  const testimonialsSwiperEl = document.getElementById('testimonialsSwiper');
-
-  if (testimonialsSwiperEl && window.innerWidth <= 1023) {
-    new Swiper('#testimonialsSwiper', {
-      modules: [Pagination],
-      slidesPerView: 1,
-      spaceBetween: 24,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-    });
-  }
-
-  // Re-inicializar em resize se necessário
-  let swiperInstance = null;
-  window.addEventListener('resize', () => {
-    if (window.innerWidth <= 1023 && !swiperInstance && testimonialsSwiperEl) {
-      swiperInstance = new Swiper('#testimonialsSwiper', {
-        modules: [Pagination],
-        slidesPerView: 1,
-        spaceBetween: 24,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-      });
-    }
-  });
-});
 
 // ============================================
 // FAQ ACCORDION
@@ -268,6 +234,211 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ============================================
+// CARROSSEL E MODAL DE IMAGENS - ENTREGÁVEIS
+// ============================================
+document.addEventListener('DOMContentLoaded', function () {
+  // Inicializar Swiper para carrossel mobile
+  const carouselMobile = document.querySelector('.deliverables-carousel-mobile');
+  if (carouselMobile && typeof Swiper !== 'undefined') {
+    new Swiper('.deliverables-carousel-mobile', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+    });
+  }
+});
+
+// Variável global para controlar zoom
+let currentZoom = 1;
+let isDragging = false;
+let startX = 0;
+let startY = 0;
+let scrollLeft = 0;
+let scrollTop = 0;
+
+// Função para abrir modal de imagem
+function openImageModal(imageSrc, caption) {
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  const modalCaption = document.getElementById('modalCaption');
+  
+  if (modal && modalImage && modalCaption) {
+    modalImage.src = imageSrc;
+    modalCaption.textContent = caption;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    currentZoom = 1;
+    modalImage.style.transform = `scale(${currentZoom})`;
+    
+    // Resetar posição de scroll do container
+    const container = modal.querySelector('.modal-image-container');
+    if (container) {
+      container.scrollLeft = 0;
+      container.scrollTop = 0;
+    }
+    
+    // Adicionar listeners para drag
+    setupImageDrag(modalImage);
+  }
+}
+
+// Função para fechar modal
+function closeImageModal(event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  
+  const modal = document.getElementById('imageModal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    currentZoom = 1;
+    
+    const modalImage = document.getElementById('modalImage');
+    if (modalImage) {
+      modalImage.style.transform = 'scale(1)';
+    }
+  }
+}
+
+// Função para zoom da imagem
+function zoomImage(factor) {
+  const modalImage = document.getElementById('modalImage');
+  if (!modalImage) return;
+  
+  currentZoom *= factor;
+  
+  // Limitar zoom entre 0.5x e 5x
+  if (currentZoom < 0.5) currentZoom = 0.5;
+  if (currentZoom > 5) currentZoom = 5;
+  
+  modalImage.style.transform = `scale(${currentZoom})`;
+  modalImage.style.transformOrigin = 'center center';
+}
+
+// Função para resetar zoom
+function resetZoom() {
+  const modalImage = document.getElementById('modalImage');
+  if (!modalImage) return;
+  
+  currentZoom = 1;
+  modalImage.style.transform = 'scale(1)';
+  
+  // Resetar scroll do container
+  const container = modalImage.closest('.modal-image-container');
+  if (container) {
+    container.scrollLeft = container.scrollWidth / 2 - container.clientWidth / 2;
+    container.scrollTop = container.scrollHeight / 2 - container.clientHeight / 2;
+  }
+}
+
+// Configurar drag para mover imagem com zoom
+function setupImageDrag(imageElement) {
+  const container = imageElement.closest('.modal-image-container');
+  if (!container) return;
+  
+  // Remover listeners anteriores
+  imageElement.removeEventListener('mousedown', handleMouseDown);
+  container.removeEventListener('mousemove', handleMouseMove);
+  container.removeEventListener('mouseup', handleMouseUp);
+  container.removeEventListener('mouseleave', handleMouseUp);
+  
+  // Adicionar novos listeners
+  imageElement.addEventListener('mousedown', handleMouseDown);
+  container.addEventListener('mousemove', handleMouseMove);
+  container.addEventListener('mouseup', handleMouseUp);
+  container.addEventListener('mouseleave', handleMouseUp);
+  
+  // Touch events para mobile
+  imageElement.addEventListener('touchstart', handleTouchStart, { passive: false });
+  container.addEventListener('touchmove', handleTouchMove, { passive: false });
+  container.addEventListener('touchend', handleTouchEnd);
+}
+
+function handleMouseDown(e) {
+  if (currentZoom <= 1) return;
+  isDragging = true;
+  const container = e.target.closest('.modal-image-container');
+  if (container) {
+    startX = e.pageX - container.offsetLeft;
+    startY = e.pageY - container.offsetTop;
+    scrollLeft = container.scrollLeft;
+    scrollTop = container.scrollTop;
+  }
+  e.preventDefault();
+}
+
+function handleMouseMove(e) {
+  if (!isDragging || currentZoom <= 1) return;
+  e.preventDefault();
+  const container = e.target.closest('.modal-image-container');
+  if (container) {
+    const x = e.pageX - container.offsetLeft;
+    const y = e.pageY - container.offsetTop;
+    const walkX = (x - startX) * 2;
+    const walkY = (y - startY) * 2;
+    container.scrollLeft = scrollLeft - walkX;
+    container.scrollTop = scrollTop - walkY;
+  }
+}
+
+function handleMouseUp() {
+  isDragging = false;
+}
+
+// Touch handlers
+let touchStartX = 0;
+let touchStartY = 0;
+
+function handleTouchStart(e) {
+  if (currentZoom <= 1) return;
+  isDragging = true;
+  const container = e.target.closest('.modal-image-container');
+  if (container) {
+    touchStartX = e.touches[0].pageX - container.offsetLeft;
+    touchStartY = e.touches[0].pageY - container.offsetTop;
+    scrollLeft = container.scrollLeft;
+    scrollTop = container.scrollTop;
+  }
+}
+
+function handleTouchMove(e) {
+  if (!isDragging || currentZoom <= 1) return;
+  e.preventDefault();
+  const container = e.target.closest('.modal-image-container');
+  if (container) {
+    const x = e.touches[0].pageX - container.offsetLeft;
+    const y = e.touches[0].pageY - container.offsetTop;
+    const walkX = (x - touchStartX) * 2;
+    const walkY = (y - touchStartY) * 2;
+    container.scrollLeft = scrollLeft - walkX;
+    container.scrollTop = scrollTop - walkY;
+  }
+}
+
+function handleTouchEnd() {
+  isDragging = false;
+}
+
+// Fechar modal com ESC
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('imageModal');
+    if (modal && modal.classList.contains('active')) {
+      closeImageModal();
+    }
+  }
+});
+
+// ============================================
 // MÁSCARA DE WHATSAPP
 // ============================================
 function maskWhatsApp(value) {
@@ -284,6 +455,28 @@ function maskWhatsApp(value) {
   } else {
     return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
   }
+}
+
+// ============================================
+// MÁSCARA DE MOEDA BRASILEIRA
+// ============================================
+function maskCurrency(value) {
+  // Remove tudo que não é número
+  const numbers = value.replace(/\D/g, '');
+
+  // Se não houver números, retorna vazio
+  if (!numbers) return '';
+
+  // Converte para número e divide por 100 para ter centavos
+  const amount = parseInt(numbers, 10) / 100;
+
+  // Formata como moeda brasileira
+  return amount.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }) + '/mês';
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -324,6 +517,35 @@ function validateNome(input) {
   }
 }
 
+function validateEmail(input) {
+  const value = input.value.trim();
+  const error = document.getElementById('emailError');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!value) {
+    input.classList.add('error');
+    input.classList.remove('valid');
+    if (error) {
+      error.textContent = 'E-mail é obrigatório';
+      error.classList.add('show');
+    }
+    return false;
+  } else if (!emailRegex.test(value)) {
+    input.classList.add('error');
+    input.classList.remove('valid');
+    if (error) {
+      error.textContent = 'Digite um e-mail válido';
+      error.classList.add('show');
+    }
+    return false;
+  } else {
+    input.classList.remove('error');
+    input.classList.add('valid');
+    if (error) error.classList.remove('show');
+    return true;
+  }
+}
+
 function validateWhatsApp(input) {
   const value = input.value.replace(/\D/g, '');
   const error = document.getElementById('whatsappError');
@@ -344,64 +566,22 @@ function validateWhatsApp(input) {
   }
 }
 
-function validateEspecialidade(select) {
-  const value = select.value;
+function validateEspecialidade(input) {
+  const value = input.value.trim();
   const error = document.getElementById('especialidadeError');
-  const outroWrapper = document.getElementById('especialidade-outro-wrapper');
-  const outroInput = document.getElementById('especialidade-outro');
-  const outroError = document.getElementById('especialidadeOutroError');
 
-  if (!value) {
-    select.classList.add('error');
-    select.classList.remove('valid');
+  if (value.length < 2) {
+    input.classList.add('error');
+    input.classList.remove('valid');
     if (error) {
       error.textContent = 'Especialidade é obrigatória';
       error.classList.add('show');
     }
-    if (outroWrapper) outroWrapper.style.display = 'none';
     return false;
-  } else if (value === 'outro') {
-    // Se "Outro" foi selecionado, validar o campo de texto
-    if (outroWrapper) outroWrapper.style.display = 'block';
-    const outroValue = outroInput ? outroInput.value.trim() : '';
-
-    if (outroValue.length < 2) {
-      select.classList.remove('error');
-      select.classList.add('valid');
-      if (error) error.classList.remove('show');
-
-      if (outroInput) {
-        outroInput.classList.add('error');
-        outroInput.classList.remove('valid');
-      }
-      if (outroError) {
-        outroError.textContent = 'Digite a especialidade';
-        outroError.classList.add('show');
-      }
-      return false;
-    } else {
-      select.classList.remove('error');
-      select.classList.add('valid');
-      if (error) error.classList.remove('show');
-
-      if (outroInput) {
-        outroInput.classList.remove('error');
-        outroInput.classList.add('valid');
-      }
-      if (outroError) outroError.classList.remove('show');
-      return true;
-    }
   } else {
-    // Especialidade selecionada da lista
-    select.classList.remove('error');
-    select.classList.add('valid');
+    input.classList.remove('error');
+    input.classList.add('valid');
     if (error) error.classList.remove('show');
-    if (outroWrapper) outroWrapper.style.display = 'none';
-    if (outroInput) {
-      outroInput.value = '';
-      outroInput.classList.remove('error', 'valid');
-    }
-    if (outroError) outroError.classList.remove('show');
     return true;
   }
 }
@@ -429,20 +609,20 @@ function validateSelect(select) {
 
 function validateForm() {
   const nome = document.getElementById('nome');
+  const email = document.getElementById('email');
   const whatsapp = document.getElementById('whatsapp');
   const especialidade = document.getElementById('especialidade');
   const faturamento = document.getElementById('faturamento');
   const objetivo = document.getElementById('objetivo');
-  const tempoAtendimento = document.getElementById('tempo-atendimento');
   const submitBtn = document.getElementById('submitBtn');
 
   const validations = [
     validateNome(nome),
+    validateEmail(email),
     validateWhatsApp(whatsapp),
     validateEspecialidade(especialidade),
     validateSelect(faturamento),
-    validateSelect(objetivo),
-    validateSelect(tempoAtendimento)
+    validateSelect(objetivo)
   ];
 
   const allValid = validations.every(v => v === true);
@@ -457,11 +637,11 @@ function validateForm() {
 // Event listeners para validação em tempo real
 document.addEventListener('DOMContentLoaded', function () {
   const nome = document.getElementById('nome');
+  const email = document.getElementById('email');
   const whatsapp = document.getElementById('whatsapp');
   const especialidade = document.getElementById('especialidade');
   const faturamento = document.getElementById('faturamento');
   const objetivo = document.getElementById('objetivo');
-  const tempoAtendimento = document.getElementById('tempo-atendimento');
 
   if (nome) {
     nome.addEventListener('blur', () => {
@@ -476,6 +656,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  if (email) {
+    email.addEventListener('blur', () => {
+      validateEmail(email);
+      validateForm();
+    });
+    email.addEventListener('input', () => {
+      if (email.value.length > 0) {
+        validateEmail(email);
+        validateForm();
+      }
+    });
+  }
+
   if (whatsapp) {
     whatsapp.addEventListener('blur', () => {
       validateWhatsApp(whatsapp);
@@ -484,20 +677,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (especialidade) {
-    especialidade.addEventListener('change', () => {
+    especialidade.addEventListener('blur', () => {
       validateEspecialidade(especialidade);
       validateForm();
     });
-  }
-
-  const especialidadeOutro = document.getElementById('especialidade-outro');
-  if (especialidadeOutro) {
-    especialidadeOutro.addEventListener('blur', () => {
-      validateEspecialidade(especialidade);
-      validateForm();
-    });
-    especialidadeOutro.addEventListener('input', () => {
-      if (especialidadeOutro.value.length >= 2) {
+    especialidade.addEventListener('input', () => {
+      if (especialidade.value.length >= 2) {
         validateEspecialidade(especialidade);
         validateForm();
       }
@@ -514,13 +699,6 @@ document.addEventListener('DOMContentLoaded', function () {
   if (objetivo) {
     objetivo.addEventListener('change', () => {
       validateSelect(objetivo);
-      validateForm();
-    });
-  }
-
-  if (tempoAtendimento) {
-    tempoAtendimento.addEventListener('change', () => {
-      validateSelect(tempoAtendimento);
       validateForm();
     });
   }
@@ -541,18 +719,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      const especialidadeSelect = document.getElementById('especialidade');
-      const especialidadeValue = especialidadeSelect.value === 'outro'
-        ? document.getElementById('especialidade-outro').value.trim()
-        : especialidadeSelect.value;
-
       const formData = {
         nome: document.getElementById('nome').value.trim(),
+        email: document.getElementById('email').value.trim(),
         whatsapp: document.getElementById('whatsapp').value,
-        especialidade: especialidadeValue,
+        especialidade: document.getElementById('especialidade').value.trim(),
         faturamento: document.getElementById('faturamento').value,
         objetivo: document.getElementById('objetivo').value,
-        tempo_atendimento: document.getElementById('tempo-atendimento').value,
       };
 
       const submitBtn = document.getElementById('submitBtn');
@@ -583,7 +756,7 @@ document.addEventListener('DOMContentLoaded', function () {
           throw error;
         }
 
-        // Chamar Edge Function para enviar notificação por email
+        // Chamar Edge Function para enviar notificação por email (para equipe Vunik)
         try {
           const { data: notificationData, error: notificationError } = await supabase.functions.invoke('send-lead-notification', {
             body: { lead: data[0] }
@@ -610,6 +783,35 @@ document.addEventListener('DOMContentLoaded', function () {
           console.error('Tipo do erro:', notificationError?.constructor?.name);
           console.error('Mensagem:', notificationError?.message);
           // Não falhar o formulário se apenas a notificação falhar
+        }
+
+        // Chamar Edge Function para enviar email de confirmação ao lead
+        try {
+          const { data: confirmationData, error: confirmationError } = await supabase.functions.invoke('send-lead-confirmation', {
+            body: { lead: data[0] }
+          });
+
+          if (confirmationError) {
+            console.error('❌ Erro ao enviar email de confirmação ao lead:', confirmationError);
+            console.error('Detalhes:', {
+              message: confirmationError.message,
+              context: confirmationError.context,
+              status: confirmationError.status
+            });
+            // Não falhar o formulário se apenas o email de confirmação falhar
+            // Mas logar o erro para diagnóstico
+          } else if (confirmationData) {
+            if (confirmationData.success) {
+              console.log('✅ Email de confirmação enviado ao lead com sucesso!');
+            } else {
+              console.warn('⚠️ Email de confirmação não foi enviado:', confirmationData.error || confirmationData.warning);
+            }
+          }
+        } catch (confirmationError) {
+          console.error('❌ Erro ao chamar função de confirmação:', confirmationError);
+          console.error('Tipo do erro:', confirmationError?.constructor?.name);
+          console.error('Mensagem:', confirmationError?.message);
+          // Não falhar o formulário se apenas o email de confirmação falhar
         }
 
         // Sucesso - mostrar snackbar e mensagem
@@ -639,7 +841,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Reabilitar botão
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Agendar uma análise';
+          submitBtn.textContent = 'Quero atrair mais pacientes';
         }
       }
     });
@@ -860,6 +1062,50 @@ function closeSnackbar() {
 window.scrollToForm = scrollToForm;
 window.closeMobileMenu = closeMobileMenu;
 window.closeSnackbar = closeSnackbar;
+window.openImageModal = openImageModal;
+window.closeImageModal = closeImageModal;
+window.zoomImage = zoomImage;
+window.resetZoom = resetZoom;
+
+// ============================================
+// ANIMAÇÕES AO SCROLL (INTERSECTION OBSERVER)
+// ============================================
+document.addEventListener('DOMContentLoaded', function () {
+  // Adicionar classe fade-in-on-scroll aos elementos que devem animar
+  const elementsToAnimate = document.querySelectorAll(
+    '.service-card, .process-step, .team-member, .clareza-card, .faq-item'
+  );
+
+  elementsToAnimate.forEach(el => {
+    el.classList.add('fade-in-on-scroll');
+  });
+
+  // Criar Intersection Observer
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Opcional: deixar de observar após aparecer para melhor performance
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Observar todos os elementos
+    elementsToAnimate.forEach(el => {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback: mostrar todos imediatamente
+    elementsToAnimate.forEach(el => {
+      el.classList.add('visible');
+    });
+  }
+});
 
 // ============================================
 // LAZY LOAD ANALYTICS

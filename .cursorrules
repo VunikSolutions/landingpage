@@ -1,0 +1,50 @@
+# Regras do Projeto Vunik
+
+## Mobile First - OBRIGATÓRIO
+
+**ANTES de executar qualquer tarefa relacionada a CSS, SCSS, estilos, layout ou desenvolvimento frontend, você DEVE:**
+
+1. **LER COMPLETAMENTE** o arquivo `doc/mobile-first-guide.md`
+2. **APLICAR** os princípios Mobile First descritos no guia
+3. **SEGUIR** a estrutura de código correta (estilos mobile primeiro, depois desktop com `@include desktop`)
+
+### Princípios Fundamentais:
+
+- ✅ Estilos base são para mobile (telas pequenas)
+- ✅ Media queries adicionam estilos para desktop (telas maiores)
+- ✅ Progressive enhancement: começar simples e adicionar complexidade
+- ✅ Breakpoint: Mobile até 1023px, Desktop 1024px+
+
+### Estrutura Correta:
+
+```scss
+.elemento {
+  // Estilos MOBILE (padrão)
+  padding: var(--spacing-lg) 16px;
+  font-size: 16px;
+  
+  // Estilos DESKTOP (adicionais)
+  @include desktop {
+    padding: var(--spacing-xl) 24px;
+    font-size: 18px;
+  }
+}
+```
+
+### Nunca faça Desktop First:
+
+❌ NÃO comece com estilos desktop e depois sobrescreva para mobile
+❌ NÃO use `@include mobile` para sobrescrever estilos desktop
+
+## Quando aplicar esta regra:
+
+- Criar ou modificar arquivos CSS/SCSS
+- Adicionar ou alterar estilos de componentes
+- Trabalhar com layouts responsivos
+- Modificar tipografia, espaçamento ou grid
+- Qualquer tarefa relacionada a frontend/styling
+
+## Idioma
+
+- Sempre responder em **Português**
+

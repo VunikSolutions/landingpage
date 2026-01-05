@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "unsplash": {
+      "command": "C:\\Users\\Caio\\AppData\\Roaming\\Python\\Python310\\Scripts\\fastmcp.exe",
+      "args": [
+        "run",
+        "D:\\repositorios\\Vunik\\INTERNO VUNIK\\vunik-site-principal\\unsplash-mcp-server\\server.py"
+      ],
+      "env": {
+        "UNSPLASH_ACCESS_KEY": "wSlCVRtUJwzojPPWJFZBvJpKEmtoyrF11JGjXRFW14A"
+      }
+    }
+  }
+}
+

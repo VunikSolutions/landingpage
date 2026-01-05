@@ -26,9 +26,23 @@
   <link rel="preload" href="/logo.svg" as="image">
   <link rel="preload" href="/vunik_logo_azul.svg" as="image">
   
+  <!-- Preconnect para Unsplash (otimização de performance) -->
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  
   <!-- DNS prefetch for external domains -->
   <link rel="dns-prefetch" href="//www.googletagmanager.com">
   <link rel="dns-prefetch" href="//www.termsfeed.com">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  
+  <!-- Google Fonts: Tipografia Oficial Vunik -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   
   <meta name="description"
     content="Agência em Salvador que ajuda médicos e dentistas a serem encontrados no Google e atrair pacientes todos os dias.">
@@ -200,8 +214,11 @@
       
       <div class="nav-desktop">
         <span class="nav-item" onclick="document.getElementById('servicos').scrollIntoView({behavior: 'smooth'})">Serviços</span>
-        <span class="nav-item" onclick="document.getElementById('processo').scrollIntoView({behavior: 'smooth'})">Como Funciona</span>
+        <span class="nav-item" onclick="document.getElementById('metodo').scrollIntoView({behavior: 'smooth'})">Método</span>
+        <span class="nav-item" onclick="document.getElementById('prova-entrega').scrollIntoView({behavior: 'smooth'})">Prova de entrega</span>
+        <span class="nav-item" onclick="document.getElementById('equipe').scrollIntoView({behavior: 'smooth'})">Equipe</span>
         <span class="nav-item" onclick="document.getElementById('faq').scrollIntoView({behavior: 'smooth'})">FAQ</span>
+        <button class="cta-header" onclick="scrollToForm(); return false;">Agendar Sessão de Diagnóstico</button>
       </div>
 
       <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
@@ -223,8 +240,11 @@
     <nav>
       <ul>
         <li><a href="#servicos" onclick="closeMobileMenu()">Serviços</a></li>
-        <li><a href="#processo" onclick="closeMobileMenu()">Como Funciona</a></li>
+        <li><a href="#metodo" onclick="closeMobileMenu()">Método</a></li>
+        <li><a href="#prova-entrega" onclick="closeMobileMenu()">Prova de entrega</a></li>
+        <li><a href="#equipe" onclick="closeMobileMenu()">Equipe</a></li>
         <li><a href="#faq" onclick="closeMobileMenu()">FAQ</a></li>
+        <li><button class="cta-header-mobile" onclick="closeMobileMenu(); scrollToForm(); return false;">Agendar Sessão de Diagnóstico</button></li>
       </ul>
     </nav>
   </div>
@@ -232,101 +252,115 @@
   <!-- 1. HERO SECTION -->
   <section id="hero" class="hero-section">
     <div class="hero-overlay"></div>
+    <!-- Elementos decorativos animados -->
+    <div class="hero-decoration">
+      <div class="hero-blob hero-blob-1"></div>
+      <div class="hero-blob hero-blob-2"></div>
+      <div class="hero-blob hero-blob-3"></div>
+    </div>
     <div class="hero-content">
       <div class="hero-text-block">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>Exclusivo para médicos e dentistas</span>
+        </div>
         <h1 class="hero-title">
-          Seja encontrado por pacientes — conquiste o topo do Google
+          Sua reputação merece uma presença digital à altura.
         </h1>
         <p class="hero-subtitle">
-          Tornamos médicos e dentistas visíveis para quem precisa deles. Presença digital premium que gera pacientes agendados, não apenas engajamento.
+          Quando o paciente pesquisa no Google, ele precisa encontrar clareza e confiança — sem exageros. Nós traduzimos sua reputação para uma jornada digital profissional, com método e acompanhamento.
         </p>
+        <ul class="hero-bullets">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Sessão de diagnóstico estratégico</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Plano sob medida</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Relatórios e otimização com transparência.</span>
+          </li>
+        </ul>
+        <div class="hero-cta-wrapper">
+          <button class="cta-primary" onclick="scrollToForm(); return false;">
+            <span>Agendar Sessão de Diagnóstico</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <a href="#metodo" class="cta-secondary-hero">
+            <span>Ver como funciona</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <p class="hero-microcopy">Conversa objetiva para entender seu cenário e direcionar os próximos passos.</p>
       </div>
       
       <!-- Formulário integrado na Hero -->
       <div class="hero-form-wrapper" id="formulario">
         <div class="form-container">
           <form id="contactForm">
-            <div class="form-group form-row">
-              <div class="form-group">
-                <label for="nome">Nome completo <span class="required">*</span></label>
-                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required minlength="3" />
-                <span class="error-message" id="nomeError"></span>
-              </div>
-              <div class="form-group">
-                <label for="whatsapp">WhatsApp <span class="required">*</span></label>
-                <input type="text" id="whatsapp" name="whatsapp" placeholder="(XX) XXXXX-XXXX" required />
-                <span class="error-message" id="whatsappError"></span>
-              </div>
+            <div class="form-group">
+              <label for="nome">Nome completo <span class="required">*</span></label>
+              <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required minlength="3" />
+              <span class="error-message" id="nomeError"></span>
             </div>
 
             <div class="form-group">
-              <label for="especialidade">Especialidade <span class="required">*</span></label>
-              <select id="especialidade" name="especialidade" required>
-                <option value="">Selecione...</option>
-                <option value="Cardiologia">Cardiologia</option>
-                <option value="Ortopedia">Ortopedia</option>
-                <option value="Dermatologia">Dermatologia</option>
-                <option value="Odontologia">Odontologia</option>
-                <option value="Ortodontia">Ortodontia</option>
-                <option value="Implantodontia">Implantodontia</option>
-                <option value="Endodontia">Endodontia</option>
-                <option value="Periodontia">Periodontia</option>
-                <option value="Clínica Geral">Clínica Geral</option>
-                <option value="Pediatria">Pediatria</option>
-                <option value="Ginecologia">Ginecologia</option>
-                <option value="Urologia">Urologia</option>
-                <option value="Oftalmologia">Oftalmologia</option>
-                <option value="Otorrinolaringologia">Otorrinolaringologia</option>
-                <option value="outro">Outro</option>
-              </select>
-              <div class="form-group" id="especialidade-outro-wrapper" style="display: none; margin-top: var(--spacing-md);">
-                <label for="especialidade-outro">Digite a especialidade <span class="required">*</span></label>
-                <input type="text" id="especialidade-outro" name="especialidade-outro" autocomplete="off" />
-                <span class="error-message" id="especialidadeOutroError"></span>
-              </div>
+              <label for="email">Seu Melhor E-mail <span class="required">*</span></label>
+              <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+              <span class="error-message" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="whatsapp">WhatsApp Principal <span class="required">*</span></label>
+              <input type="text" id="whatsapp" name="whatsapp" placeholder="(XX) XXXXX-XXXX" required />
+              <span class="error-message" id="whatsappError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="especialidade">Qual a sua especialidade? <span class="required">*</span></label>
+              <input type="text" id="especialidade" name="especialidade" placeholder="Ex: Cardiologia, Ortodontia, Dermatologia..." required />
               <span class="error-message" id="especialidadeError"></span>
-            </div>
-
-            <div class="form-group">
-              <label for="faturamento">Faturamento mensal aproximado <span class="required">*</span></label>
-              <select id="faturamento" name="faturamento" required>
-                <option value="">Selecione...</option>
-                <option value="ate-10k">Até R$ 10.000</option>
-                <option value="10k-30k">R$ 10.000 a R$ 30.000</option>
-                <option value="30k-50k">R$ 30.000 a R$ 50.000</option>
-                <option value="50k-100k">R$ 50.000 a R$ 100.000</option>
-                <option value="acima-100k">Acima de R$ 100.000</option>
-              </select>
-              <span class="error-message" id="faturamentoError"></span>
             </div>
 
             <div class="form-group">
               <label for="objetivo">Qual seu principal objetivo? <span class="required">*</span></label>
               <select id="objetivo" name="objetivo" required>
                 <option value="">Selecione...</option>
-                <option value="aumentar-pacientes">Aumentar número de pacientes</option>
-                <option value="posicionamento-google">Melhorar posicionamento no Google</option>
-                <option value="presenca-digital">Ter presença digital profissional</option>
-                <option value="aumentar-agendamentos">Aumentar agendamentos</option>
-                <option value="pacientes-ideais">Ser encontrado por pacientes ideais</option>
+                <option value="aparecer-primeiro-google">Aparecer primeiro quando pacientes procuram minha especialidade</option>
+                <option value="aumentar-agendamentos-qualificados">Aumentar agendamentos com pacientes qualificados</option>
+                <option value="construir-autoridade-valor">Construir autoridade para aumentar o valor dos meus serviços</option>
                 <option value="outro">Outro</option>
               </select>
               <span class="error-message" id="objetivoError"></span>
             </div>
 
             <div class="form-group">
-              <label for="tempo-atendimento">Há quanto tempo você atende? <span class="required">*</span></label>
-              <select id="tempo-atendimento" name="tempo-atendimento" required>
+              <label for="faturamento">Qual é seu faturamento médio mensal? <span class="required">*</span></label>
+              <select id="faturamento" name="faturamento" required>
                 <option value="">Selecione...</option>
-                <option value="menos-2">Menos de 2 anos</option>
-                <option value="2-5">2 a 5 anos</option>
-                <option value="5-10">5 a 10 anos</option>
-                <option value="mais-10">Mais de 10 anos</option>
+                <option value="ate-10k">Até R$ 10.000</option>
+                <option value="10k-20k">De R$ 10.000 a R$ 20.000</option>
+                <option value="20k-50k">R$ 20.000 a R$ 50.000</option>
+                <option value="50k-100k">R$ 50.000 a R$ 100.000</option>
+                <option value="acima-100k">Acima de R$ 100.000</option>
               </select>
-              <span class="error-message" id="tempoAtendimentoError"></span>
+              <span class="error-message" id="faturamentoError"></span>
             </div>
 
-            <button type="submit" class="form-submit" id="submitBtn" disabled>Agendar uma análise</button>
+            <button type="submit" class="form-submit" id="submitBtn" disabled>Quero atrair mais pacientes</button>
             
             <p class="form-privacy">Seus dados estão seguros. Não fazemos spam.</p>
           </form>
@@ -347,179 +381,88 @@
     </div>
   </section>
 
-  <!-- WRAPPER COM BACKGROUND PARA PROBLEMA E AGITAÇÃO -->
-  <div class="sections-background-wrapper">
-    <!-- 2. PROBLEMA/DOR -->
-    <section id="problema" class="content-section">
-      <div class="section-content two-column">
-        <div class="column-image">
-          <picture>
-            <source srcset="/empty_room.webp" type="image/webp">
-            <img src="/empty_room.png" alt="Sala de espera vazia - representando pacientes perdidos" loading="lazy" width="450" height="338" />
-          </picture>
-        </div>
-        <div class="column-text">
-          <h2 class="section-title">Quantos pacientes você deixou de atender hoje?</h2>
-          <div class="section-text">
-            <p>Se alguém procurar seu nome no Google agora, o que encontra? Sua presença digital está à altura da sua experiência como profissional?</p>
-            <p>Muitos médicos e dentistas consolidados enfrentam o mesmo desafio: têm excelência técnica, anos de experiência e boa reputação offline, mas não são encontrados quando pacientes procuram por seus serviços online.</p>
-            <p>O resultado? Pacientes que poderiam ser seus acabam escolhendo outros profissionais simplesmente porque aparecem primeiro nas buscas.</p>
+  <!-- SEÇÃO 1 — DIAGNÓSTICO SOBRIO DO CENÁRIO -->
+  <section id="clareza" class="content-section">
+    <div class="section-content">
+      <h2 class="section-title">O que o paciente encontra quando procura por você?</h2>
+      <p class="section-text">Em poucos minutos, ele forma uma percepção. Nós analisamos o que aparece, o que comunica confiança e o quão fácil é dar o próximo passo.</p>
+      <div class="clareza-image-wrapper">
+        <picture>
+          <source srcset="https://images.unsplash.com/photo-1758691461935-202e2ef6b69f?crop=entropy&cs=tinysrgb&fit=max&fm=webp&w=1200&q=80" type="image/webp">
+          <img src="https://images.unsplash.com/photo-1758691461935-202e2ef6b69f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200&q=80" alt="Médico em consulta profissional com paciente" loading="lazy" width="1200" height="675">
+        </picture>
+      </div>
+      <div class="clareza-cards">
+        <div class="clareza-card">
+          <div class="clareza-card-icon">
+            <img src="https://images.unsplash.com/photo-1706426629246-2a3c3e3e3ff2?crop=entropy&cs=tinysrgb&fit=crop&w=200&h=200&q=80" alt="Google Search" loading="lazy" />
           </div>
+          <h3>Presença no Google</h3>
+          <p>Informações consistentes e sinais de confiança.</p>
+        </div>
+        <div class="clareza-card">
+          <div class="clareza-card-icon">
+            <img src="https://images.unsplash.com/photo-1691480195680-144318cfa695?crop=entropy&cs=tinysrgb&fit=crop&w=200&h=200&q=80" alt="Monitor Screen Icon" loading="lazy" />
+          </div>
+          <h3>Primeira impressão da sua página</h3>
+          <p>Clareza, profissionalismo e posicionamento.</p>
+        </div>
+        <div class="clareza-card">
+          <div class="clareza-card-icon">
+            <img src="https://images.unsplash.com/photo-1557180295-76eee20ae8aa?crop=entropy&cs=tinysrgb&fit=crop&w=200&h=200&q=80" alt="Phone Call Contact Icon" loading="lazy" />
+          </div>
+          <h3>Próximo passo</h3>
+          <p>Contato e agendamento sem atrito.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 3. AGITAÇÃO/CONSEQUÊNCIAS -->
-    <section id="agitacao" class="content-section">
-      <div class="section-content two-column">
-        <div class="column-text">
-          <h2 class="section-title">O custo de não estar visível</h2>
-          <div class="section-text">
-            <p>Enquanto você não aparece no Google, seus concorrentes estão capturando pacientes que poderiam ser seus. Cada dia sem presença digital adequada é uma oportunidade perdida.</p>
-            <p>Não se trata apenas de ter um site ou Instagram. Trata-se de ser encontrado pelas pessoas certas, no momento certo, com uma imagem que transmite confiança e profissionalismo.</p>
-            <p>A diferença entre estar bem posicionado e não estar pode significar dezenas de pacientes a mais por mês.</p>
-          </div>
-        </div>
-        <div class="column-chart">
-          <div class="chart-container" id="comparisonChart">
-            <div class="chart-title">Comparação de Resultados</div>
-            <div class="chart-bars">
-              <div class="chart-bar-wrapper">
-                <div class="chart-bar-label">Sem presença digital</div>
-                <div class="chart-bar-container">
-                  <div class="chart-bar chart-bar-low" data-value="28">
-                    <span class="chart-value">28%</span>
-                  </div>
-                </div>
-              </div>
-              <div class="chart-bar-wrapper">
-                <div class="chart-bar-label">Com presença digital</div>
-                <div class="chart-bar-container">
-                  <div class="chart-bar chart-bar-high" data-value="82">
-                    <span class="chart-value">82%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="chart-footer">
-              <p>Até <strong>2.9x mais</strong> pacientes encontrados</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA APÓS PROBLEMA E AGITAÇÃO -->
-    <section class="content-section cta-section">
-      <div class="section-content">
-        <a href="#formulario" class="cta-secondary" onclick="scrollToForm(); return false;">
-          Quero saber mais
-          <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4.68123 13.3334L3.64581 12.2979L8.44373 7.50002L3.64581 2.7021L4.68123 1.66669L10.5146 7.50002L4.68123 13.3334Z" fill="currentColor" />
-          </svg>
-        </a>
-      </div>
-    </section>
-  </div>
-
-  <!-- 4. SOLUÇÃO/SERVIÇOS -->
+  <!-- SEÇÃO 2 — SOLUÇÃO INTEGRADA -->
   <section id="servicos" class="services-section">
     <div class="services-content">
-      <h2 class="section-title">Nossas soluções para construir sua autoridade digital</h2>
+      <h2 class="section-title">Não é sobre peças soltas. É sobre autoridade e relevância no digital.</h2>
+      <p class="section-subtitle">Google, página, campanhas e marca precisam trabalhar juntos para elevar percepção, fortalecer confiança e sustentar crescimento com consistência.</p>
       <div class="services-grid">
         <div class="service-card">
           <div class="service-icon">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-              <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" stroke-width="2"/>
-              <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="2"/>
-            </svg>
+            <img src="https://images.unsplash.com/photo-1706426629246-2a3c3e3e3ff2?crop=entropy&cs=tinysrgb&fit=crop&w=200&h=200&q=80" alt="Google Logo Icon" loading="lazy" />
           </div>
-          <h3 class="service-title">Site com posicionamento premium</h3>
-          <p class="service-description">Design UI/UX profissional feito sob medida. Sem templates genéricos: cada página é única, alinhada com sua marca e posicionamento. Originalidade que diferencia você, com cada elemento pensado estrategicamente para converter visitantes em pacientes agendados.</p>
+          <h3 class="service-title">Google com Consistência</h3>
+          <p class="service-description">Presença local organizada e sinais de confiança para que o paciente encontre você com clareza — e leve a decisão adiante.</p>
         </div>
         <div class="service-card">
           <div class="service-icon">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 3v18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M7 17l4-6 4 2 4-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
+            <img src="https://images.unsplash.com/photo-1691480195680-144318cfa695?crop=entropy&cs=tinysrgb&fit=crop&w=200&h=200&q=80" alt="Monitor Screen Icon" loading="lazy" />
           </div>
-          <h3 class="service-title">Tráfego Pago orientado a resultados</h3>
-          <p class="service-description">Analisamos constantemente os resultados das campanhas e trabalhamos em melhorias contínuas. Todo mês, realizamos uma reunião para apresentar e discutir o relatório de performance, garantindo que cada investimento gere pacientes qualificados e agenda previsível.</p>
+          <h3 class="service-title">Página de Autoridade</h3>
+          <p class="service-description">Uma experiência digital premium que traduz sua reputação: mensagem objetiva, estrutura profissional e próximo passo natural.</p>
         </div>
         <div class="service-card">
           <div class="service-icon">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-              <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <img src="https://images.unsplash.com/photo-1555103067-ff09c48881ef?crop=entropy&cs=tinysrgb&fit=crop&w=200&h=200&q=80" alt="Chart Graph Icon" loading="lazy" />
           </div>
-          <h3 class="service-title">SEO para estar no topo do Google</h3>
-          <p class="service-description">Trabalhamos estrategicamente para colocar você nas primeiras posições do Google. Analisamos constantemente o desempenho e otimizamos continuamente. Todo mês, realizamos uma reunião para apresentar e discutir o relatório de performance.</p>
+          <h3 class="service-title">Campanhas com Critério</h3>
+          <p class="service-description">Quando fizer sentido, ativamos aquisição com responsabilidade: intenção qualificada, otimização contínua e transparência de métricas.</p>
         </div>
         <div class="service-card">
           <div class="service-icon">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              <path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              <path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
+            <img src="https://images.unsplash.com/photo-1580307028391-8051f48e159d?crop=entropy&cs=tinysrgb&fit=crop&w=200&h=200&q=80" alt="Color Palette Design Icon" loading="lazy" />
           </div>
-          <h3 class="service-title">Branding completo</h3>
-          <p class="service-description">Identidade visual completa desenvolvida sob medida para sua marca. Criamos logotipo, paleta de cores, tipografia e manual de marca que transmitem profissionalismo e confiança. Cada elemento é pensado estrategicamente para fortalecer sua presença e diferenciação no mercado.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
-          </div>
-          <h3 class="service-title">Social media</h3>
-          <p class="service-description">Gestão estratégica das suas redes sociais com conteúdo relevante e profissional. Criamos e publicamos posts que engajam seu público, fortalecem sua autoridade e geram conexões genuínas. Análise constante de performance e otimização contínua para maximizar o alcance e o engajamento.</p>
+          <h3 class="service-title">Branding Completo</h3>
+          <p class="service-description">Identidade e comunicação alinhadas para reforçar posicionamento, diferenciação e reconhecimento em todos os pontos de contato.</p>
         </div>
       </div>
-      <a href="#formulario" class="cta-secondary" onclick="scrollToForm(); return false;">
-        Ver como funciona
-        <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4.68123 13.3334L3.64581 12.2979L8.44373 7.50002L3.64581 2.7021L4.68123 1.66669L10.5146 7.50002L4.68123 13.3334Z" fill="currentColor" />
-        </svg>
-      </a>
-      <div class="services-plans">
-        <p class="plans-text">Planos disponíveis: 3 meses | 12 meses</p>
+      <div class="section-cta-wrapper">
+        <button class="cta-primary" onclick="scrollToForm(); return false;">Agendar Call de Diagnóstico</button>
       </div>
     </div>
   </section>
 
-  <!-- 5. MÉTRICAS E RESULTADOS -->
-  <section id="metricas" class="metrics-section">
-    <div class="metrics-content">
-      <h2 class="section-title">Resultados que falam por si</h2>
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-number" data-target="7500" data-suffix="+">0+</div>
-          <div class="metric-label">conversas e leads gerados para nossos clientes</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-number" data-target="7" data-suffix="M+">0M+</div>
-          <div class="metric-label">pessoas alcançadas através das campanhas</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-number" data-target="713" data-suffix="K+">0K+</div>
-          <div class="metric-label">engajamentos com conteúdo dos profissionais</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-number" data-target="0.01" data-prefix="R$ " data-decimal="2">R$ 0,00</div>
-          <div class="metric-label">custo médio por engajamento nas campanhas otimizadas</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. COMO FUNCIONAMOS -->
-  <section id="processo" class="process-section">
+  <!-- SEÇÃO 3 — MÉTODO -->
+  <section id="metodo" class="process-section">
     <div class="process-content">
-      <h2 class="section-title">Processo simples, resultados consistentes</h2>
+      <h2 class="section-title">Um processo simples, com responsabilidade</h2>
       <div class="process-steps">
         <div class="process-step">
           <div class="step-indicator">
@@ -527,8 +470,8 @@
             <div class="step-number-bg"></div>
           </div>
           <div class="step-content">
-            <h3 class="step-title">Entendemos seus objetivos</h3>
-            <p class="step-description">Conversa inicial para alinhar expectativas e definir metas mensuráveis.</p>
+            <h3 class="step-title">Sessão de Diagnóstico Estratégico</h3>
+            <p class="step-description">Compreendemos seus objetivos, cenário atual e restrições.</p>
           </div>
         </div>
         <div class="step-arrow" aria-hidden="true">
@@ -542,8 +485,8 @@
             <div class="step-number-bg"></div>
           </div>
           <div class="step-content">
-            <h3 class="step-title">Criamos sua estratégia</h3>
-            <p class="step-description">Solução personalizada baseada no seu perfil e no seu público-alvo.</p>
+            <h3 class="step-title">Criação do Plano sob medida</h3>
+            <p class="step-description">Desenvolvimento interno das soluções necessárias para sanar os problemas identificados.</p>
           </div>
         </div>
         <div class="step-arrow" aria-hidden="true">
@@ -557,84 +500,189 @@
             <div class="step-number-bg"></div>
           </div>
           <div class="step-content">
-            <h3 class="step-title">Executamos e otimizamos</h3>
-            <p class="step-description">Trabalho contínuo com acompanhamento e ajustes baseados em dados.</p>
+            <h3 class="step-title">Sessão de Apresentação Estratégica</h3>
+            <p class="step-description">Apresentação do plano desenvolvido e proposta comercial.</p>
           </div>
         </div>
-        <div class="step-arrow" aria-hidden="true">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="process-step">
-          <div class="step-indicator">
-            <div class="step-number">4</div>
-            <div class="step-number-bg"></div>
-          </div>
-          <div class="step-content">
-            <h3 class="step-title">Você recebe pacientes</h3>
-            <p class="step-description">Fluxo constante de leads qualificados que se transformam em agendamentos.</p>
-          </div>
-        </div>
+      </div>
+      <div class="section-cta-wrapper">
+        <button class="cta-primary" onclick="scrollToForm(); return false;">Agendar Sessão de Diagnóstico</button>
       </div>
     </div>
   </section>
 
-  <!-- 7. DEPOIMENTOS -->
-  <section id="depoimentos" class="testimonials-section">
-    <div class="testimonials-content">
-      <h2 class="section-title">O que nossos clientes dizem</h2>
+  <!-- SEÇÃO 4 — O QUE VOCÊ RECEBE (PROVA DE ENTREGA) -->
+  <section id="prova-entrega" class="deliverables-section">
+    <div class="deliverables-content">
+      <h2 class="section-title">Entregáveis que deixam tudo claro</h2>
+      <ul class="deliverables-list">
+        <li class="deliverable-item">
+          <div class="deliverable-bullet">
+            <div class="bullet-circle"></div>
+          </div>
+          <div class="deliverable-content">
+            <h3 class="deliverable-title">Roadmap do seu plano</h3>
+            <p class="deliverable-description">Prioridades organizadas por semana</p>
+          </div>
+        </li>
+        
+        <li class="deliverable-item">
+          <div class="deliverable-bullet">
+            <div class="bullet-circle"></div>
+          </div>
+          <div class="deliverable-content">
+            <h3 class="deliverable-title">Mapa de mensagens</h3>
+            <p class="deliverable-description">O que comunicar e o que evitar</p>
+          </div>
+        </li>
+        
+        <li class="deliverable-item">
+          <div class="deliverable-bullet">
+            <div class="bullet-circle"></div>
+          </div>
+          <div class="deliverable-content">
+            <h3 class="deliverable-title">Estrutura de landing page</h3>
+            <p class="deliverable-description">Seções + argumentos + CTAs</p>
+          </div>
+        </li>
+        
+        <li class="deliverable-item">
+          <div class="deliverable-bullet">
+            <div class="bullet-circle"></div>
+          </div>
+          <div class="deliverable-content">
+            <h3 class="deliverable-title">Plano de campanhas</h3>
+            <p class="deliverable-description">Hipóteses, públicos, criativos e métricas</p>
+          </div>
+        </li>
+        
+        <li class="deliverable-item">
+          <div class="deliverable-bullet">
+            <div class="bullet-circle"></div>
+          </div>
+          <div class="deliverable-content">
+            <h3 class="deliverable-title">Modelo de relatório</h3>
+            <p class="deliverable-description">O que é acompanhado e com que frequência</p>
+          </div>
+        </li>
+      </ul>
+      <div class="deliverables-proof">
+        <h3>Veja um exemplo do tipo de plano que você recebe</h3>
+        <p>Preferimos mostrar método e entregáveis, em vez de prometer números.</p>
+        
+        <!-- Carrossel Mobile -->
+        <div class="deliverables-carousel-mobile swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="deliverables-image-wrapper" onclick="openImageModal('/roadmap_exemplo.svg', 'Roadmap do seu plano')">
+                <img src="/roadmap_exemplo.svg" alt="Roadmap do seu plano - Exemplo" loading="lazy" />
+                <div class="image-overlay">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Clique para ampliar</span>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="deliverables-image-wrapper" onclick="openImageModal('/relatorio_mensal_exemplo.svg', 'Relatório Mensal')">
+                <img src="/relatorio_mensal_exemplo.svg" alt="Relatório Mensal - Exemplo" loading="lazy" />
+                <div class="image-overlay">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Clique para ampliar</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        
+        <!-- Grid Desktop -->
+        <div class="deliverables-grid-desktop">
+          <div class="deliverables-image-wrapper" onclick="openImageModal('/roadmap_exemplo.svg', 'Roadmap do seu plano')">
+            <img src="/roadmap_exemplo.svg" alt="Roadmap do seu plano - Exemplo" loading="lazy" />
+            <div class="image-overlay">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Clique para ampliar</span>
+            </div>
+          </div>
+          <div class="deliverables-image-wrapper" onclick="openImageModal('/relatorio_mensal_exemplo.svg', 'Relatório Mensal')">
+            <img src="/relatorio_mensal_exemplo.svg" alt="Relatório Mensal - Exemplo" loading="lazy" />
+            <div class="image-overlay">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Clique para ampliar</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Texto Helper -->
+        <div class="deliverables-helper">
+          <ul>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="2" fill="currentColor"/>
+              </svg>
+              <span>Os relatórios incluem outras métricas além das mostradas nos exemplos.</span>
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="2" fill="currentColor"/>
+              </svg>
+              <span>Estamos disponíveis para reuniões de apresentação caso você prefira.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
       
-      <!-- Desktop: Grid -->
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <p class="testimonial-text">"Desde que começamos, minha presença digital melhorou muito e isso já está refletindo diretamente nos resultados da clínica. Estou recebendo cerca de 2 a 3 vezes mais pacientes novos do que antes. Os direcionamentos das campanhas deixaram minha imagem muito mais profissional. Acompanhamento rápido, ajustes precisos e estratégia bem definida fizeram muita diferença."</p>
-          <p class="testimonial-author">Fernando - Cliente Vunik</p>
-        </div>
-        <div class="testimonial-card">
-          <p class="testimonial-text">"João é um excelente profissional. Desde o início, sempre foi muito educado, prestativo e atencioso. Demonstrou muita flexibilidade para entender exatamente o que eu precisava e sempre trouxe soluções práticas e bem pensadas. Acompanha de perto os resultados e realmente se preocupa em fazer o negócio crescer."</p>
-          <p class="testimonial-author">Karine - Cliente Vunik</p>
-        </div>
-        <div class="testimonial-card">
-          <p class="testimonial-text">"O trabalho feito está sendo maravilhoso. Estamos tendo muito retorno de vendas e estamos com 3x vezes mais de atendimentos que o padrão. Os detalhes e o acompanhamento fizeram toda diferença para a melhoria de vendas da loja."</p>
-          <p class="testimonial-author">Jonathan - Cliente Vunik</p>
-        </div>
-      </div>
-
-      <!-- Mobile: Swiper (será inicializado via JS) -->
-      <div class="swiper testimonials-swiper" id="testimonialsSwiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="testimonial-card">
-              <p class="testimonial-text">"Desde que começamos, minha presença digital melhorou muito e isso já está refletindo diretamente nos resultados da clínica. Estou recebendo cerca de 2 a 3 vezes mais pacientes novos do que antes. Os direcionamentos das campanhas deixaram minha imagem muito mais profissional. Acompanhamento rápido, ajustes precisos e estratégia bem definida fizeram muita diferença."</p>
-              <p class="testimonial-author">Fernando - Cliente Vunik</p>
+      <!-- Modal de Visualização de Imagem -->
+      <div id="imageModal" class="image-modal" onclick="closeImageModal(event)">
+        <button class="modal-close" aria-label="Fechar modal" onclick="closeImageModal(event)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="modal-content" onclick="event.stopPropagation()">
+          <div class="modal-image-container">
+            <img id="modalImage" src="" alt="" />
+            <div class="modal-zoom-controls">
+              <button class="zoom-btn zoom-in" onclick="zoomImage(1.2)" aria-label="Aumentar zoom">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="zoom-btn zoom-out" onclick="zoomImage(0.8)" aria-label="Diminuir zoom">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="zoom-btn zoom-reset" onclick="resetZoom()" aria-label="Resetar zoom">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 12C3 4.5885 4.5885 3 12 3C19.4115 3 21 4.5885 21 12C21 19.4115 19.4115 21 12 21C4.5885 21 3 19.4115 3 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
             </div>
           </div>
-          <div class="swiper-slide">
-            <div class="testimonial-card">
-              <p class="testimonial-text">"João é um excelente profissional. Desde o início, sempre foi muito educado, prestativo e atencioso. Demonstrou muita flexibilidade para entender exatamente o que eu precisava e sempre trouxe soluções práticas e bem pensadas. Acompanha de perto os resultados e realmente se preocupa em fazer o negócio crescer."</p>
-              <p class="testimonial-author">Karine - Cliente Vunik</p>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="testimonial-card">
-              <p class="testimonial-text">"O trabalho feito está sendo maravilhoso. Estamos tendo muito retorno de vendas e estamos com 3x vezes mais de atendimentos que o padrão. Os detalhes e o acompanhamento fizeram toda diferença para a melhoria de vendas da loja."</p>
-              <p class="testimonial-author">Jonathan - Cliente Vunik</p>
-            </div>
-          </div>
+          <p class="modal-caption" id="modalCaption"></p>
         </div>
-        <div class="swiper-pagination"></div>
       </div>
     </div>
   </section>
 
-  <!-- 8. EQUIPE -->
+
+  <!-- SEÇÃO 5 — EQUIPE -->
   <section id="equipe" class="team-section">
     <div class="team-content">
-      <h2 class="section-title">Conheça quem vai trabalhar pelo seu sucesso</h2>
+      <h2 class="section-title">Quem lidera o seu projeto</h2>
       <div class="team-grid">
         <div class="team-member">
-          <div class="member-photo member-photo-kaue">
+          <div class="member-photo">
             <picture>
               <source srcset="/seo_head.webp" type="image/webp">
               <img src="/seo_head.jpg" alt="Kaue Rodrigues - Especialista em SEO" loading="lazy" />
@@ -642,18 +690,18 @@
           </div>
           <p class="member-name">Kaue Rodrigues</p>
           <p class="member-role">Head de SEO</p>
-          <p class="member-description">Top 10 SEO do Brasil em 2023. Especialista em posicionar profissionais no topo das buscas do Google. Quando alguém procura por sua especialidade, você aparece primeiro.</p>
+          <p class="member-description">Estrutura técnica, conteúdo e presença local com critérios de qualidade e acompanhamento.</p>
         </div>
         <div class="team-member">
           <div class="member-photo">
             <picture>
-              <source srcset="/ceo_head.webp" type="image/webp">
-              <img src="/ceo.png" alt="Caio Deiró - CEO" loading="lazy" />
+              <source srcset="/ceo.webp" type="image/webp">
+              <img src="/ceo.jpeg" alt="Caio Deiró - CEO" loading="lazy" />
             </picture>
           </div>
           <p class="member-name">Caio Deiró</p>
           <p class="member-role">Fundador & CEO</p>
-          <p class="member-description">Fundador da Vunik com ampla trajetória em desenvolvimento. Acredita que todo profissional excelente merece ser encontrado. Constrói soluções que transformam expertise em resultados.</p>
+          <p class="member-description">Coordena estratégia e execução para traduzir reputação em presença digital clara e consistente.</p>
         </div>
         <div class="team-member">
           <div class="member-photo">
@@ -664,20 +712,20 @@
           </div>
           <p class="member-name">João Pedro</p>
           <p class="member-role">Head de Tráfego Pago</p>
-          <p class="member-description">Anos de atuação em tráfego com foco em conversão. Histórico extenso de clientes atendidos. Transforma investimento em pacientes agendados, não apenas cliques.</p>
+          <p class="member-description">Campanhas orientadas a intenção e conversão, com otimização e relatórios.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 9. FAQ -->
+  <!-- SEÇÃO 6 — FAQ -->
   <section id="faq" class="faq-section">
     <div class="faq-content">
       <h2 class="section-title">Perguntas Frequentes</h2>
       <div class="faq-list">
         <div class="faq-item" id="faq-1">
           <button class="faq-question">
-            <span>Quanto custa? Vale o investimento?</span>
+            <span>Quanto custa? Como vocês trabalham com planos?</span>
             <span class="faq-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -686,13 +734,13 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-content">
-              Trabalhamos com planos personalizados de 3 e 12 meses, adaptados às suas necessidades. A verdadeira questão não é quanto custa, mas sim: quanto custa não investir? Caro é o investimento que não tem retorno. Nosso foco é ROI: cada real investido deve gerar pacientes agendados e resultados mensuráveis. Agende uma conversa sem compromisso e receba uma proposta transparente.
+              Trabalhamos com planos de 3 e 12 meses. Após a Sessão de Diagnóstico Estratégico, desenvolvemos o plano internamente e apresentamos a proposta na Sessão de Apresentação Estratégica — com escopo detalhado, entregáveis claros e ritmo de acompanhamento definido.
             </div>
           </div>
         </div>
         <div class="faq-item" id="faq-2">
           <button class="faq-question">
-            <span>Quanto tempo leva para eu ver resultados?</span>
+            <span>Em quanto tempo vejo sinais de melhora?</span>
             <span class="faq-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -701,13 +749,13 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-content">
-              Resultados iniciais começam a aparecer em 2-3 meses. Resultados consistentes e previsíveis a partir do 4º mês de trabalho. SEO e posicionamento digital são processos que exigem tempo e consistência - não prometemos milagres em 7 dias. Trabalhamos com planos de médio e longo prazo porque acreditamos em parceria estratégica, não em soluções temporárias.
+              Depende do ponto de partida, da especialidade e da região. Os sinais aparecem conforme ajustamos as bases e construímos consistência ao longo dos meses.
             </div>
           </div>
         </div>
         <div class="faq-item" id="faq-3">
           <button class="faq-question">
-            <span>Vocês garantem que vou ter mais pacientes? Já tentei com outras agências e não funcionou.</span>
+            <span>Vocês garantem posição no Google ou número de pacientes?</span>
             <span class="faq-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -716,13 +764,13 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-content">
-              Não trabalhamos com garantias de números específicos porque cada caso é único. O que garantimos é trabalho sério e transparente, com estratégia personalizada e otimização contínua baseada em dados. A diferença está na abordagem: não vendemos pacotes genéricos, criamos soluções sob medida. Não focamos em engajamento vazio, focamos em pacientes agendados. Se você já teve experiência ruim, nossa proposta é justamente ser diferente: parceiro estratégico, não apenas prestador de serviço.
+              Não. Não prometemos ranking nem números específicos. Nosso compromisso é com método, execução e transparência (relatórios e decisões de otimização).
             </div>
           </div>
         </div>
         <div class="faq-item" id="faq-4">
           <button class="faq-question">
-            <span>Preciso ficar envolvido no dia a dia? Não tenho tempo para isso.</span>
+            <span>Quanto tempo eu preciso dedicar no dia a dia?</span>
             <span class="faq-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -731,13 +779,13 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-content">
-              Não. Nossa proposta é exatamente tirar essa preocupação da sua cabeça. Você foca no que faz de melhor: cuidar de pacientes. Nós cuidamos da sua presença digital. Você recebe relatórios periódicos e pode acompanhar os resultados, mas não precisa se envolver na execução. Nossa equipe trabalha de forma independente, sempre alinhada com seus objetivos.
+              O mínimo possível. Você participa das duas sessões estratégicas e de checkpoints combinados (normalmente mensal). A execução fica inteiramente com a Vunik.
             </div>
           </div>
         </div>
         <div class="faq-item" id="faq-5">
           <button class="faq-question">
-            <span>Como sei que funciona para a minha especialidade? Cada área tem suas particularidades.</span>
+            <span>Funciona para minha especialidade?</span>
             <span class="faq-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -746,7 +794,22 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-content">
-              Trabalhamos exclusivamente com médicos e dentistas, então entendemos as particularidades de cada especialidade. Nossa estratégia é sempre personalizada: um cardiologista tem necessidades diferentes de um dentista, e um ortopedista tem necessidades diferentes de um dermatologista. Na conversa inicial, entendemos seu perfil, seu público-alvo e suas particularidades para criar uma estratégia que realmente funcione para você. Não aplicamos receitas prontas.
+              A estratégia é personalizada. Na Sessão de Diagnóstico Estratégico, compreendemos profundamente seu cenário e desenvolvemos um plano sob medida para sua realidade.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-6">
+          <button class="faq-question">
+            <span>Vocês atendem quem não é médico/dentista?</span>
+            <span class="faq-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Não. A Vunik é focada exclusivamente em médicos, dentistas, clínicas médicas e clínicas odontológicas.
             </div>
           </div>
         </div>
@@ -754,8 +817,17 @@
     </div>
   </section>
 
+  <!-- CTA FINAL -->
+  <section class="cta-final-section">
+    <div class="cta-final-content">
+      <h2 class="section-title">Vamos organizar sua presença digital com clareza?</h2>
+      <p class="section-text">Agende uma Sessão de Diagnóstico Estratégico e receba um direcionamento objetivo e personalizado do seu cenário.</p>
+      <button class="cta-primary" onclick="scrollToForm(); return false;">Agendar Sessão de Diagnóstico</button>
+      <p class="cta-microcopy">Sem spam. Atendimento exclusivo para médicos e dentistas.</p>
+    </div>
+  </section>
 
-  <!-- 11. FOOTER -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-content">
       <div class="footer-main">
@@ -763,9 +835,6 @@
           <div class="footer-logo">
             <img src="/vunik_logo_azul.svg" alt="Logotipo Vunik Solutions" loading="lazy" width="120" height="40">
           </div>
-          <p class="purpose-text">
-            A Vunik nasceu da necessidade de tornar bons profissionais da saúde acessíveis e vistos no mundo digital. Acreditamos que todo profissional excelente merece ser encontrado por quem precisa de seus cuidados. Através do digital, conectamos profissionais qualificados aos pacientes certos, transformando expertise em acessibilidade e reputação em resultados mensuráveis.
-          </p>
         </div>
         <div class="footer-contact">
           <h4>Contato</h4>
@@ -775,19 +844,16 @@
             </svg>
             corporativo@vunik.site
           </a>
-        </div>
-        <div class="footer-social">
-          <h4>Redes Sociais</h4>
-          <a href="https://www.instagram.com/vuniksolutions/" target="_blank" rel="noopener noreferrer" class="social-link">
+          <a href="https://www.instagram.com/vuniksolutions/" target="_blank" rel="noopener noreferrer" class="contact-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="currentColor"/>
             </svg>
-            @vuniksolutions
+            Instagram
           </a>
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="copyright">© 2025 Vunik Solutions. Todos os direitos reservados.</p>
+        <p class="copyright">Comunicação alinhada a boas práticas e responsabilidade no marketing para saúde.</p>
       </div>
     </div>
   </footer>
@@ -813,20 +879,12 @@
     <div class="snackbar-progress"></div>
   </div>
 
-  <!-- Botão Flutuante WhatsApp -->
-  <a href="https://wa.me/5571993067834?text=Olá,%20Gostaria%20de%20agendar%20minha%20consultoria%20gratuita" 
-     target="_blank" 
-     rel="noopener noreferrer" 
-     class="whatsapp-float" 
-     aria-label="Fale conosco no WhatsApp"
-     title="Fale conosco no WhatsApp">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="currentColor"/>
-    </svg>
-    <span class="whatsapp-float-pulse"></span>
-  </a>
 
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script type="module" src="/main.js"></script>
 </body>
 
 </html>
+
+
