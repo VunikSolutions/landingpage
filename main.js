@@ -841,7 +841,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Reabilitar botão
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Quero atrair mais pacientes';
+          submitBtn.textContent = 'Solicitar Diagnóstico';
         }
       }
     });
