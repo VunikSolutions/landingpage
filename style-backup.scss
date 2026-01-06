@@ -1,8 +1,23 @@
 // ============================================
 // TIPOGRAFIA OFICIAL VUNIK
 // ============================================
-// Plus Jakarta Sans → títulos, botões, navegação, destaques
-// Inter → textos corridos, parágrafos, descrições, formulários
+// Inter → fonte única para todo o site (texto e UI)
+// Headings em Inter semibold (sem serif exagerada)
+
+// ============================================
+// MIXINS (definidos primeiro para uso posterior)
+// ============================================
+@mixin mobile {
+  @media screen and (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: 1024px) {
+    @content;
+  }
+}
 
 // ============================================
 // RESET E BASE
@@ -93,62 +108,121 @@ html {
   &:nth-child(6) { transition-delay: 0.6s; }
 }
 
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  // Previne layout shift durante carregamento
+  min-height: 100vh;
+  
+  @include desktop {
+    font-size: 18px;
+  }
+}
+
+// ============================================
+// ESCALA DE TIPOGRAFIA
+// ============================================
+h1, .h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.2;
+  color: var(--ink);
+  max-width: 60ch; // Máx. largura de parágrafo: 60-72 caracteres
+  
+  @include desktop {
+    font-size: 48px;
+    line-height: 1.15;
+  }
+}
+
+h2, .h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.25;
+  color: var(--ink);
+  
+  @include desktop {
+    font-size: 36px;
+  }
+}
+
+h3, .h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.25;
+  color: var(--ink);
+  
+  @include desktop {
+    font-size: 26px;
+  }
+}
+
+p, .body {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  max-width: 60ch;
+  
+  @include desktop {
+    font-size: 18px;
+  }
+}
+
+small, .small {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
 // ============================================
 // VARIÁVEIS CSS
 // ============================================
 :root {
-  // Fundos (Paleta Clara - Adequada ao Nicho Médico/Odontológico)
+  // ============================================
+  // PALETA DE CORES - VUNIK DESIGN SYSTEM
+  // ============================================
+  
+  // Brand Blue (Primária) - Títulos, links, detalhes, ícones-chave, foco
+  --brand-blue: #3943B7;
+  
+  // CTA Green (Ação) - Botões primários e highlights de conversão
+  --cta-green: #21C15C;
+  --cta-green-dark: #147437; // Para texto branco quando necessário
+  
+  // Backgrounds - Dominante, sensação de saúde/limpeza
   --bg-primary: #FFFFFF;
-  --bg-secondary: #F8FAFC;
-  --bg-card: #F0F4F8;
-  --bg-elevated: #E8F0F7;
-
-  // Azul - Primária (Cor Principal - Profissionalismo e Confiança)
-  --blue-lightest: #EFF6FF;
-  --blue-lighter: #DBEAFE;
-  --blue-light: #93C5FD;
-  --blue-medium: #60A5FA;
-  --blue-primary: #3943B7;   // Marca Vunik
-  --blue-dark: #2F37A0;      // mais premium
-  --blue-darker: #232A7A;
-
-  // Verde - Secundária (Cor de Destaque/CTA - Confiança e Segurança)
-  --green-lightest: #F0FDF4;
-  --green-lighter: #DCFCE7;
-  --green-light: #BBF7D0;
-  --green-medium: #86EFAC;
-  --green-primary: #22C55E;
-  --green-dark: #16A34A;
-  --green-darker: #15803D;
-
-  // Laranja - Mantida para compatibilidade (não mais usada em CTAs)
-  --orange-lightest: #FFF7ED;
-  --orange-lighter: #FFEDD5;
-  --orange-light: #FED7AA;
-  --orange-medium: #FDBA74;
-  --orange-primary: #F97316;
-  --orange-dark: #EA580C;
-  --orange-darker: #C2410C;
-
-  // Texto (Hierarquia para Fundos Claros)
-  --text-primary: #1F2937;
+  --bg-secondary: #F6F7F8;
+  
+  // Neutros (Texto/Bordas)
+  --ink: #0B1220; // Texto principal
+  --gray: #374151; // Texto secundário
+  --muted: #6B7280; // Texto terciário
+  --border: #E5E7EB; // Bordas
+  
+  // Compatibilidade (mantidas para transição suave)
+  --blue-primary: #3943B7;
+  --green-primary: #21C15C;
+  --green-dark: #147437;
+  --text-primary: #0B1220;
   --text-secondary: #374151;
   --text-tertiary: #6B7280;
-  --text-disabled: #9CA3AF;
-
-  // Inputs com borda que "aparece" (>= 3:1 no branco)
-  --field-border: #7C8BA1;
-  --field-border-hover: #6B7C93;
-
-  // Erro (vermelho contido para clínico premium)
-  --danger: #B42318;
+  --bg-card: #FFFFFF;
 
   // Breakpoints
   --mobile-max: 1023px;
   --desktop-min: 1024px;
-  --desktop-large: 1440px;
+  --container-max: 1200px; // Container max-width atualizado
 
-  // Espaçamentos
+  // Espaçamentos (múltiplos de 8)
   --spacing-xs: 8px;
   --spacing-sm: 16px;
   --spacing-md: 24px;
@@ -156,99 +230,10 @@ html {
   --spacing-xl: 40px;
   --spacing-2xl: 80px;
   --spacing-3xl: 120px;
-
-  // Raios (Border Radius)
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 24px;
-  --radius-full: 9999px;
-
-  // Sombras (Elevação Premium)
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.16), 0 6px 20px rgba(0, 0, 0, 0.08);
-  --shadow-2xl: 0 20px 60px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.1);
-
-  // Sombras coloridas (para CTAs e elementos destacados)
-  --shadow-blue: 0 4px 20px rgba(57, 67, 183, 0.28), 0 2px 8px rgba(57, 67, 183, 0.18);
-  --shadow-green: 0 4px 20px rgba(34, 197, 94, 0.3), 0 2px 8px rgba(34, 197, 94, 0.2);
-  --shadow-blue-lg: 0 6px 30px rgba(57, 67, 183, 0.36), 0 4px 12px rgba(57, 67, 183, 0.26);
-  --shadow-green-lg: 0 6px 30px rgba(34, 197, 94, 0.4), 0 4px 12px rgba(34, 197, 94, 0.3);
-
-  // Transições
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-  // Estados de hover/focus (opacidades e transformações)
-  --hover-opacity: 0.8;
-  --focus-ring: 0 0 0 3px rgba(57, 67, 183, 0.18);
-  --focus-ring-blue: 0 0 0 3px rgba(57, 67, 183, 0.22);
-  --focus-ring-green: 0 0 0 3px rgba(34, 197, 94, 0.15);
-  --hover-lift: translateY(-2px);
-  --hover-lift-lg: translateY(-4px);
-
-  // Bordas
-  --border-width: 1px;
-  --border-width-thick: 2px;
-  --border-color: rgba(57, 67, 183, 0.1);
-  --border-color-hover: rgba(57, 67, 183, 0.2);
-  --border-color-focus: var(--blue-primary);
-
-  // Tipografia (Tokens Consultivos Premium)
-  --font-heading: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-
-  --fs-body: 16px;
-  --fs-body-desktop: 17px;
-
-  --fs-cta: 16px;
-  --fs-cta-desktop: 17px;
-
-  --lh-body: 1.75;
-  --lh-heading: 1.15;
-
-  --ls-body: -0.005em;
-  --ls-heading: -0.02em;
-  --ls-cta: -0.01em;
-}
-
-// ============================================
-// MIXINS
-// ============================================
-@mixin mobile {
-  @media screen and (max-width: 1023px) {
-    @content;
-  }
-}
-
-@mixin desktop {
-  @media screen and (min-width: 1024px) {
-    @content;
-  }
-}
-
-// ============================================
-// BODY
-// ============================================
-body {
-  font-family: var(--font-body);
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-  letter-spacing: var(--ls-body);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  overflow-x: hidden;
-  // Previne layout shift durante carregamento
-  min-height: 100vh;
-
-  @include desktop {
-    font-size: var(--fs-body-desktop);
-  }
+  
+  // Espaçamentos de seção
+  --section-padding-mobile: 48px;
+  --section-padding-desktop: 80px;
 }
 
 // ============================================
@@ -256,244 +241,112 @@ body {
 // ============================================
 .container {
   width: 100%;
-  max-width: var(--desktop-large);
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 var(--spacing-sm);
 
   @include desktop {
-    padding: 0 var(--spacing-3xl);
+    padding: 0 var(--spacing-md);
   }
 }
 
 .section {
-  padding: var(--spacing-xl) 20px;
+  padding: var(--section-padding-mobile) var(--spacing-sm);
 
   @include desktop {
-    padding: var(--spacing-2xl) var(--spacing-3xl);
+    padding: var(--section-padding-desktop) var(--spacing-md);
   }
 }
 
 // ============================================
-// CLASSES BASE REUTILIZÁVEIS (DESIGN SYSTEM)
+// COMPONENTES BASE - DESIGN SYSTEM
 // ============================================
 
-// Card Base Premium
+// Cards padrão
 .card {
   background-color: var(--bg-primary);
-  border: var(--border-width) solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-normal);
-
+  border: 1px solid var(--border);
+  border-radius: 18px; // 16-20px
+  padding: var(--spacing-md);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); // Sombra bem sutil
+  
   @include desktop {
-    padding: var(--spacing-xl);
-    border-radius: var(--radius-xl);
+    padding: var(--spacing-md);
+    border-radius: 20px;
   }
-
+  
   &:hover {
-    border-color: var(--border-color-hover);
-    box-shadow: var(--shadow-md);
-    transform: var(--hover-lift);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+    transition: all 0.3s ease;
   }
 }
 
-// Botão Base
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-xs);
-  padding: 14px 24px;
-  border: none;
-  border-radius: var(--radius-md);
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: var(--fs-cta);
-  letter-spacing: var(--ls-cta);
-  line-height: 1.1;
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  text-decoration: none;
-  text-align: center;
-  min-height: 48px;
-  touch-action: manipulation;
-
-  @include mobile {
-    width: 100%;
-    padding: 14px 20px;
-    min-height: 52px;
-  }
-
-  @include desktop {
-    font-size: var(--fs-cta-desktop);
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: var(--focus-ring);
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none !important;
-  }
-
-  // Variante Primary
-  &.btn-primary {
-    background-color: var(--blue-primary);
-    color: #FFFFFF;
-    box-shadow: var(--shadow-blue);
-
-    &:hover:not(:disabled) {
-      background-color: var(--blue-dark);
-      box-shadow: var(--shadow-blue-lg);
-      transform: var(--hover-lift);
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(0);
-    }
-  }
-
-  // Variante Secondary
-  &.btn-secondary {
-    background-color: transparent;
-    border: var(--border-width-thick) solid var(--blue-primary);
-    color: var(--blue-primary);
-
-    &:hover:not(:disabled) {
-      background-color: var(--blue-primary);
-      color: #FFFFFF;
-      box-shadow: var(--shadow-blue);
-      transform: var(--hover-lift);
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(0);
-    }
-  }
-
-  // Variante Ghost
-  &.btn-ghost {
-    background-color: transparent;
-    color: var(--text-primary);
-
-    &:hover:not(:disabled) {
-      background-color: var(--bg-secondary);
-      opacity: var(--hover-opacity);
-    }
-  }
-}
-
-// Input Base
-.input {
+// Inputs padrão
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="url"],
+textarea,
+select {
   width: 100%;
-  min-height: 48px;
+  height: 48px;
   padding: 12px 16px;
-  background-color: #FFFFFF;
-  border: var(--border-width-thick) solid var(--field-border);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-size: 15px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 16px;
   font-family: 'Inter', sans-serif;
-  transition: all var(--transition-normal);
-
-  @include mobile {
-    font-size: 16px;
-    min-height: 52px;
-    padding: 14px 16px;
-    -webkit-appearance: none;
-    appearance: none;
+  transition: all 0.3s ease;
+  
+  @include desktop {
+    font-size: 18px;
   }
-
-  &::placeholder {
-    color: var(--text-tertiary);
-    opacity: 0.6;
-  }
-
+  
   &:focus {
     outline: none;
-    border-color: var(--blue-primary);
-    box-shadow: var(--focus-ring-blue);
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 3px rgba(57, 67, 183, 0.1); // Focus ring #3943B7 visível
   }
-
-  &:hover:not(:focus) {
-    border-color: var(--field-border-hover);
-  }
-
-  &.error {
-    border-color: var(--danger);
-    
-    &:focus {
-      box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.18);
-    }
-  }
-
-  &.valid {
-    border-color: var(--green-primary);
-    
-    &:focus {
-      box-shadow: var(--focus-ring-green);
-    }
-  }
-
+  
   &:disabled {
-    background-color: var(--bg-secondary);
-    color: var(--text-disabled);
-    cursor: not-allowed;
     opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--bg-secondary);
+  }
+  
+  &::placeholder {
+    color: var(--muted);
   }
 }
 
-// Heading Base (Hierarquia Tipográfica)
-.heading {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 700;
-  color: var(--text-primary);
-  line-height: 1.2;
-  letter-spacing: -0.3px;
-  margin: 0;
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
 
-  &.h1 {
-    font-size: clamp(32px, 8vw, 56px);
-    letter-spacing: -0.5px;
-    line-height: 1.1;
-
-    @include desktop {
-      font-size: 56px;
-      letter-spacing: -0.6px;
-    }
+// Links padrão
+a:not(.cta-primary):not(.cta-secondary):not(.cta-secondary-hero) {
+  color: var(--brand-blue);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
   }
-
-  &.h2 {
-    font-size: clamp(28px, 7vw, 48px);
-    letter-spacing: -0.4px;
-
-    @include desktop {
-      font-size: 48px;
-      letter-spacing: -0.5px;
-    }
+  
+  &:focus {
+    outline: 2px solid var(--brand-blue);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
-
-  &.h3 {
-    font-size: clamp(22px, 5vw, 32px);
-    letter-spacing: -0.3px;
-
-    @include desktop {
-      font-size: 32px;
-      letter-spacing: -0.4px;
-    }
-  }
-
-  &.h4 {
-    font-size: clamp(20px, 4vw, 24px);
-    letter-spacing: -0.2px;
-
-    @include desktop {
-      font-size: 24px;
-    }
+  
+  &:visited {
+    color: var(--brand-blue);
   }
 }
 
@@ -526,15 +379,15 @@ header {
   }
 
   .header-content {
-    max-width: var(--desktop-large);
+    max-width: var(--container-max);
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 var(--spacing-sm);
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     @include desktop {
-      padding: 0 var(--spacing-3xl);
+      padding: 0 var(--spacing-md);
     }
 
     .logo {
@@ -565,14 +418,12 @@ header {
 
         .nav-item {
           color: #FFFFFF;
-          font-family: var(--font-heading);
-          font-size: 16px;
+          font-size: 18px;
           font-weight: 500;
-          letter-spacing: -0.01em;
+          font-family: 'Inter', sans-serif;
           cursor: pointer;
           transition: all 0.3s ease;
           white-space: nowrap;
-          letter-spacing: -0.2px;
 
           &:hover {
             opacity: 0.7;
@@ -580,24 +431,23 @@ header {
         }
 
         .cta-header {
-          padding: 12px 24px;
-          background-color: var(--blue-primary);
+          padding: 12px 18px;
+          background-color: var(--cta-green);
           border: none;
-          border-radius: 8px;
-          color: #FFFFFF;
+          border-radius: 15px;
+          color: var(--ink);
           font-weight: 600;
-          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-family: 'Inter', sans-serif;
           font-size: 16px;
+          height: 48px;
           cursor: pointer;
           transition: all 0.3s ease;
           white-space: nowrap;
-          letter-spacing: -0.2px;
-          box-shadow: var(--shadow-blue);
+          box-shadow: 0 2px 8px rgba(33, 193, 92, 0.15);
 
           &:hover {
-            background-color: var(--blue-dark);
-            box-shadow: var(--shadow-blue-lg);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(33, 193, 92, 0.2);
           }
         }
       }
@@ -616,8 +466,8 @@ header {
       span {
         font-size: 12px;
         font-weight: 500;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        color: var(--blue-primary);
+        font-family: 'Inter', sans-serif;
+        color: var(--brand-blue);
         white-space: nowrap;
       }
     }
@@ -672,7 +522,7 @@ header {
     .header-content {
       .nav-desktop {
         .nav-item {
-          color: var(--blue-primary);
+          color: var(--brand-blue);
 
           &:hover {
             opacity: 0.7;
@@ -682,12 +532,12 @@ header {
 
       .menu-toggle {
         svg path {
-          fill: var(--blue-primary);
+          fill: var(--ink);
         }
 
         &:hover {
           svg path {
-            fill: var(--blue-dark);
+            fill: var(--brand-blue);
           }
         }
       }
@@ -786,7 +636,7 @@ header {
             text-decoration: none;
             font-size: 18px;
             font-weight: 500;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.2s ease;
             display: block;
             cursor: pointer;
@@ -811,12 +661,12 @@ header {
           .cta-header-mobile {
             width: 100%;
             padding: 14px 20px;
-            background-color: var(--blue-primary);
+            background-color: var(--green-primary);
             border: none;
             border-radius: 8px;
             color: #FFFFFF;
             font-weight: 600;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -824,7 +674,7 @@ header {
             touch-action: manipulation;
 
             &:hover {
-              background-color: var(--blue-dark);
+              background-color: var(--green-dark);
               transform: translateY(-2px);
             }
 
@@ -1030,7 +880,7 @@ header {
         margin-bottom: var(--spacing-lg);
         font-size: 14px;
         font-weight: 600;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Inter', sans-serif;
         color: #FFFFFF;
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         animation: fadeInUp 0.6s ease-out;
@@ -1071,7 +921,7 @@ header {
     .hero-title {
       font-size: 75px;
       font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       line-height: 1.2;
       color: #FFFFFF;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -1223,24 +1073,20 @@ header {
         align-items: center;
         gap: 12px;
         padding: 18px 36px;
-        background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-dark) 100%);
+        background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-dark) 100%);
         border: none;
         border-radius: 12px;
         color: #FFFFFF;
-        font-family: var(--font-heading);
         font-weight: 600;
-        font-size: var(--fs-cta);
-        letter-spacing: var(--ls-cta);
-        line-height: 1.1;
+        font-family: 'Inter', sans-serif;
+        font-size: 18px;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 8px 24px rgba(57, 67, 183, 0.35), 0 4px 12px rgba(57, 67, 183, 0.25);
+        box-shadow: 
+          0 8px 24px rgba(34, 197, 94, 0.4),
+          0 4px 12px rgba(34, 197, 94, 0.3);
         position: relative;
         overflow: hidden;
-
-        @include desktop {
-          font-size: var(--fs-cta-desktop);
-        }
 
         &::before {
           content: '';
@@ -1255,7 +1101,9 @@ header {
 
         &:hover {
           transform: translateY(-3px);
-          box-shadow: 0 12px 32px rgba(57, 67, 183, 0.42), 0 6px 16px rgba(57, 67, 183, 0.32);
+          box-shadow: 
+            0 12px 32px rgba(34, 197, 94, 0.5),
+            0 6px 16px rgba(34, 197, 94, 0.4);
 
           &::before {
             left: 100%;
@@ -1309,14 +1157,16 @@ header {
         background-color: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: var(--border-width) solid rgba(255, 255, 255, 0.3);
-        border-radius: var(--radius-xl);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 16px;
         padding: var(--spacing-xl);
-        box-shadow: var(--shadow-2xl);
+        box-shadow: 
+          0 20px 60px rgba(0, 0, 0, 0.3),
+          0 8px 24px rgba(0, 0, 0, 0.2);
 
         @include mobile {
           padding: var(--spacing-lg);
-          border-radius: var(--radius-lg);
+          border-radius: 12px;
         }
 
         .form-group {
@@ -1346,93 +1196,57 @@ header {
             font-family: 'Inter', sans-serif;
             font-size: 14px;
             margin-bottom: var(--spacing-xs);
-            transition: color var(--transition-fast);
 
             @include mobile {
               font-size: 13px;
             }
 
             .required {
-              color: var(--danger);
-              font-weight: 600;
+              color: var(--orange-primary);
             }
           }
 
           input,
           select {
             width: 100%;
-            min-height: 48px;
+            height: 48px;
             padding: 12px 16px;
-            background-color: #FFFFFF;
-            border: var(--border-width-thick) solid var(--field-border);
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            font-size: 15px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--ink);
+            font-size: 16px;
             font-family: 'Inter', sans-serif;
-            transition: all var(--transition-normal);
+            transition: all 0.3s ease;
 
-            @include mobile {
-              font-size: 16px;
-              min-height: 52px;
-              padding: 14px 16px;
-              border-radius: var(--radius-md);
-              -webkit-appearance: none;
-              appearance: none;
-            }
-
-            &::placeholder {
-              color: var(--text-tertiary);
-              opacity: 0.6;
-            }
-
-            &:hover:not(:focus):not(:disabled) {
-              border-color: var(--field-border-hover);
+            @include desktop {
+              font-size: 18px;
             }
 
             &:focus {
               outline: none;
-              border-color: var(--blue-primary);
-              box-shadow: var(--focus-ring-blue);
+              border-color: var(--brand-blue);
+              box-shadow: 0 0 0 3px rgba(57, 67, 183, 0.1); // Focus ring #3943B7 visível
             }
 
             &.error {
-              border-color: var(--danger);
-              
-              &:focus {
-                box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.18);
-              }
+              border-color: var(--orange-primary);
             }
 
             &.valid {
-              border-color: var(--green-primary);
-              
-              &:focus {
-                box-shadow: var(--focus-ring-green);
-              }
-            }
-
-            &:disabled {
-              background-color: var(--bg-secondary);
-              color: var(--text-disabled);
-              cursor: not-allowed;
-              opacity: 0.6;
+              border-color: var(--blue-primary);
             }
           }
 
           .error-message {
-            color: var(--danger);
+            color: var(--orange-primary);
             font-size: 12px;
             font-family: 'Inter', sans-serif;
-            margin-top: 6px;
+            margin-top: 4px;
             display: none;
-            opacity: 0;
-            transform: translateY(-4px);
-            transition: all var(--transition-fast);
 
             &.show {
               display: block;
-              opacity: 1;
-              transform: translateY(0);
             }
           }
         }
@@ -1440,62 +1254,34 @@ header {
         .form-submit {
           width: 100%;
           height: 55px;
-          background-color: var(--blue-primary);
+          background-color: var(--green-primary);
           border: none;
-          border-radius: var(--radius-md);
+          border-radius: 8px;
           color: #FFFFFF;
-          font-family: var(--font-heading);
           font-weight: 600;
-          font-size: var(--fs-cta);
-          letter-spacing: var(--ls-cta);
-          line-height: 1.1;
+          font-family: 'Inter', sans-serif;
+          font-size: 18px;
           cursor: pointer;
-          transition: all var(--transition-normal);
+          transition: all 0.3s ease;
           margin-top: var(--spacing-md);
-          box-shadow: var(--shadow-blue);
-          position: relative;
-          overflow: hidden;
+          box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+          letter-spacing: -0.2px;
 
           @include mobile {
             height: 56px;
             min-height: 56px;
+            font-size: 16px;
             margin-top: var(--spacing-lg);
             touch-action: manipulation;
           }
 
-          @include desktop {
-            font-size: var(--fs-cta-desktop);
-          }
-
-          &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left var(--transition-slow);
-          }
-
           &:hover:not(:disabled) {
-            background-color: var(--blue-dark);
-            box-shadow: var(--shadow-blue-lg);
-            transform: var(--hover-lift);
-
-            &::before {
-              left: 100%;
-            }
-          }
-
-          &:focus:not(:disabled) {
-            outline: none;
-            box-shadow: var(--shadow-blue-lg), var(--focus-ring-blue);
+            background-color: var(--green-dark);
+            box-shadow: 0 6px 30px rgba(34, 197, 94, 0.5);
+            transform: translateY(-2px);
           }
 
           &:active:not(:disabled) {
-            transform: translateY(0);
-            
             @include mobile {
               transform: scale(0.98);
             }
@@ -1504,7 +1290,6 @@ header {
           &:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none !important;
           }
         }
 
@@ -1520,21 +1305,16 @@ header {
           display: none;
           text-align: center;
           padding: var(--spacing-xl);
-          background-color: rgba(37, 99, 235, 0.08);
-          border: var(--border-width-thick) solid var(--blue-primary);
-          border-radius: var(--radius-lg);
+          background-color: rgba(37, 99, 235, 0.1);
+          border: 1px solid var(--blue-primary);
+          border-radius: 8px;
           color: var(--text-primary);
           font-size: 16px;
           font-family: 'Inter', sans-serif;
           font-weight: 500;
-          opacity: 0;
-          transform: translateY(10px);
-          transition: all var(--transition-normal);
 
           &.show {
             display: block;
-            opacity: 1;
-            transform: translateY(0);
           }
 
           .form-success-download {
@@ -1547,26 +1327,21 @@ header {
               align-items: center;
               gap: 10px;
               padding: 14px 28px;
-              background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-dark) 100%);
+              background: linear-gradient(135deg, var(--blue-primary) 0%, #004499 100%);
               color: #ffffff;
               text-decoration: none;
-              border-radius: var(--radius-md);
+              border-radius: 8px;
               font-weight: 600;
-              font-family: 'Plus Jakarta Sans', sans-serif;
+              font-family: 'Inter', sans-serif;
               font-size: 16px;
-              transition: all var(--transition-normal);
-              box-shadow: var(--shadow-blue);
+              transition: all 0.3s ease;
+              box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
               letter-spacing: -0.2px;
 
               &:hover {
-                transform: var(--hover-lift);
-                box-shadow: var(--shadow-blue-lg);
-                background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-darker) 100%);
-              }
-
-              &:focus {
-                outline: none;
-                box-shadow: var(--shadow-blue-lg), var(--focus-ring-blue);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+                background: linear-gradient(135deg, #0052cc 0%, #003d7a 100%);
               }
 
               &:active {
@@ -1604,17 +1379,16 @@ button.cta-primary,
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 8px !important;
-  padding: 16px 32px !important;
-  background-color: var(--blue-primary) !important;
+  gap: var(--spacing-xs) !important;
+  padding: 16px 18px !important;
+  background-color: var(--cta-green) !important;
   border: none !important;
-  border-radius: 8px !important;
-  color: #FFFFFF !important;
-  font-family: var(--font-heading) !important;
+  border-radius: 15px !important; // 14-16px
+  color: var(--ink) !important; // Texto Ink, não branco
   font-weight: 600 !important;
-  font-size: var(--fs-cta) !important;
-  letter-spacing: var(--ls-cta) !important;
-  line-height: 1.1 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 16px !important;
+  height: 48px !important;
   cursor: pointer !important;
   transition: all 0.3s ease !important;
   text-decoration: none !important;
@@ -1624,28 +1398,36 @@ button.cta-primary,
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
   width: auto !important;
-  height: auto !important;
-  box-shadow: var(--shadow-blue) !important;
+  box-shadow: 0 2px 8px rgba(33, 193, 92, 0.15) !important; // Sombra mínima
+
+  @include desktop {
+    font-size: 18px !important;
+    padding: 16px 18px !important;
+  }
 
   @include mobile {
     width: 100% !important;
     max-width: 100% !important;
-    padding: 14px 24px !important;
-    min-height: 52px !important;
-  }
-
-  @include desktop {
-    font-size: var(--fs-cta-desktop) !important;
   }
 
   &:hover {
-    background-color: var(--blue-dark) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: var(--shadow-blue-lg) !important;
+    transform: translateY(-1px) !important; // Levantar 1-2px
+    box-shadow: 0 4px 12px rgba(33, 193, 92, 0.2) !important; // Sombra levemente maior
+  }
+
+  &:focus {
+    outline: 2px solid var(--brand-blue) !important;
+    outline-offset: 2px !important;
   }
 
   &:active {
     transform: translateY(0) !important;
+  }
+
+  &:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
   }
 }
 
@@ -1659,24 +1441,21 @@ a.cta-secondary-hero {
   border: 2px solid #FFFFFF !important;
   border-radius: 8px !important;
   color: #FFFFFF !important;
-  font-family: var(--font-heading) !important;
   font-weight: 600 !important;
-  font-size: var(--fs-cta) !important;
-  letter-spacing: var(--ls-cta) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 18px !important;
   cursor: pointer !important;
   transition: all 0.3s ease !important;
   text-decoration: none !important;
   text-align: center !important;
   min-width: 200px !important;
+  letter-spacing: -0.2px !important;
 
   @include mobile {
     width: 100% !important;
     max-width: 100% !important;
     padding: 14px 24px !important;
-  }
-
-  @include desktop {
-    font-size: var(--fs-cta-desktop) !important;
+    font-size: 16px !important;
   }
 
   &:hover {
@@ -1697,16 +1476,16 @@ a.cta-secondary,
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 8px !important;
-  padding: 16px 32px !important;
+  gap: var(--spacing-xs) !important;
+  padding: 16px 18px !important;
   background-color: transparent !important;
-  border: 2px solid var(--blue-primary) !important;
-  border-radius: 6px !important;
-  color: var(--blue-primary) !important;
-  font-family: var(--font-heading) !important;
+  border: 1px solid var(--border) !important; // Borda #E5E7EB
+  border-radius: 15px !important;
+  color: var(--ink) !important; // Texto Ink
   font-weight: 600 !important;
-  font-size: var(--fs-cta) !important;
-  letter-spacing: var(--ls-cta) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 16px !important;
+  height: 48px !important;
   cursor: pointer !important;
   transition: all 0.3s ease !important;
   text-decoration: none !important;
@@ -1716,10 +1495,9 @@ a.cta-secondary,
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
   width: auto !important;
-  height: auto !important;
 
   @include desktop {
-    font-size: var(--fs-cta-desktop) !important;
+    font-size: 18px !important;
   }
 
   @include mobile {
@@ -1729,11 +1507,15 @@ a.cta-secondary,
   }
 
   &:hover {
-    background-color: var(--blue-primary) !important;
-    color: #FFFFFF !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3) !important;
+    background-color: var(--bg-secondary) !important; // Hover com fundo #F6F7F8
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
     text-decoration: none !important;
+  }
+
+  &:focus {
+    outline: 2px solid var(--brand-blue) !important;
+    outline-offset: 2px !important;
   }
 
   &:active {
@@ -1741,14 +1523,20 @@ a.cta-secondary,
   }
 
   &:visited {
-    color: var(--blue-primary) !important;
+    color: var(--ink) !important;
     text-decoration: none !important;
-    border-color: var(--blue-primary) !important;
+    border-color: var(--border) !important;
   }
 
   &:link {
     text-decoration: none !important;
-    border: 2px solid var(--blue-primary) !important;
+    border: 1px solid var(--border) !important;
+  }
+
+  &:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
   }
 
   svg {
@@ -1850,18 +1638,22 @@ a.cta-secondary,
     }
 
     .clareza-card {
-      background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-      border: var(--border-width-thick) solid var(--border-color);
-      border-radius: var(--radius-xl);
-      padding: var(--spacing-xl);
-      transition: all var(--transition-normal);
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: var(--spacing-md);
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); // Sombra bem sutil
+      
+      @include desktop {
+        border-radius: 20px;
+        padding: var(--spacing-md);
+      }
 
       @include mobile {
         padding: var(--spacing-lg);
-        border-radius: var(--radius-lg);
       }
 
       &::before {
@@ -1877,9 +1669,11 @@ a.cta-secondary,
       }
 
       &:hover {
-        border-color: var(--border-color-hover);
-        transform: var(--hover-lift-lg);
-        box-shadow: var(--shadow-lg);
+        border-color: var(--blue-primary);
+        transform: translateY(-6px);
+        box-shadow: 
+          0 12px 40px rgba(37, 99, 235, 0.15),
+          0 4px 16px rgba(37, 99, 235, 0.1);
 
         &::before {
           opacity: 1;
@@ -1967,7 +1761,7 @@ a.cta-secondary,
       h3 {
         font-size: 22px;
         font-weight: 700;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Inter', sans-serif;
         color: var(--text-primary);
         margin-bottom: var(--spacing-sm);
         letter-spacing: -0.3px;
@@ -2020,7 +1814,7 @@ a.cta-secondary,
     .section-title {
       font-size: 48px;
       font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: var(--text-primary);
       text-align: center;
       margin-bottom: var(--spacing-xl);
@@ -2153,7 +1947,7 @@ a.cta-secondary,
           .deliverable-title {
             font-size: 20px;
             font-weight: 600;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             color: var(--text-primary);
             margin: 0 0 var(--spacing-xs) 0;
             line-height: 1.4;
@@ -2195,7 +1989,7 @@ a.cta-secondary,
       h3 {
         font-size: 28px;
         font-weight: 700;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Inter', sans-serif;
         color: var(--text-primary);
         margin-bottom: var(--spacing-md);
         letter-spacing: -0.3px;
@@ -2583,16 +2377,14 @@ a.cta-secondary,
     .section-title {
       font-size: 48px;
       font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: var(--text-primary);
-      margin-bottom: var(--spacing-lg);
+      margin-bottom: var(--spacing-md);
       letter-spacing: -0.5px;
-      line-height: 1.2;
 
       @include mobile {
         font-size: clamp(32px, 8vw, 48px);
         letter-spacing: -0.3px;
-        line-height: 1.3;
       }
     }
 
@@ -2601,11 +2393,10 @@ a.cta-secondary,
       font-family: 'Inter', sans-serif;
       color: var(--text-secondary);
       margin-bottom: var(--spacing-xl);
-      line-height: 1.7;
+      line-height: 1.6;
 
       @include mobile {
         font-size: 18px;
-        line-height: 1.7;
       }
     }
 
@@ -2629,14 +2420,14 @@ a.cta-secondary,
 .content-section {
   width: 100%;
   background-color: var(--bg-primary);
-  padding: var(--spacing-2xl) 20px;
+  padding: var(--spacing-xl) 20px;
 
   @include mobile {
-    padding: var(--spacing-xl) 16px;
+    padding: var(--spacing-lg) 16px;
   }
 
   @include desktop {
-    padding: var(--spacing-2xl) var(--spacing-3xl);
+    padding: var(--spacing-xl) var(--spacing-3xl);
   }
 
   // Seção de problema com padding-top igual ao padding-bottom do CTA
@@ -2866,7 +2657,7 @@ a.cta-secondary,
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
+            background: linear-gradient(90deg, var(--blue-primary) 0%, var(--blue-medium) 50%, var(--orange-primary) 100%);
             border-radius: 16px 16px 0 0;
           }
 
@@ -2886,7 +2677,7 @@ a.cta-secondary,
           .chart-title {
             font-size: 22px;
             font-weight: 700;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             color: var(--text-primary);
             text-align: center;
             margin-bottom: var(--spacing-xl);
@@ -2933,7 +2724,7 @@ a.cta-secondary,
               .chart-bar-label {
                 font-size: 15px;
                 font-weight: 600;
-                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-family: 'Inter', sans-serif;
                 color: var(--text-primary);
                 text-align: left;
                 display: flex;
@@ -3040,7 +2831,7 @@ a.cta-secondary,
                   .chart-value {
                     font-size: 15px;
                     font-weight: 700;
-                    font-family: 'Plus Jakarta Sans', sans-serif;
+                    font-family: 'Inter', sans-serif;
                     color: #FFFFFF;
                     white-space: nowrap;
                     text-shadow: 
@@ -3099,7 +2890,7 @@ a.cta-secondary,
               strong {
                 color: var(--blue-primary);
                 font-weight: 700;
-                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-family: 'Inter', sans-serif;
                 font-size: 18px;
                 background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-medium) 100%);
                 -webkit-background-clip: text;
@@ -3135,10 +2926,10 @@ a.cta-secondary,
     .section-title {
       font-size: 48px;
       font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: var(--text-primary);
       text-align: center;
-      margin-bottom: var(--spacing-lg);
+      margin-bottom: var(--spacing-md);
       width: 100%;
       line-height: 1.2;
       min-height: 1.2em; // Previne layout shift durante carregamento de fonte
@@ -3156,7 +2947,7 @@ a.cta-secondary,
     .section-text {
       font-size: 18px;
       font-family: 'Inter', sans-serif;
-      line-height: 1.7;
+      line-height: 1.6;
       color: var(--text-secondary);
       text-align: center;
       max-width: 800px;
@@ -3164,8 +2955,8 @@ a.cta-secondary,
       width: 100%;
 
       p {
-        margin-bottom: var(--spacing-md);
-        line-height: 1.7;
+        margin-bottom: 20px;
+        line-height: 1.8;
 
         &:last-child {
           margin-bottom: 0;
@@ -3180,7 +2971,7 @@ a.cta-secondary,
         max-width: 100%;
 
         p {
-          margin-bottom: var(--spacing-sm);
+          margin-bottom: 16px;
           line-height: 1.7;
 
           &:last-child {
@@ -3201,7 +2992,7 @@ a.cta-secondary,
         border-radius: 6px;
         color: var(--blue-primary);
         font-weight: 600;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Inter', sans-serif;
         font-size: 18px;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -3267,7 +3058,7 @@ a.cta-secondary,
       // Mobile First: tamanho padrão para mobile
       font-size: clamp(32px, 8vw, 48px);
       font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: var(--text-primary);
       text-align: center;
       margin-bottom: var(--spacing-lg);
@@ -3294,18 +3085,18 @@ a.cta-secondary,
 
         .service-card {
         // Mobile First: estilos padrão para mobile
-        background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-        border: var(--border-width-thick) solid var(--border-color);
-        border-radius: var(--radius-lg);
-        padding: var(--spacing-lg);
-        transition: all var(--transition-normal);
+        background-color: var(--bg-primary);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: var(--spacing-md);
+        transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
-        box-shadow: var(--shadow-sm);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); // Sombra bem sutil
 
         @include desktop {
-          padding: var(--spacing-xl);
-          border-radius: var(--radius-xl);
+          padding: var(--spacing-md);
+          border-radius: 20px;
         }
 
         &::before {
@@ -3334,9 +3125,9 @@ a.cta-secondary,
         }
 
         &:hover {
-          border-color: var(--border-color-hover);
-          transform: var(--hover-lift-lg) scale(1.01);
-          box-shadow: var(--shadow-xl);
+          border-color: var(--border);
+          transform: translateY(-1px); // Levantar 1-2px
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Sombra levemente maior
 
           &::before {
             transform: scaleX(1);
@@ -3401,7 +3192,7 @@ a.cta-secondary,
         .service-title {
           font-size: 26px;
           font-weight: 700;
-          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-family: 'Inter', sans-serif;
           color: var(--text-primary);
           margin-bottom: var(--spacing-md);
           letter-spacing: -0.4px;
@@ -3463,7 +3254,7 @@ a.cta-secondary,
       text-decoration: none !important;
       text-align: center !important;
       min-width: 200px !important;
-      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      font-family: 'Inter', sans-serif !important;
       appearance: none !important;
       -webkit-appearance: none !important;
       -moz-appearance: none !important;
@@ -3582,7 +3373,7 @@ a.cta-secondary,
     .section-title {
       font-size: 48px;
       font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: var(--text-primary);
       text-align: center;
       margin-bottom: var(--spacing-xl);
@@ -3606,16 +3397,18 @@ a.cta-secondary,
       }
 
       .metric-card {
-        background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-        border: 1px solid rgba(37, 99, 235, 0.1);
-        border-radius: 16px;
-        padding: var(--spacing-xl);
-        box-shadow: 
-          0 8px 32px rgba(0, 0, 0, 0.08),
-          0 2px 8px rgba(37, 99, 235, 0.05),
-          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        background-color: var(--bg-primary);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: var(--spacing-md);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); // Sombra bem sutil
         position: relative;
         overflow: visible;
+        
+        @include desktop {
+          border-radius: 20px;
+          padding: var(--spacing-md);
+        }
         transition: all 0.3s ease;
         text-align: center;
         display: flex;
@@ -3652,7 +3445,7 @@ a.cta-secondary,
         .metric-number {
           font-size: 48px;
           font-weight: 700;
-          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-family: 'Inter', sans-serif;
           background: linear-gradient(
             135deg,
             var(--blue-primary) 0%,
@@ -3729,7 +3522,7 @@ a.cta-secondary,
       .section-title {
       font-size: 48px;
       font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: var(--text-primary);
       text-align: center;
       margin-bottom: var(--spacing-xl);
@@ -3869,7 +3662,7 @@ a.cta-secondary,
             color: #FFFFFF;
             font-size: 36px;
             font-weight: 700;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -3889,7 +3682,7 @@ a.cta-secondary,
           .step-title {
             font-size: 20px;
             font-weight: 700;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             color: var(--text-primary);
             margin-bottom: var(--spacing-sm);
             letter-spacing: -0.2px;
@@ -4008,7 +3801,7 @@ a.cta-secondary,
     .section-title {
       font-size: clamp(32px, 8vw, 48px);
       font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: var(--text-primary);
       text-align: center;
       margin-bottom: var(--spacing-lg);
@@ -4033,24 +3826,24 @@ a.cta-secondary,
 
       .team-member {
         text-align: center;
-        transition: all var(--transition-normal);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-        border: var(--border-width-thick) solid var(--border-color);
-        border-radius: var(--radius-xl);
+        border: 2px solid rgba(37, 99, 235, 0.1);
+        border-radius: 20px;
         padding: var(--spacing-lg);
-        box-shadow: var(--shadow-sm);
+        box-shadow: 
+          0 4px 20px rgba(0, 0, 0, 0.06),
+          0 1px 4px rgba(37, 99, 235, 0.04);
         max-width: 100%;
         width: 100%;
 
         @include desktop {
-          border-radius: var(--radius-2xl);
+          border-radius: 24px;
           padding: var(--spacing-xl);
         }
 
         &:hover {
-          transform: var(--hover-lift-lg);
-          border-color: var(--border-color-hover);
-          box-shadow: var(--shadow-lg);
+          transform: translateY(-8px);
 
           .member-photo {
             border-color: var(--blue-primary);
@@ -4123,7 +3916,7 @@ a.cta-secondary,
         .member-name {
           font-size: 22px;
           font-weight: 700;
-          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-family: 'Inter', sans-serif;
           color: var(--text-primary);
           margin-bottom: var(--spacing-xs);
           letter-spacing: -0.3px;
@@ -4139,16 +3932,18 @@ a.cta-secondary,
         }
 
         .member-role {
-          font-size: 14px;
-          font-family: var(--font-heading);
+          font-size: 16px;
+          font-family: 'Inter', sans-serif;
           color: var(--blue-primary);
           margin-bottom: var(--spacing-md);
           font-weight: 600;
-          letter-spacing: 0.4px;
-          // Removido text-transform: uppercase para estilo mais consultivo
+          letter-spacing: -0.1px;
+          text-transform: uppercase;
+          font-size: 13px;
+          letter-spacing: 1px;
 
           @include mobile {
-            font-size: 13px;
+            font-size: 12px;
             margin-bottom: var(--spacing-sm);
           }
         }
@@ -4193,7 +3988,7 @@ a.cta-secondary,
     .section-title {
       font-size: 48px;
       font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: var(--text-primary);
       text-align: center;
       margin-bottom: var(--spacing-xl);
@@ -4268,7 +4063,7 @@ a.cta-secondary,
           color: var(--text-primary);
           font-size: 18px;
           font-weight: 600;
-          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-family: 'Inter', sans-serif;
           text-align: left;
           cursor: pointer;
           display: flex;
@@ -4362,8 +4157,9 @@ a.cta-secondary,
   background: linear-gradient(
     135deg,
     var(--blue-lightest) 0%,
-    #FFFFFF 40%,
-    #FFFFFF 100%
+    #FFFFFF 30%,
+    #FFFFFF 70%,
+    var(--orange-lightest) 100%
   );
   position: relative;
   padding: var(--spacing-2xl) 20px;
@@ -4456,7 +4252,7 @@ a.cta-secondary,
       z-index: 2;
       font-size: 48px;
       font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       color: var(--text-primary);
       text-align: center;
       margin-bottom: var(--spacing-md);
@@ -4484,7 +4280,7 @@ a.cta-secondary,
       .highlight-time {
         color: var(--blue-primary);
         font-weight: 600;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Inter', sans-serif;
       }
     }
 
@@ -4537,48 +4333,35 @@ a.cta-secondary,
           }
 
           .required {
-            color: var(--danger);
+            color: var(--orange-primary);
           }
         }
 
         input,
         select {
           width: 100%;
-          min-height: 48px;
+          height: 48px;
           padding: 12px 16px;
-          background-color: #FFFFFF;
-          border: var(--border-width-thick) solid var(--field-border);
-          border-radius: 6px;
-          color: var(--text-primary);
+          background-color: var(--bg-primary);
+          border: 1px solid var(--border);
+          border-radius: 8px;
+          color: var(--ink);
           font-size: 16px;
           font-family: 'Inter', sans-serif;
           transition: all 0.3s ease;
 
-          @include mobile {
-            font-size: 16px; // Evita zoom no iOS
-            min-height: 52px;
-            padding: 14px 16px;
-            border-radius: 8px;
-            -webkit-appearance: none;
-            appearance: none;
-          }
-
-          &:hover:not(:focus):not(:disabled) {
-            border-color: var(--field-border-hover);
+          @include desktop {
+            font-size: 18px;
           }
 
           &:focus {
             outline: none;
-            border-color: var(--blue-primary);
-            box-shadow: var(--focus-ring-blue);
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 3px rgba(57, 67, 183, 0.1); // Focus ring #3943B7 visível
           }
 
           &.error {
-            border-color: var(--danger);
-            
-            &:focus {
-              box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.18);
-            }
+            border-color: var(--orange-primary);
           }
 
           &.valid {
@@ -4587,7 +4370,7 @@ a.cta-secondary,
         }
 
         .error-message {
-          color: var(--danger);
+          color: var(--orange-primary);
           font-size: 14px;
           font-family: 'Inter', sans-serif;
           margin-top: 4px;
@@ -4632,35 +4415,31 @@ a.cta-secondary,
       .form-submit {
         width: 100%;
         height: 55px;
-        background-color: var(--blue-primary);
+        background-color: var(--green-primary);
         border: none;
         border-radius: 6px;
         color: #FFFFFF;
-        font-family: var(--font-heading);
         font-weight: 600;
-        font-size: var(--fs-cta);
-        letter-spacing: var(--ls-cta);
-        line-height: 1.1;
+        font-family: 'Inter', sans-serif;
+        font-size: 18px;
         cursor: pointer;
         transition: all 0.3s ease;
         margin-top: var(--spacing-md);
-        box-shadow: var(--shadow-blue);
+        box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+        letter-spacing: -0.2px;
 
         @include mobile {
           height: 56px;
           min-height: 56px;
+          font-size: 16px;
           border-radius: 8px;
           margin-top: var(--spacing-lg);
           touch-action: manipulation;
         }
 
-        @include desktop {
-          font-size: var(--fs-cta-desktop);
-        }
-
         &:hover:not(:disabled) {
-          background-color: var(--blue-dark);
-          box-shadow: var(--shadow-blue-lg);
+          background-color: var(--green-dark);
+          box-shadow: 0 6px 30px rgba(34, 197, 94, 0.5);
           transform: translateY(-2px);
         }
 
@@ -4716,7 +4495,7 @@ a.cta-secondary,
             text-decoration: none;
             border-radius: 8px;
             font-weight: 600;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 16px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
@@ -4827,13 +4606,13 @@ footer {
         h4 {
           font-size: 20px;
           font-weight: 600;
-          font-family: var(--font-heading);
+          font-family: 'Inter', sans-serif;
           color: var(--text-primary);
           margin-bottom: var(--spacing-sm);
           margin-top: 0;
           padding: 0;
-          // Removido text-transform: uppercase e letter-spacing alto para estilo mais consultivo
-          letter-spacing: var(--ls-heading);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
           line-height: 1.2;
 
           @include mobile {
@@ -4984,7 +4763,7 @@ footer {
     strong {
       font-size: 16px;
       font-weight: 600;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       line-height: 1.4;
       color: #ffffff;
       letter-spacing: -0.2px;

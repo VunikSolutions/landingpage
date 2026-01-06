@@ -104,9 +104,44 @@ serve(async (req) => {
               </p>
               
               <p style="margin: 30px 0 0 0; color: #666666; font-size: 14px; line-height: 1.6;">
-                Atenciosamente,<br>
-                <strong>Equipe Vunik</strong>
+                Atenciosamente,
               </p>
+              
+              <!-- Assinatura -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 20px 0 0 0; padding-top: 20px;">
+                <tr>
+                  <td style="padding: 0;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="padding: 0 0 20px 0; vertical-align: top;">
+                          <img src="https://www.vunik.com.br/vunik%20logo.png" alt="Vunik Logo" width="120" height="auto" style="display: block; max-width: 120px; height: auto;" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 0 0 8px 0;">
+                          <p style="margin: 0; color: #333333; font-size: 16px; font-weight: 600; line-height: 1.4;">
+                            Caio Deiró | CEO — Vunik
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 0 0 8px 0;">
+                          <p style="margin: 0; color: #666666; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Seu digital à altura da sua reputação.
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 0;">
+                          <p style="margin: 0; color: #0066cc; font-size: 14px; line-height: 1.5;">
+                            <a href="https://www.vunik.com" style="color: #0066cc; text-decoration: none;">www.vunik.com</a>
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           <tr>

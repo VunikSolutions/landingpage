@@ -28,7 +28,7 @@ serve(async (req) => {
     }
 
     // Validar campos obrigatórios do lead
-    if (!lead.nome || !lead.whatsapp || !lead.especialidade) {
+    if (!lead.nome || !lead.email || !lead.whatsapp || !lead.especialidade) {
       console.error('Erro: Campos obrigatórios do lead não fornecidos', lead)
       throw new Error('Campos obrigatórios do lead não fornecidos')
     }
@@ -54,22 +54,22 @@ serve(async (req) => {
     // Mapear valores de faturamento para texto legível
     const faturamentoMap: Record<string, string> = {
       'ate-10k': 'Até R$ 10.000',
-      '10k-30k': 'R$ 10.000 a R$ 30.000',
-      '30k-50k': 'R$ 30.000 a R$ 50.000',
+      '10k-20k': 'De R$ 10.000 a R$ 20.000',
+      '20k-50k': 'R$ 20.000 a R$ 50.000',
       '50k-100k': 'R$ 50.000 a R$ 100.000',
       'acima-100k': 'Acima de R$ 100.000'
     }
 
-    // Mapear valores de tempo de atendimento para texto legível
-    const tempoMap: Record<string, string> = {
-      'menos-2': 'Menos de 2 anos',
-      '2-5': '2 a 5 anos',
-      '5-10': '5 a 10 anos',
-      'mais-10': 'Mais de 10 anos'
+    // Mapear valores de objetivo para texto legível
+    const objetivoMap: Record<string, string> = {
+      'aparecer-primeiro-google': 'Aparecer primeiro quando pacientes procuram minha especialidade',
+      'aumentar-agendamentos-qualificados': 'Aumentar agendamentos com pacientes qualificados',
+      'construir-autoridade-valor': 'Construir autoridade para aumentar o valor dos meus serviços',
+      'outro': 'Outro'
     }
 
     const faturamentoTexto = faturamentoMap[lead.faturamento] || lead.faturamento
-    const tempoTexto = tempoMap[lead.tempo_atendimento] || lead.tempo_atendimento
+    const objetivoTexto = objetivoMap[lead.objetivo] || lead.objetivo
     const dataFormatada = new Date(lead.created_at).toLocaleString('pt-BR', {
       day: '2-digit',
       month: '2-digit',
@@ -150,6 +150,24 @@ serve(async (req) => {
                       <tr>
                         <td width="160" style="padding-right: 20px; vertical-align: top;">
                           <span style="color: #666666; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                            E-mail
+                          </span>
+                        </td>
+                        <td style="vertical-align: top;">
+                          <a href="mailto:{{EMAIL}}" style="color: #0066cc; font-size: 16px; font-weight: 500; text-decoration: none;">
+                            {{EMAIL}}
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td width="160" style="padding-right: 20px; vertical-align: top;">
+                          <span style="color: #666666; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
                             WhatsApp
                           </span>
                         </td>
@@ -217,24 +235,6 @@ serve(async (req) => {
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;">
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr>
-                        <td width="160" style="padding-right: 20px; vertical-align: top;">
-                          <span style="color: #666666; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
-                            Tempo de Atendimento
-                          </span>
-                        </td>
-                        <td style="vertical-align: top;">
-                          <span style="color: #333333; font-size: 16px; font-weight: 500;">
-                            {{TEMPO_ATENDIMENTO}}
-                          </span>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
                   <td style="padding: 12px 0;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                       <tr>
@@ -271,6 +271,46 @@ serve(async (req) => {
                   </td>
                 </tr>
               </table>
+              
+              <p style="margin: 30px 0 0 0; color: #666666; font-size: 14px; line-height: 1.6;">
+                Atenciosamente,
+              </p>
+              
+              <!-- Assinatura -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 20px 0 0 0; padding-top: 20px;">
+                <tr>
+                  <td style="padding: 0;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="padding: 0 0 20px 0; vertical-align: top;">
+                          <img src="https://www.vunik.com.br/vunik%20logo.png" alt="Vunik Logo" width="120" height="auto" style="display: block; max-width: 120px; height: auto;" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 0 0 8px 0;">
+                          <p style="margin: 0; color: #333333; font-size: 16px; font-weight: 600; line-height: 1.4;">
+                            Caio Deiró | CEO — Vunik
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 0 0 8px 0;">
+                          <p style="margin: 0; color: #666666; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Seu digital à altura da sua reputação.
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 0;">
+                          <p style="margin: 0; color: #0066cc; font-size: 14px; line-height: 1.5;">
+                            <a href="https://www.vunik.com" style="color: #0066cc; text-decoration: none;">www.vunik.com</a>
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           <tr>
@@ -295,12 +335,12 @@ serve(async (req) => {
     // Substituir variáveis no template
     const emailHtml = getEmailTemplate()
       .replace(/\{\{NOME\}\}/g, lead.nome)
+      .replace(/\{\{EMAIL\}\}/g, lead.email || 'Não informado')
       .replace(/\{\{WHATSAPP\}\}/g, lead.whatsapp)
       .replace(/\{\{WHATSAPP_NUMERO\}\}/g, whatsappNumero)
       .replace(/\{\{ESPECIALIDADE\}\}/g, lead.especialidade)
       .replace(/\{\{FATURAMENTO\}\}/g, faturamentoTexto)
-      .replace(/\{\{OBJETIVO\}\}/g, lead.objetivo)
-      .replace(/\{\{TEMPO_ATENDIMENTO\}\}/g, tempoTexto)
+      .replace(/\{\{OBJETIVO\}\}/g, objetivoTexto)
       .replace(/\{\{DATA_HORA\}\}/g, dataFormatada)
       .replace(/\{\{LEAD_ID\}\}/g, lead.id)
 
