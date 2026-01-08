@@ -1926,7 +1926,7 @@ a.cta-secondary,
     @include desktop {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--spacing-xl);
+      gap: var(--spacing-2xl);
       max-width: 100%;
       margin: var(--spacing-2xl) 0;
       width: 100%;
@@ -1950,45 +1950,27 @@ a.cta-secondary,
       }
 
       @include desktop {
-        padding: var(--spacing-xl);
-        border-radius: var(--radius-xl);
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: var(--spacing-3xl) var(--spacing-2xl);
+        border-radius: var(--radius-2xl);
+        gap: var(--spacing-xl);
       }
 
       &:hover {
         border-color: var(--blue-primary);
-        transform: translateX(4px);
         box-shadow: var(--shadow-md);
 
-        .check-icon {
-          background-color: var(--blue-primary);
-          color: #FFFFFF;
-          transform: scale(1.05);
-        }
-      }
-
-      // Estado selecionado quando está no centro da tela (scroll-based)
-      &.centered {
-        border-color: var(--blue-primary);
-        border-width: 2px;
-        box-shadow: 
-          0 8px 30px rgba(57, 67, 183, 0.18),
-          0 2px 12px rgba(57, 67, 183, 0.12),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-
         @include mobile {
-          transform: translateX(2px) scale(1.01);
-          box-shadow: 
-            0 6px 24px rgba(57, 67, 183, 0.15),
-            0 2px 8px rgba(57, 67, 183, 0.1),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+          transform: translateX(4px);
         }
 
         @include desktop {
-          transform: translateX(6px) scale(1.02);
+          transform: translateY(-4px);
           box-shadow: 
-            0 12px 40px rgba(57, 67, 183, 0.2),
-            0 4px 16px rgba(57, 67, 183, 0.15),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+            0 12px 40px rgba(57, 67, 183, 0.15),
+            0 4px 16px rgba(57, 67, 183, 0.1);
         }
 
         .check-icon {
@@ -1996,11 +1978,46 @@ a.cta-secondary,
           color: #FFFFFF;
           
           @include mobile {
-            transform: scale(1.08);
+            transform: scale(1.05);
           }
 
           @include desktop {
-            transform: scale(1.1);
+            transform: scale(1.08);
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-dark) 100%);
+            box-shadow: 0 8px 24px rgba(57, 67, 183, 0.3);
+          }
+        }
+      }
+
+      // Estado selecionado quando está no centro da tela (scroll-based) - APENAS MOBILE
+      &.centered {
+        @include mobile {
+          border-color: var(--blue-primary);
+          border-width: 2px;
+          transform: translateX(2px) scale(1.01);
+          box-shadow: 
+            0 6px 24px rgba(57, 67, 183, 0.15),
+            0 2px 8px rgba(57, 67, 183, 0.1),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+
+          .check-icon {
+            background-color: var(--blue-primary);
+            color: #FFFFFF;
+            transform: scale(1.08);
+          }
+        }
+
+        // No desktop, não aplicar nenhum estilo
+        @include desktop {
+          border-color: var(--border-color);
+          border-width: var(--border-width-thick);
+          transform: none;
+          box-shadow: var(--shadow-sm);
+
+          .check-icon {
+            background-color: var(--blue-lightest);
+            color: var(--blue-primary);
+            transform: none;
           }
         }
       }
@@ -2024,8 +2041,11 @@ a.cta-secondary,
         }
 
         @include desktop {
-          width: 44px;
-          height: 44px;
+          width: 72px;
+          height: 72px;
+          border-radius: var(--radius-xl);
+          border-width: 3px;
+          background: linear-gradient(135deg, rgba(57, 67, 183, 0.1) 0%, rgba(57, 67, 183, 0.05) 100%);
         }
 
         svg {
@@ -2033,14 +2053,18 @@ a.cta-secondary,
           height: 20px;
 
           @include desktop {
-            width: 22px;
-            height: 22px;
+            width: 32px;
+            height: 32px;
           }
         }
       }
 
       .check-content {
         flex: 1;
+
+        @include desktop {
+          width: 100%;
+        }
 
         h3 {
           font-size: 20px;
@@ -2056,7 +2080,12 @@ a.cta-secondary,
           }
 
           @include desktop {
-            font-size: 22px;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 var(--spacing-md) 0;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            text-align: center;
           }
         }
 
@@ -2073,7 +2102,11 @@ a.cta-secondary,
           }
 
           @include desktop {
-            font-size: 16px;
+            font-size: 20px;
+            line-height: 1.7;
+            text-align: center;
+            color: var(--text-secondary);
+            max-width: 100%;
           }
         }
       }
@@ -3440,61 +3473,42 @@ a.cta-secondary,
           }
         }
 
-        // Estado selecionado quando está no centro da tela (scroll-based)
+        // Estado selecionado quando está no centro da tela (scroll-based) - APENAS MOBILE
         &.centered {
-          border-color: var(--blue-primary);
-          border-width: 2px;
-          box-shadow: 
-            0 8px 30px rgba(57, 67, 183, 0.18),
-            0 2px 12px rgba(57, 67, 183, 0.12),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-
           @include mobile {
+            border-color: var(--blue-primary);
+            border-width: 2px;
             transform: scale(1.01);
             box-shadow: 
               0 6px 24px rgba(57, 67, 183, 0.15),
               0 2px 8px rgba(57, 67, 183, 0.1),
               inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-          }
 
-          @include desktop {
-            transform: scale(1.02);
-            box-shadow: 
-              0 12px 40px rgba(57, 67, 183, 0.2),
-              0 4px 16px rgba(57, 67, 183, 0.15),
-              inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-          }
+            &::before {
+              transform: scaleX(1);
+            }
 
-          &::before {
-            transform: scaleX(1);
-          }
+            &::after {
+              opacity: 1;
+            }
 
-          &::after {
-            opacity: 1;
-          }
-
-          .service-icon {
-            background: linear-gradient(135deg, rgba(57, 67, 183, 0.15) 0%, rgba(57, 67, 183, 0.1) 100%);
-
-            @include mobile {
+            .service-icon {
+              background: linear-gradient(135deg, rgba(57, 67, 183, 0.15) 0%, rgba(57, 67, 183, 0.1) 100%);
               transform: scale(1.05);
-            }
-
-            @include desktop {
-              transform: scale(1.1);
-            }
-            
-            img {
-              @include mobile {
+              
+              img {
                 transform: scale(1.04);
                 filter: drop-shadow(0 4px 12px rgba(57, 67, 183, 0.3));
               }
-
-              @include desktop {
-                transform: scale(1.08);
-                filter: drop-shadow(0 6px 16px rgba(57, 67, 183, 0.4));
-              }
             }
+          }
+
+          // No desktop, não aplicar nenhum estilo
+          @include desktop {
+            border-color: var(--border-color);
+            border-width: var(--border-width-thick);
+            transform: none;
+            box-shadow: var(--shadow-sm);
           }
         }
 
@@ -4957,7 +4971,7 @@ footer {
         }
 
         .footer-logo {
-          margin-bottom: var(--spacing-md);
+          margin-bottom: var(--spacing-sm);
 
           @include mobile {
             display: flex;
@@ -4968,6 +4982,27 @@ footer {
           img {
             height: 40px;
             width: auto;
+          }
+        }
+
+        .footer-slogan {
+          font-size: 16px;
+          font-family: var(--font-body);
+          font-style: italic;
+          line-height: 1.5;
+          color: var(--text-secondary);
+          margin: 0;
+          text-align: left;
+
+          @include mobile {
+            font-size: 14px;
+            text-align: center;
+            margin-top: var(--spacing-xs);
+          }
+
+          @include desktop {
+            font-size: 17px;
+            margin-top: var(--spacing-xs);
           }
         }
 

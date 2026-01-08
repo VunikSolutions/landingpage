@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ============================================
-// SELEÇÃO AUTOMÁTICA DE CARDS BASEADA NO SCROLL
+// SELEÇÃO AUTOMÁTICA DE CARDS BASEADA NO SCROLL (APENAS MOBILE)
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
   const serviceCards = document.querySelectorAll('.service-card');
@@ -146,7 +146,21 @@ document.addEventListener('DOMContentLoaded', function () {
   
   let ticking = false;
 
+  // Verificar se está em mobile (viewport < 1024px)
+  function isMobile() {
+    return window.innerWidth < 1024;
+  }
+
   function updateCardSelection(cards, selector) {
+    // Só aplicar efeito em mobile
+    if (!isMobile()) {
+      // Remover classe centered de todos os cards se estiver em desktop
+      cards.forEach(card => {
+        card.classList.remove('centered');
+      });
+      return;
+    }
+
     const viewportCenter = window.innerHeight / 2;
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
     const centerY = scrollY + viewportCenter;
