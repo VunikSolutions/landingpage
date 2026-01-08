@@ -114,13 +114,13 @@ serve(async (req) => {
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                       <tr>
                         <td style="padding: 0 0 20px 0; vertical-align: top;">
-                          <img src="https://www.vunik.com.br/vunik%20logo.png" alt="Vunik Logo" width="120" height="auto" style="display: block; max-width: 120px; height: auto;" />
+                          <img src="https://www.vunik.com.br/vunik%20logo.png" alt="Vunik Logo" width="60" height="auto" style="display: block; max-width: 60px; height: auto;" />
                         </td>
                       </tr>
                       <tr>
                         <td style="padding: 0 0 8px 0;">
                           <p style="margin: 0; color: #333333; font-size: 16px; font-weight: 600; line-height: 1.4;">
-                            Caio Deiró | CEO — Vunik
+                            Equipe Vunik
                           </p>
                         </td>
                       </tr>
