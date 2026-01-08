@@ -138,6 +138,82 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ============================================
+// SELEÇÃO AUTOMÁTICA DE CARDS BASEADA NO SCROLL
+// ============================================
+document.addEventListener('DOMContentLoaded', function () {
+  const serviceCards = document.querySelectorAll('.service-card');
+  const clarezaItems = document.querySelectorAll('.clareza-checklist-item');
+  
+  let ticking = false;
+
+  function updateCardSelection(cards, selector) {
+    const viewportCenter = window.innerHeight / 2;
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const centerY = scrollY + viewportCenter;
+
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const cardTop = rect.top + scrollY;
+      const cardBottom = cardTop + rect.height;
+      const cardCenter = cardTop + (rect.height / 2);
+
+      // Verificar se o centro do card está próximo ao centro da viewport
+      // Usando uma margem de tolerância de 150px
+      const distanceFromCenter = Math.abs(cardCenter - centerY);
+      const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+      
+      if (isInViewport && distanceFromCenter < 150) {
+        // Card está no centro da tela
+        if (!card.classList.contains('centered')) {
+          // Remover classe de outros cards do mesmo tipo
+          cards.forEach(otherCard => {
+            if (otherCard !== card) {
+              otherCard.classList.remove('centered');
+            }
+          });
+          // Adicionar classe ao card atual
+          card.classList.add('centered');
+        }
+      } else {
+        // Card não está no centro
+        if (card.classList.contains('centered')) {
+          card.classList.remove('centered');
+        }
+      }
+    });
+  }
+
+  function updateAllSelections() {
+    if (serviceCards.length > 0) {
+      updateCardSelection(serviceCards, '.service-card');
+    }
+    if (clarezaItems.length > 0) {
+      updateCardSelection(clarezaItems, '.clareza-checklist-item');
+    }
+    ticking = false;
+  }
+
+  // Atualizar na inicialização
+  updateAllSelections();
+
+  // Atualizar durante o scroll
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateAllSelections);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Atualizar ao redimensionar a janela
+  window.addEventListener('resize', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateAllSelections);
+      ticking = true;
+    }
+  }, { passive: true });
+});
+
+// ============================================
 // CARROSSEL DE DEPOIMENTOS PREMIUM - REMOVIDO
 // ============================================
 

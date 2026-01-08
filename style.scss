@@ -520,9 +520,11 @@ header {
   }
 
   &.scrolled {
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08), 0 1px 8px rgba(0, 0, 0, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .header-content {
@@ -1964,6 +1966,45 @@ a.cta-secondary,
         }
       }
 
+      // Estado selecionado quando está no centro da tela (scroll-based)
+      &.centered {
+        border-color: var(--blue-primary);
+        border-width: 2px;
+        box-shadow: 
+          0 8px 30px rgba(57, 67, 183, 0.18),
+          0 2px 12px rgba(57, 67, 183, 0.12),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+
+        @include mobile {
+          transform: translateX(2px) scale(1.01);
+          box-shadow: 
+            0 6px 24px rgba(57, 67, 183, 0.15),
+            0 2px 8px rgba(57, 67, 183, 0.1),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+
+        @include desktop {
+          transform: translateX(6px) scale(1.02);
+          box-shadow: 
+            0 12px 40px rgba(57, 67, 183, 0.2),
+            0 4px 16px rgba(57, 67, 183, 0.15),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+
+        .check-icon {
+          background-color: var(--blue-primary);
+          color: #FFFFFF;
+          
+          @include mobile {
+            transform: scale(1.08);
+          }
+
+          @include desktop {
+            transform: scale(1.1);
+          }
+        }
+      }
+
       .check-icon {
         flex-shrink: 0;
         width: 40px;
@@ -3395,6 +3436,64 @@ a.cta-secondary,
             img {
               transform: scale(1.05);
               filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.3));
+            }
+          }
+        }
+
+        // Estado selecionado quando está no centro da tela (scroll-based)
+        &.centered {
+          border-color: var(--blue-primary);
+          border-width: 2px;
+          box-shadow: 
+            0 8px 30px rgba(57, 67, 183, 0.18),
+            0 2px 12px rgba(57, 67, 183, 0.12),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+
+          @include mobile {
+            transform: scale(1.01);
+            box-shadow: 
+              0 6px 24px rgba(57, 67, 183, 0.15),
+              0 2px 8px rgba(57, 67, 183, 0.1),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+          }
+
+          @include desktop {
+            transform: scale(1.02);
+            box-shadow: 
+              0 12px 40px rgba(57, 67, 183, 0.2),
+              0 4px 16px rgba(57, 67, 183, 0.15),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+          }
+
+          &::before {
+            transform: scaleX(1);
+          }
+
+          &::after {
+            opacity: 1;
+          }
+
+          .service-icon {
+            background: linear-gradient(135deg, rgba(57, 67, 183, 0.15) 0%, rgba(57, 67, 183, 0.1) 100%);
+
+            @include mobile {
+              transform: scale(1.05);
+            }
+
+            @include desktop {
+              transform: scale(1.1);
+            }
+            
+            img {
+              @include mobile {
+                transform: scale(1.04);
+                filter: drop-shadow(0 4px 12px rgba(57, 67, 183, 0.3));
+              }
+
+              @include desktop {
+                transform: scale(1.08);
+                filter: drop-shadow(0 6px 16px rgba(57, 67, 183, 0.4));
+              }
             }
           }
         }
