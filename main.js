@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
   const serviceCards = document.querySelectorAll('.service-card');
   const clarezaItems = document.querySelectorAll('.clareza-checklist-item');
-  
+
   let ticking = false;
 
   // Verificar se está em mobile (viewport < 1024px)
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // Usando uma margem de tolerância de 150px
       const distanceFromCenter = Math.abs(cardCenter - centerY);
       const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
-      
+
       if (isInViewport && distanceFromCenter < 150) {
         // Card está no centro da tela
         if (!card.classList.contains('centered')) {
@@ -359,7 +359,7 @@ function openImageModal(imageSrc, caption) {
   const modal = document.getElementById('imageModal');
   const modalImage = document.getElementById('modalImage');
   const modalCaption = document.getElementById('modalCaption');
-  
+
   if (modal && modalImage && modalCaption) {
     modalImage.src = imageSrc;
     modalCaption.textContent = caption;
@@ -367,14 +367,14 @@ function openImageModal(imageSrc, caption) {
     document.body.style.overflow = 'hidden';
     currentZoom = 1;
     modalImage.style.transform = `scale(${currentZoom})`;
-    
+
     // Resetar posição de scroll do container
     const container = modal.querySelector('.modal-image-container');
     if (container) {
       container.scrollLeft = 0;
       container.scrollTop = 0;
     }
-    
+
     // Adicionar listeners para drag
     setupImageDrag(modalImage);
   }
@@ -385,13 +385,13 @@ function closeImageModal(event) {
   if (event) {
     event.stopPropagation();
   }
-  
+
   const modal = document.getElementById('imageModal');
   if (modal) {
     modal.classList.remove('active');
     document.body.style.overflow = '';
     currentZoom = 1;
-    
+
     const modalImage = document.getElementById('modalImage');
     if (modalImage) {
       modalImage.style.transform = 'scale(1)';
@@ -403,13 +403,13 @@ function closeImageModal(event) {
 function zoomImage(factor) {
   const modalImage = document.getElementById('modalImage');
   if (!modalImage) return;
-  
+
   currentZoom *= factor;
-  
+
   // Limitar zoom entre 0.5x e 5x
   if (currentZoom < 0.5) currentZoom = 0.5;
   if (currentZoom > 5) currentZoom = 5;
-  
+
   modalImage.style.transform = `scale(${currentZoom})`;
   modalImage.style.transformOrigin = 'center center';
 }
@@ -418,10 +418,10 @@ function zoomImage(factor) {
 function resetZoom() {
   const modalImage = document.getElementById('modalImage');
   if (!modalImage) return;
-  
+
   currentZoom = 1;
   modalImage.style.transform = 'scale(1)';
-  
+
   // Resetar scroll do container
   const container = modalImage.closest('.modal-image-container');
   if (container) {
@@ -434,19 +434,19 @@ function resetZoom() {
 function setupImageDrag(imageElement) {
   const container = imageElement.closest('.modal-image-container');
   if (!container) return;
-  
+
   // Remover listeners anteriores
   imageElement.removeEventListener('mousedown', handleMouseDown);
   container.removeEventListener('mousemove', handleMouseMove);
   container.removeEventListener('mouseup', handleMouseUp);
   container.removeEventListener('mouseleave', handleMouseUp);
-  
+
   // Adicionar novos listeners
   imageElement.addEventListener('mousedown', handleMouseDown);
   container.addEventListener('mousemove', handleMouseMove);
   container.addEventListener('mouseup', handleMouseUp);
   container.addEventListener('mouseleave', handleMouseUp);
-  
+
   // Touch events para mobile
   imageElement.addEventListener('touchstart', handleTouchStart, { passive: false });
   container.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -519,7 +519,7 @@ function handleTouchEnd() {
 }
 
 // Fechar modal com ESC
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
     const modal = document.getElementById('imageModal');
     if (modal && modal.classList.contains('active')) {
@@ -843,6 +843,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (error) {
           console.error('Erro ao salvar lead:', error);
+          
+          // Tratar erro específico de Row Level Security (RLS)
+          if (error.code === '42501' || error.message?.includes('row-level security policy')) {
+            console.error('❌ Erro de permissão: A tabela leads precisa de uma política RLS que permita inserções anônimas.');
+            console.error('📝 Solução: Execute o SQL em supabase/migrations/enable_leads_insert.sql no Supabase SQL Editor');
+            throw new Error('Erro de configuração do servidor. Por favor, entre em contato diretamente pelo email corporativo@vunik.site');
+          }
+          
+          // Tratar erro de autenticação
+          if (error.code === 'PGRST301' || error.message?.includes('JWT')) {
+            console.error('❌ Erro de autenticação: Verifique se VITE_SUPABASE_ANON_KEY está correto.');
+            throw new Error('Erro de configuração do servidor. Por favor, entre em contato diretamente pelo email corporativo@vunik.site');
+          }
+          
           throw error;
         }
 
