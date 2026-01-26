@@ -6,7 +6,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
-const NOTIFICATION_EMAIL = Deno.env.get('NOTIFICATION_EMAIL') || 'corporativo@vunik.site'
+const NOTIFICATION_EMAIL = Deno.env.get('NOTIFICATION_EMAIL') || 'caio.guimaraes@vunik.com.br'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
