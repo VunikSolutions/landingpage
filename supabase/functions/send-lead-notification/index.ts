@@ -303,7 +303,7 @@ serve(async (req) => {
                       <tr>
                         <td style="padding: 0;">
                           <p style="margin: 0; color: #0066cc; font-size: 14px; line-height: 1.5;">
-                            <a href="https://www.vunik.com" style="color: #0066cc; text-decoration: none;">www.vunik.com</a>
+                            <a href="https://www.vunik.com.br" style="color: #0066cc; text-decoration: none;">www.vunik.com.br</a>
                           </p>
                         </td>
                       </tr>
