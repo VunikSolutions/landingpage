@@ -1212,6 +1212,166 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ============================================
+// GOOGLE ANALYTICS - RASTREAMENTO DE SCROLL E TEMPO DE PERMANÊNCIA
+// ============================================
+// Função para aguardar gtag estar disponível
+function waitForGtag(callback, maxAttempts = 50) {
+  let attempts = 0;
+  const checkGtag = setInterval(() => {
+    attempts++;
+    if (typeof window.gtag !== 'undefined' || typeof window.dataLayer !== 'undefined') {
+      clearInterval(checkGtag);
+      callback();
+    } else if (attempts >= maxAttempts) {
+      clearInterval(checkGtag);
+      console.warn('Google Analytics (gtag) não carregou após 5 segundos. Eventos podem não ser rastreados.');
+    }
+  }, 100);
+}
+
+// Inicializar rastreamento quando gtag estiver disponível
+waitForGtag(function() {
+  // Variáveis para rastreamento de scroll
+  const scrollThresholds = [25, 50, 75, 100];
+  const scrollTracked = {};
+
+  // Variáveis para rastreamento de tempo
+  const timeThresholds = [30, 60, 120, 180, 300]; // em segundos: 30s, 1min, 2min, 3min, 5min
+  const timeTracked = {};
+  const startTime = Date.now();
+
+  // Função helper para enviar eventos ao GA4
+  function sendGA4Event(eventName, parameters) {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', eventName, parameters);
+      console.log(`✅ Evento GA4 enviado: ${eventName}`, parameters);
+    } else if (typeof window.dataLayer !== 'undefined') {
+      window.dataLayer.push({
+        'event': eventName,
+        ...parameters
+      });
+      console.log(`✅ Evento GA4 enviado via dataLayer: ${eventName}`, parameters);
+    } else {
+      console.warn(`⚠️ Não foi possível enviar evento ${eventName} - gtag não disponível`);
+    }
+  }
+
+  // Função para calcular porcentagem de scroll
+  function getScrollPercentage() {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollBottom = scrollTop + windowHeight;
+    
+    if (documentHeight <= windowHeight) {
+      return 100; // Página muito curta, considerada como 100%
+    }
+    
+    return Math.round((scrollBottom / documentHeight) * 100);
+  }
+
+  // Função para rastrear scroll depth
+  function trackScrollDepth() {
+    const currentScroll = getScrollPercentage();
+    
+    scrollThresholds.forEach(threshold => {
+      if (currentScroll >= threshold && !scrollTracked[threshold]) {
+        scrollTracked[threshold] = true;
+        
+        // Enviar evento para Google Analytics 4 (formato correto)
+        sendGA4Event('scroll_depth', {
+          'scroll_percentage': threshold,
+          'scroll_label': `${threshold}%`,
+          'engagement_time_msec': Math.floor((Date.now() - startTime))
+        });
+        
+        console.log(`📊 Scroll rastreado: ${threshold}%`);
+      }
+    });
+  }
+
+  // Função para rastrear tempo de permanência
+  function trackTimeOnPage() {
+    const currentTime = Date.now();
+    const timeSpent = Math.floor((currentTime - startTime) / 1000); // em segundos
+    
+    timeThresholds.forEach(threshold => {
+      if (timeSpent >= threshold && !timeTracked[threshold]) {
+        timeTracked[threshold] = true;
+        
+        // Formatar tempo para exibição
+        let timeLabel;
+        if (threshold < 60) {
+          timeLabel = `${threshold}s`;
+        } else if (threshold < 120) {
+          timeLabel = '1min';
+        } else {
+          timeLabel = `${Math.floor(threshold / 60)}min`;
+        }
+        
+        // Enviar evento para Google Analytics 4 (formato correto)
+        sendGA4Event('time_on_page', {
+          'time_seconds': threshold,
+          'time_label': timeLabel,
+          'engagement_time_msec': threshold * 1000
+        });
+        
+        console.log(`⏱️ Tempo rastreado: ${timeLabel}`);
+      }
+    });
+  }
+
+  // Aguardar DOM estar pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initTracking();
+    });
+  } else {
+    initTracking();
+  }
+
+  function initTracking() {
+    // Rastrear scroll com throttling para performance
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      scrollTimeout = setTimeout(() => {
+        trackScrollDepth();
+      }, 100); // Throttle de 100ms
+    }, { passive: true });
+
+    // Rastrear tempo de permanência a cada 10 segundos
+    const timeInterval = setInterval(() => {
+      trackTimeOnPage();
+    }, 10000); // Verificar a cada 10 segundos
+
+    // Rastrear tempo ao sair da página (beforeunload)
+    window.addEventListener('beforeunload', () => {
+      clearInterval(timeInterval);
+      const finalTime = Math.floor((Date.now() - startTime) / 1000);
+      
+      // Enviar tempo total antes de sair
+      sendGA4Event('page_time_total', {
+        'total_time_seconds': finalTime,
+        'engagement_time_msec': finalTime * 1000
+      });
+    });
+
+    // Rastrear scroll inicial após pequeno delay
+    setTimeout(() => {
+      trackScrollDepth();
+    }, 500);
+    
+    // Rastrear tempo inicial após 1 segundo
+    setTimeout(() => {
+      trackTimeOnPage();
+    }, 1000);
+  }
+});
+
+// ============================================
 // LAZY LOAD ANALYTICS
 // ============================================
 setTimeout(() => {
